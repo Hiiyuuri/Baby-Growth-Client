@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
  import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import url from '../config/config';
 export default function LoginScreen(props) {
     const {navigation}=props;
     const [isLoading,setLoading]=useState(false);
@@ -43,7 +43,7 @@ const onLogin = (event => {
   
   const fn = async () => {
     try{
-      const result = await axios.post("http://192.168.0.113:3000/nik",{NIK:nik},{});
+      const result = await axios.post(url+"/nik",{nik:nik},{});
       if(result){
         // console.log(result.data);
         getData(result.data);

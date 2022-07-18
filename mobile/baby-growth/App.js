@@ -2,6 +2,7 @@
 import { StyleSheet,  } from 'react-native';
 // import MainNavigator from './src/navigations/AppNavigation';
 import { NavigationContainer } from '@react-navigation/native';
+import { BottomTabBar } from '@react-navigation/bottom-tabs'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -25,7 +26,16 @@ function MyBottomDrawer() {
   const Tab = createBottomTabNavigator();
   
     return (
-      <Tab.Navigator
+      <Tab.Navigator screenOptions={({ route }) => ({
+        tabBarButton: [
+          "Articles",
+          "ArticleDetail"
+        ].includes(route.name)
+          ? () => {
+              return null;
+            }
+          : undefined,
+      })}
         initialRouteName="Categories"
       >
         <Tab.Screen
@@ -84,20 +94,20 @@ function MyBottomDrawer() {
 
   
 
-function MainNavigator(){
-  const Stack= createStackNavigator();
-      return(
-          <Stack.Navigator>
-              <Stack.Screen name='Articles' component={ArticleScreen} />
-              <Stack.Screen name='ArticleDetail' component={ArticleDetail} />
-              {/* <Stack.Screen name='Login' component={LoginScreen} />
-              <Stack.Screen name='Category' component={Category} />
-              <Stack.Screen name='Cart' component={CartScreen} />
-              <Stack.Screen name='Ingredient' component={Ingredient} />
-              <Stack.Screen name='Detail' component={MenuDetail} /> */}
-          </Stack.Navigator>
-      )
-  }
+// function MainNavigator(){
+//   const Stack= createStackNavigator();
+//       return(
+//           <Stack.Navigator>
+//               <Stack.Screen name='Articles' component={ArticleScreen} />
+//               <Stack.Screen name='ArticleDetail' component={ArticleDetail} />
+//               {/* <Stack.Screen name='Login' component={LoginScreen} />
+//               <Stack.Screen name='Category' component={Category} />
+//               <Stack.Screen name='Cart' component={CartScreen} />
+//               <Stack.Screen name='Ingredient' component={Ingredient} />
+//               <Stack.Screen name='Detail' component={MenuDetail} /> */}
+//           </Stack.Navigator>
+//       )
+//   }
 
 function CustomDrawerContent(props) {
   return (

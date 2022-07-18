@@ -3,6 +3,7 @@ import { Button, FlatList, Text, TextInput, View, TouchableHighlight, Image, Sta
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import ArticleCard from './ArticleCard';
+import url from '../config/config';
 
 export default function ArticleScreen({ navigation, route }) {
   const item = route.params.item
@@ -12,7 +13,7 @@ export default function ArticleScreen({ navigation, route }) {
     console.log("Array navigated"+item)
     const fn = async () => {
         try {
-          const result = await axios.get("http://192.168.0.113:3000/category/"+item+"/article");
+          const result = await axios.get(url+"/category/"+item+"/article");
           if (result) {
             console.log(result.data);
             setArticles(result.data);

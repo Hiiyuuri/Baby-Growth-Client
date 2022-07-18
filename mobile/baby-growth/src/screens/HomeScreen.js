@@ -3,7 +3,7 @@ import { Button, FlatList, Text, TextInput, View, TouchableHighlight, Image, Sta
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import CategoryCards from './CategoryCards';
-
+import url from '../config/config';
 export default function HomeScreen(props) {
   const { navigation } = props;
   const [mother, setMother] = useState({})
@@ -13,9 +13,10 @@ export default function HomeScreen(props) {
     console.log("Use effect called")
     const fn = async () => {
       const valueNIK = await AsyncStorage.getItem(`nik`);
+      console.log(url);
       if (valueNIK) {
         try {
-          const result = await axios.get("http://192.168.0.113:3000/category");
+          const result = await axios.get(url+"/category");
           if (result) {
             console.log(result.data);
             setCategory(result.data);

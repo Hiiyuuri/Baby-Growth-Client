@@ -13,6 +13,7 @@ import {
 } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import url from '../config/config';
 
 export default function ChartIbu() {
   const screenWidth = Dimensions.get("window").width;
@@ -25,7 +26,7 @@ export default function ChartIbu() {
       console.log("NIK Adalah"+valueNIK)
       if (valueNIK) {
         try {
-          const result = await axios.post("http://192.168.0.113:3000/pregnancy",{nik:valueNIK});
+          const result = await axios.post(url+"/pregnancy",{nik:valueNIK});
           if (result) {
             console.log(result.data);
             setPregnancy(result.data);
