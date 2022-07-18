@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../../asset/logo.png";
 import "./Login.css";
 import {useDispatch} from 'react-redux'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {useState} from "react"
 import Swal from "sweetalert2";
 import {PostLogin} from '../../store/actions/actionCreator'

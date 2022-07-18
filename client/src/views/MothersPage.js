@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 import Stack from "react-bootstrap/Stack";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -68,7 +68,7 @@ export default function MothersPage() {
 
   return (
     <div>
-      <Navbar />
+      <Navigation />
       <Container style={{ marginTop: "75px" }}>
         <h3>
           <b>
