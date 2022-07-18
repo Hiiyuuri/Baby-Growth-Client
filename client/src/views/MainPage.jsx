@@ -32,6 +32,7 @@ function MainPage() {
             </Link>
         </div>
         <div className="hover-zoomin" style={{ maxWidth: "22rem" }}>
+          <Link to={'/register-mom'}>
           <img
             src={Pic1}
             alt=""
@@ -45,6 +46,7 @@ function MainPage() {
               display: "inline-block",
             }}
           />
+          </Link>
         </div>
       </div>
       <div
