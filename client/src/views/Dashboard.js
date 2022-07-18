@@ -1,7 +1,11 @@
 // import CreateForm from "../components/CreateForm";
 import PieChart from "../components/PieChart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCombinedData, fetchRTData } from "../store/actions/actionCreator";
+import {
+  fetchCombinedData,
+  fetchRTData,
+  watchlist
+} from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,6 +15,7 @@ import Navbar from "../components/Navbar";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import WatchlistRow from "../components/WatchlistRow";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -19,11 +24,16 @@ export default function Dashboard() {
     dispatch(fetchCombinedData());
   }, []);
 
+  useEffect(() => {
+    dispatch(watchlist());
+  }, []);
+
   const combinedData = useSelector(state => state.chart.combinedData);
   const kurang = useSelector(state => state.statistic.kurang);
   const cukup = useSelector(state => state.statistic.cukup);
   const berlebih = useSelector(state => state.statistic.berlebih);
   const pregnantMother = useSelector(state => state.statistic.pregnantMother);
+  const watchList = useSelector(state => state.list.watchList);
 
   let rtKurang = "";
   let rtCukup = "";
@@ -87,11 +97,9 @@ export default function Dashboard() {
             <div>
               <Table striped bordered hover>
                 <thead>
-                  <tr>
-                    <th>Kurang</th>
-                    <th>Cukup</th>
-                    <th>Berlebih</th>
-                  </tr>
+                  <th>Kurang</th>
+                  <th>Cukup</th>
+                  <th>Berlebih</th>
                 </thead>
                 <tbody>
                   <tr>
@@ -137,27 +145,9 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>RT 01</td>
-                  <td className="bg-danger text-white">Critical</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>RT 04</td>
-                  <td className="bg-danger text-white">Critical</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>RT 02</td>
-                  <td className="bg-warning text-black">Warning</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
+                {watchList.map(el => {
+                  return <WatchlistRow watchlist={el} />;
+                })}
               </tbody>
             </Table>
           </Stack>
