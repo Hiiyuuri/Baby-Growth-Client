@@ -6,21 +6,26 @@ import NavLinks from "./NavLinks";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
-    <nav className="bg-white">
+    <nav className="bg-gradient-to-r from-emerald-500 to-teal-500">
       <div className="flex items-center font-medium justify-around">
         <div className="z-50 p-5 md:w-auto w-full flex justify-between">
-          <img src={Logo} alt="logo" className="md:cursor-pointer h-9" />
-          <div className="text-3xl md:hidden" onClick={() => setOpen(!open)}>
+          <img src={Logo} alt="logo" className="md:cursor-pointer h-16" />
+          <div className="text-3xl text-black md:hidden" onClick={() => setOpen(!open)}>
             <ion-icon name={`${open ? "close" : "menu"}`}></ion-icon>
           </div>
         </div>
         <ul className="md:flex hidden uppercase items-center gap-8 font-[Poppins]">
           <li>
-            <Link to="/" className="py-7 px-3 inline-block">
+            <Link to="/" className="py-7 px-3 inline-block text-gray-50">
               Home
             </Link>
           </li>
           <NavLinks />
+          <li>
+            <Link to="/" className="py-7 px-3 inline-block text-gray-50">
+              Maps
+            </Link>
+          </li>
         </ul>
         <div className="md:block hidden">
           <Button />
@@ -33,11 +38,16 @@ const Navbar = () => {
         `}
         >
           <li>
-            <Link to="/" className="py-7 px-3 inline-block">
+            <Link to="/" className="py-7 px-3 inline-block text-black">
               Home
             </Link>
           </li>
           <NavLinks />
+          <li>
+            <Link to="/" className="py-7 px-3 inline-block text-black">
+              Maps
+            </Link>
+          </li>
           <div className="py-5">
             <Button />
           </div>
