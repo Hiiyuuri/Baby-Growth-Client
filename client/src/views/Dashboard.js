@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCombinedData,
   fetchRTData,
-  watchlist
+  watchlist,
+  allUsers
 } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
@@ -17,16 +18,15 @@ import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
+import { useParams } from "react-router-dom";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
-  }, []);
-
-  useEffect(() => {
     dispatch(watchlist());
+    dispatch(allUsers());
   }, []);
 
   const combinedData = useSelector(state => state.chart.combinedData);
@@ -35,12 +35,11 @@ export default function Dashboard() {
   const berlebih = useSelector(state => state.statistic.berlebih);
   const pregnantMother = useSelector(state => state.statistic.pregnantMother);
   const watchList = useSelector(state => state.list.watchList);
+  const users = useSelector(state => state.user.allUsers);
 
   let rtKurang = "";
   let rtCukup = "";
   let rtBerlebih = "";
-
-  console.log(combinedData);
 
   if (kurang.length !== 0) {
     kurang.forEach(el => {
@@ -70,12 +69,12 @@ export default function Dashboard() {
     });
   }
 
-  //   const queryRT = rt => {
-  //     const { isLoading, data, error } = useQuery("rt-data", fetchRTData(rt), {
-  //       enabled: false
-  //     });
-  //   };
-
+  const numConverter = noRT => {
+    if (noRT < 10) {
+      return `RT 0${noRT}`;
+    }
+    return `RT ${noRT}`;
+  };
   return (
     <div>
       <Navbar />
@@ -92,9 +91,13 @@ export default function Dashboard() {
                 align="end"
                 style={{ marginBottom: "20px", marginTop: "20px" }}
               >
-                <Dropdown.Item as="button">RT 01</Dropdown.Item>
-                <Dropdown.Item as="button">RT 02</Dropdown.Item>
-                <Dropdown.Item as="button">RT 03</Dropdown.Item>
+                {users.map(el => {
+                  return (
+                    <Dropdown.Item as="button">
+                      {numConverter(el.noRT)}
+                    </Dropdown.Item>
+                  );
+                })}
               </DropdownButton>
             </div>
             <div>

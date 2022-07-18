@@ -20,14 +20,14 @@ import { useParams } from "react-router-dom";
 
 export default function ListPage() {
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(motherListByRT());
+    dispatch(motherListByRT(id));
   }, []);
 
   const motherListData = useSelector(state => state.list.motherList);
 
-  const { id } = useParams();
   let title = id;
 
   if (title < 10) {

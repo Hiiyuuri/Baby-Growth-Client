@@ -11,7 +11,8 @@ import {
   MOTHER_DETAIL,
   MOTHER_PREGNANCY,
   MOTHER_LIST_BY_RT_FETCH_SUCCESS,
-  WATCHLIST_FETCH_SUCCESS
+  WATCHLIST_FETCH_SUCCESS,
+  ALL_USER_FETCH_SUCCESS
 } from "./actionType";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -95,6 +96,12 @@ export const motherList = payload => {
 export const watchlistFetch = payload => {
   return {
     type: WATCHLIST_FETCH_SUCCESS,
+    payload
+  };
+};
+export const allUserFetch = payload => {
+  return {
+    type: ALL_USER_FETCH_SUCCESS,
     payload
   };
 };
@@ -183,13 +190,30 @@ export function fetchDetailData(id) {
 export function motherListByRT(id) {
   return async function(dispatch) {
     try {
-      const res = await axios.get(`${baseURL}/motherProfile/1`, {
+      const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
           access_token: localStorage.getItem(`access_token`)
         }
       });
 
+      console.log(res.data);
       dispatch(motherList(res.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function allUsers() {
+  return async function(dispatch) {
+    try {
+      const res = await axios.get(`${baseURL}/listUser`, {
+        headers: {
+          access_token: localStorage.getItem(`access_token`)
+        }
+      });
+
+      dispatch(allUserFetch(res.data));
     } catch (err) {
       console.log(err);
     }
