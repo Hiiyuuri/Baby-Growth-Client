@@ -67,11 +67,3 @@ export default function BarChart({ dataValue, select }) {
 
   return <Bar options={options} data={data} />;
 }
-
-// [
-//   {
-//     pregnancyId: 1,
-//     data: [500, 600]
-//     data: [0,5, 5,0]
-//   }
-// ];

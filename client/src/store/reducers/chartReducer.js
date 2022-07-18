@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   combinedData: [],
-  dataByRT: [],
+  dataByRT: 0,
   pregnancyData: [],
   babyData: []
 };

@@ -129,6 +129,7 @@ export function fetchCombinedData() {
       dispatch(giziKurangFetch(giziKurang));
       dispatch(giziCukupFetch(giziCukup));
       dispatch(giziBerlebihFetch(giziBerlebih));
+      dispatch(rtDataFetchSucess(0));
     } catch (err) {
       console.log(err);
     }
@@ -155,6 +156,7 @@ export const useDataRT = () => {
         const data = result.data.categories;
         const combinedData = [data.kurang, data.cukup, data.berlebih];
 
+        dispatch(rtDataFetchSucess(rt));
         dispatch(combinedDataFetchSucess(combinedData));
         dispatch(pregnantMotherFetch(result.data.ibuBelumMelahirkan));
       })
