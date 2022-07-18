@@ -5,22 +5,21 @@ import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Dropdown from "react-bootstrap/Dropdown";
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 import Stack from "react-bootstrap/Stack";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
+import { useParams } from "react-router-dom";
 
 export default function MothersPage() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const [key, setKey] = useState("pregnancy");
 
   useEffect(() => {
-    dispatch(fetchDetailData());
+    dispatch(fetchDetailData(id));
   }, []);
 
   const pregnancyData = useSelector(state => state.chart.pregnancyData);
@@ -69,7 +68,7 @@ export default function MothersPage() {
 
   return (
     <div>
-      <Navbar />
+      <Navigation />
       <Container style={{ marginTop: "75px" }}>
         <h3>
           <b>
