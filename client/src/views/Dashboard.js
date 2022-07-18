@@ -3,9 +3,11 @@ import PieChart from "../components/PieChart";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCombinedData,
-  fetchRTData,
+  useDataRT,
   watchlist,
-  allUsers
+  allUsers,
+  combinedDataFetchSucess,
+  pregnantMotherFetch
 } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
@@ -19,9 +21,12 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const { fetchRTData } = useDataRT();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
@@ -75,6 +80,7 @@ export default function Dashboard() {
     }
     return `RT ${noRT}`;
   };
+
   return (
     <div>
       <Navbar />
@@ -93,7 +99,12 @@ export default function Dashboard() {
               >
                 {users.map(el => {
                   return (
-                    <Dropdown.Item as="button" onClick={fetchRTData(el.noRT)}>
+                    <Dropdown.Item
+                      as="button"
+                      onClick={e => {
+                        e.preventDefault(fetchRTData(el.noRT));
+                      }}
+                    >
                       {numConverter(el.noRT)}
                     </Dropdown.Item>
                   );
