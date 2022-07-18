@@ -106,7 +106,7 @@ export const allUserFetch = payload => {
 };
 
 export function fetchCombinedData() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -136,8 +136,35 @@ export function fetchCombinedData() {
   };
 }
 
+
+const rtDummy = [
+  {
+    noRT: 1,
+    data: [4, 3, 1]
+  },
+  {
+    noRT: 2,
+    data: [0, 5, 3]
+  },
+  {
+    noRT: 3,
+    data: [2, 4, 0]
+  }
+];
+
+export function fetchRTData(rt) {
+  console.log(rt);
+  return async function (dispatch) {
+    try {
+      //   const res = await axios.get(`${baseURL}`);
+
+      //   if (!res) {
+      //     throw new Error(`Network Error`);
+      //   }
+
 export const useDataRT = () => {
   const dispatch = useDispatch();
+
 
   const fetchRTData = rt => {
     axios
@@ -168,7 +195,7 @@ export const useDataRT = () => {
 };
 
 export function fetchDetailData(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
@@ -188,7 +215,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
@@ -204,21 +231,114 @@ export function motherListByRT(id) {
   };
 }
 
+
+
+// ================= rayhan 
+
+export function fetchMotherListOnly() {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`${baseURL}/listMotherProfile`, {
+
 export function allUsers() {
   return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listUser`, {
+
         headers: {
           access_token: localStorage.getItem(`access_token`)
         }
       });
 
+      // console.log(res)
+      return res.data
       dispatch(allUserFetch(res.data));
     } catch (err) {
       console.log(err);
     }
   };
 }
+
+export const registerMother = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerMotherProfile',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, latitude:+(inputCreate.lat), longitude:+(inputCreate.lng)}
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const registerUser = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerUser',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, noRT:inputCreate.RT}
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const registerPregnancy = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerPregnancy',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const createPregnancyData = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerPregnancyData',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const inputBabyDataAct = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/inputBabyData',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
 
 export function watchlist() {
   return async function(dispatch) {
@@ -265,3 +385,4 @@ export function PostLogin(form) {
         
   };
 }
+
