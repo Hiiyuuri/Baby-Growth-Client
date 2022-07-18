@@ -1,22 +1,32 @@
 // import CreateForm from "../components/CreateForm";
 import PieChart from "../components/PieChart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCombinedData, fetchRTData } from "../store/actions/actionCreator";
+import {
+  fetchCombinedData,
+  fetchRTData,
+  watchlist,
+  allUsers
+} from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import Navbar from "../components/Navbar";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import WatchlistRow from "../components/WatchlistRow";
+import { useParams } from "react-router-dom";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
+    dispatch(watchlist());
+    dispatch(allUsers());
   }, []);
 
   const combinedData = useSelector(state => state.chart.combinedData);
@@ -24,6 +34,8 @@ export default function Dashboard() {
   const cukup = useSelector(state => state.statistic.cukup);
   const berlebih = useSelector(state => state.statistic.berlebih);
   const pregnantMother = useSelector(state => state.statistic.pregnantMother);
+  const watchList = useSelector(state => state.list.watchList);
+  const users = useSelector(state => state.user.allUsers);
 
   let rtKurang = "";
   let rtCukup = "";
@@ -57,6 +69,12 @@ export default function Dashboard() {
     });
   }
 
+  const numConverter = noRT => {
+    if (noRT < 10) {
+      return `RT 0${noRT}`;
+    }
+    return `RT ${noRT}`;
+  };
   return (
     <div>
       <Navbar />
@@ -67,31 +85,27 @@ export default function Dashboard() {
           </Col>
           <Stack md="6" className="col-md-5 mx-auto border">
             <div>
-              <Dropdown
-                onClick={() => {
-                  fetchRTData(1);
-                }}
+              <DropdownButton
+                id="dropdown-item-button"
+                title="Filter by RT"
+                align="end"
                 style={{ marginBottom: "20px", marginTop: "20px" }}
               >
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Filter by RT
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">RT 1</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">RT 2</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">RT 3</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                {users.map(el => {
+                  return (
+                    <Dropdown.Item as="button" onClick={fetchRTData(el.noRT)}>
+                      {numConverter(el.noRT)}
+                    </Dropdown.Item>
+                  );
+                })}
+              </DropdownButton>
             </div>
             <div>
               <Table striped bordered hover>
                 <thead>
-                  <tr>
-                    <th>Kurang</th>
-                    <th>Cukup</th>
-                    <th>Berlebih</th>
-                  </tr>
+                  <th>Kurang</th>
+                  <th>Cukup</th>
+                  <th>Berlebih</th>
                 </thead>
                 <tbody>
                   <tr>
@@ -111,6 +125,13 @@ export default function Dashboard() {
             <div style={{ textAlign: "left" }}>
               <ul>
                 <li>
+                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
+                </li>
+              </ul>
+            </div>
+            <div style={{ textAlign: "left" }}>
+              <ul>
+                <li>
                   RT Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
                 </li>
                 <li>
@@ -121,13 +142,7 @@ export default function Dashboard() {
                 </li>
               </ul>
             </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
-                </li>
-              </ul>
-            </div>
+
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -137,27 +152,9 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>RT 01</td>
-                  <td className="bg-danger text-white">Critical</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>RT 04</td>
-                  <td className="bg-danger text-white">Critical</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>RT 02</td>
-                  <td className="bg-warning text-black">Warning</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
+                {watchList.map(el => {
+                  return <WatchlistRow watchlist={el} />;
+                })}
               </tbody>
             </Table>
           </Stack>

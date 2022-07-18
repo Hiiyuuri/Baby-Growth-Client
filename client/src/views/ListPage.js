@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "../components/Navbar";
-import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Tab from "react-bootstrap/Tab";
@@ -20,16 +19,14 @@ import { useParams } from "react-router-dom";
 
 export default function ListPage() {
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(motherListByRT());
+    dispatch(motherListByRT(id));
   }, []);
 
   const motherListData = useSelector(state => state.list.motherList);
 
-  console.log(motherListData);
-
-  const { id } = useParams();
   let title = id;
 
   if (title < 10) {
