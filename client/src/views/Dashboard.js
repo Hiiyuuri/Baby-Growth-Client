@@ -13,7 +13,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -123,7 +123,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <Navbar />
+      <Navigation />
       <Container>
         <Row md="12" style={{ marginTop: "100px" }}>
           <Col md="6" className="border">

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { motherListByRT } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 import Table from "react-bootstrap/Table";
 import ListPageRow from "../components/ListPageRow";
 import { useParams } from "react-router-dom";
@@ -27,7 +27,7 @@ export default function ListPage() {
 
   return (
     <div>
-      <Navbar />
+      <Navigation />
       <Container>
         <div style={{ marginTop: "75px" }}>
           <h3>
