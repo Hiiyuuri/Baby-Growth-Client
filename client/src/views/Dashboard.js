@@ -20,6 +20,42 @@ export default function Dashboard() {
   }, []);
 
   const combinedData = useSelector(state => state.chart.combinedData);
+  const kurang = useSelector(state => state.statistic.kurang);
+  const cukup = useSelector(state => state.statistic.cukup);
+  const berlebih = useSelector(state => state.statistic.berlebih);
+  const pregnantMother = useSelector(state => state.statistic.pregnantMother);
+
+  let rtKurang = "";
+  let rtCukup = "";
+  let rtBerlebih = "";
+
+  if (kurang.length !== 0) {
+    kurang.forEach(el => {
+      if (el < 10) {
+        rtKurang += `RT 0${el} `;
+      } else {
+        rtKurang += `RT ${el} `;
+      }
+    });
+  }
+  if (cukup.length !== 0) {
+    cukup.forEach(el => {
+      if (el < 10) {
+        rtCukup += `RT 0${el} `;
+      } else {
+        rtCukup += `RT ${el} `;
+      }
+    });
+  }
+  if (berlebih.length !== 0) {
+    berlebih.forEach(el => {
+      if (el < 10) {
+        rtBerlebih += `RT 0${el} `;
+      } else {
+        rtBerlebih += `RT ${el} `;
+      }
+    });
+  }
 
   return (
     <div>
@@ -75,20 +111,20 @@ export default function Dashboard() {
             <div style={{ textAlign: "left" }}>
               <ul>
                 <li>
-                  RT Dengan Gizi Kurang Terbanyak : <b>RT 04</b>
+                  RT Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
                 </li>
                 <li>
-                  RT Dengan Gizi Cukup Terbanyak : <b>RT 07</b>
+                  RT Dengan Gizi Cukup Terbanyak : <b>{rtCukup}</b>
                 </li>
                 <li>
-                  RT Dengan Gizi Berlebih Terbanyak : <b>RT 05</b>{" "}
+                  RT Dengan Gizi Berlebih Terbanyak : <b>{rtBerlebih}</b>{" "}
                 </li>
               </ul>
             </div>
             <div style={{ textAlign: "left" }}>
               <ul>
                 <li>
-                  Jumlah Ibu Hamil : <b>5</b>
+                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
                 </li>
               </ul>
             </div>

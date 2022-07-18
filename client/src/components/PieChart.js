@@ -54,6 +54,9 @@ export default function PieChart(dataValue) {
         formatter: function(value) {
           const percentage = Math.round(value / totalData * 100);
 
+          if (!percentage) {
+            return ``;
+          }
           return `${percentage}%`;
         }
       }
