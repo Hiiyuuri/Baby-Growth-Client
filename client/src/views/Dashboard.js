@@ -3,7 +3,7 @@ import PieChart from "../components/PieChart";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCombinedData,
-  fetchRTData,
+  useDataRT,
   watchlist,
   allUsers
 } from "../store/actions/actionCreator";
@@ -18,10 +18,12 @@ import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { fetchRTData } = useDataRT();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
@@ -30,6 +32,7 @@ export default function Dashboard() {
   }, []);
 
   const combinedData = useSelector(state => state.chart.combinedData);
+  const numRT = useSelector(state => state.chart.dataByRT);
   const kurang = useSelector(state => state.statistic.kurang);
   const cukup = useSelector(state => state.statistic.cukup);
   const berlebih = useSelector(state => state.statistic.berlebih);
@@ -75,6 +78,49 @@ export default function Dashboard() {
     }
     return `RT ${noRT}`;
   };
+
+  let title = <div style={{ textAlign: "left" }}>Data Seluruh RT</div>;
+
+  if (numRT !== 0) {
+    if (numRT < 10) {
+      title = (
+        <Row>
+          <Col>
+            Data RT 0{numRT}
+          </Col>
+          <Col>
+            <Button
+              variant="info"
+              onClick={() => {
+                navigate(`/rt/${numRT}`);
+              }}
+            >
+              Detail
+            </Button>
+          </Col>
+        </Row>
+      );
+    } else {
+      title = (
+        <Row>
+          <Col>
+            Data RT {numRT}
+          </Col>
+          <Col>
+            <Button
+              variant="info"
+              onClick={() => {
+                navigate(`/rt/${watchlist.noRT}`);
+              }}
+            >
+              Detail
+            </Button>
+          </Col>
+        </Row>
+      );
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -84,23 +130,46 @@ export default function Dashboard() {
             <PieChart dataValue={combinedData} style={{ height: "100px" }} />
           </Col>
           <Stack md="6" className="col-md-5 mx-auto border">
+            <Container>
+              <Row>
+                <DropdownButton
+                  id="dropdown-item-button"
+                  title="Filter by RT"
+                  align="end"
+                  style={{ marginBottom: "20px", marginTop: "20px" }}
+                >
+                  <Dropdown.Item
+                    onClick={e => {
+                      e.preventDefault(dispatch(fetchCombinedData()));
+                    }}
+                  >
+                    Seluruh RT
+                  </Dropdown.Item>
+                  {users.map(el => {
+                    return (
+                      <Dropdown.Item
+                        as="button"
+                        onClick={e => {
+                          e.preventDefault(fetchRTData(el.noRT));
+                        }}
+                        key={el.noRT}
+                      >
+                        {numConverter(el.noRT)}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+                <Col>
+                  <div style={{ padding: "20px" }}>
+                    <h5>
+                      {title}
+                    </h5>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
             <div>
-              <DropdownButton
-                id="dropdown-item-button"
-                title="Filter by RT"
-                align="end"
-                style={{ marginBottom: "20px", marginTop: "20px" }}
-              >
-                {users.map(el => {
-                  return (
-                    <Dropdown.Item as="button" onClick={fetchRTData(el.noRT)}>
-                      {numConverter(el.noRT)}
-                    </Dropdown.Item>
-                  );
-                })}
-              </DropdownButton>
-            </div>
-            <div>
+              <h5>Jumlah Bayi Berdasarkan Kecukupan Gizi</h5>
               <Table striped bordered hover>
                 <thead>
                   <th>Kurang</th>
