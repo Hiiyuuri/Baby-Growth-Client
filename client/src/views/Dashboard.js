@@ -93,7 +93,7 @@ export default function Dashboard() {
               >
                 {users.map(el => {
                   return (
-                    <Dropdown.Item as="button">
+                    <Dropdown.Item as="button" onClick={fetchRTData(el.noRT)}>
                       {numConverter(el.noRT)}
                     </Dropdown.Item>
                   );
@@ -125,6 +125,13 @@ export default function Dashboard() {
             <div style={{ textAlign: "left" }}>
               <ul>
                 <li>
+                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
+                </li>
+              </ul>
+            </div>
+            <div style={{ textAlign: "left" }}>
+              <ul>
+                <li>
                   RT Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
                 </li>
                 <li>
@@ -135,13 +142,7 @@ export default function Dashboard() {
                 </li>
               </ul>
             </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
-                </li>
-              </ul>
-            </div>
+
             <Table striped bordered hover>
               <thead>
                 <tr>

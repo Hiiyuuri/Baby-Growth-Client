@@ -14,13 +14,15 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
+import { useParams } from "react-router-dom";
 
 export default function MothersPage() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const [key, setKey] = useState("pregnancy");
 
   useEffect(() => {
-    dispatch(fetchDetailData());
+    dispatch(fetchDetailData(id));
   }, []);
 
   const pregnancyData = useSelector(state => state.chart.pregnancyData);

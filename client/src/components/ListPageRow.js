@@ -1,6 +1,9 @@
 import Dropdown from "react-bootstrap/Dropdown";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ListPageRow({ data }) {
+  const navigate = useNavigate();
+
   return (
     <tr>
       <td>
@@ -21,7 +24,11 @@ export default function ListPageRow({ data }) {
           <Dropdown.Menu>
             {data.Pregnancies.map(el => {
               return (
-                <Dropdown.Item href="#/action-1">
+                <Dropdown.Item
+                  onClick={() => {
+                    navigate(`/mothers/${el.id}`);
+                  }}
+                >
                   {el.name}
                 </Dropdown.Item>
               );

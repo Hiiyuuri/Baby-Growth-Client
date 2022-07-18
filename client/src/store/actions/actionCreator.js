@@ -15,7 +15,7 @@ import {
   ALL_USER_FETCH_SUCCESS
 } from "./actionType";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
 
@@ -126,10 +126,10 @@ export function fetchCombinedData() {
       const giziBerlebih = res.data.statistic.giziBerlebihTerbanyak.noRT;
 
       dispatch(combinedDataFetchSucess(combinedData));
+      dispatch(pregnantMotherFetch(res.data.ibuBelumMelahirkan));
       dispatch(giziKurangFetch(giziKurang));
       dispatch(giziCukupFetch(giziCukup));
       dispatch(giziBerlebihFetch(giziBerlebih));
-      dispatch(pregnantMotherFetch(res.data.ibuBelumMelahirkan));
     } catch (err) {
       console.log(err);
     }
@@ -152,15 +152,23 @@ const rtDummy = [
 ];
 
 export function fetchRTData(rt) {
-  return async function() {
+  return async function(dispatch) {
     try {
-      const res = await axios.get(`${baseURL}/babyWeigthCategories/${rt}`);
+      const res = await axios.get(`${baseURL}/babyWeigthCategories/${rt}`, {
+        headers: {
+          access_token: localStorage.getItem(`access_token`)
+        }
+      });
 
       if (!res) {
         throw new Error(`Network Error`);
       }
 
-      console.log(res);
+      const data = res.data.categories;
+      const combinedData = [data.kurang, data.cukup, data.berlebih];
+
+      dispatch(combinedDataFetchSucess(combinedData));
+      dispatch(pregnantMotherFetch(res.data.ibuBelumMelahirkan));
     } catch (err) {
       console.log(err);
     }
@@ -170,7 +178,7 @@ export function fetchRTData(rt) {
 export function fetchDetailData(id) {
   return async function(dispatch) {
     try {
-      const res = await axios.get(`${baseURL}/detailpregnancy/1`, {
+      const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
           access_token: localStorage.getItem(`access_token`)
         }
@@ -186,6 +194,29 @@ export function fetchDetailData(id) {
     }
   };
 }
+
+// export const fetchDetailData = id => {
+//   return dispatch => {
+//     axios
+//       .get(`${baseURL}/detailpregnancy/${id}`, {
+//         headers: {
+//           access_token: localStorage.getItem(`access_token`)
+//         }
+//       })
+//       .then(res => {
+//         if (!res) {
+//           throw new Error(`Network Error`);
+//         }
+//         return res;
+//       })
+//       .then(result => {
+//         console.log(result);
+//       })
+//       .catch(err => {
+//         console.log(err);
+//       });
+//   };
+// };
 
 export function motherListByRT(id) {
   return async function(dispatch) {
