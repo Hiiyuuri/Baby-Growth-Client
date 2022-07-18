@@ -11,6 +11,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import Navbar from "../components/Navbar";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
@@ -38,6 +39,8 @@ export default function Dashboard() {
   let rtKurang = "";
   let rtCukup = "";
   let rtBerlebih = "";
+
+  console.log(combinedData);
 
   if (kurang.length !== 0) {
     kurang.forEach(el => {
@@ -67,6 +70,12 @@ export default function Dashboard() {
     });
   }
 
+  //   const queryRT = rt => {
+  //     const { isLoading, data, error } = useQuery("rt-data", fetchRTData(rt), {
+  //       enabled: false
+  //     });
+  //   };
+
   return (
     <div>
       <Navbar />
@@ -77,22 +86,16 @@ export default function Dashboard() {
           </Col>
           <Stack md="6" className="col-md-5 mx-auto border">
             <div>
-              <Dropdown
-                onClick={() => {
-                  fetchRTData(1);
-                }}
+              <DropdownButton
+                id="dropdown-item-button"
+                title="Filter by RT"
+                align="end"
                 style={{ marginBottom: "20px", marginTop: "20px" }}
               >
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Filter by RT
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">RT 1</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">RT 2</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">RT 3</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown.Item as="button">RT 01</Dropdown.Item>
+                <Dropdown.Item as="button">RT 02</Dropdown.Item>
+                <Dropdown.Item as="button">RT 03</Dropdown.Item>
+              </DropdownButton>
             </div>
             <div>
               <Table striped bordered hover>

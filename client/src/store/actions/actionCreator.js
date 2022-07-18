@@ -15,6 +15,7 @@ import {
 } from "./actionType";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 import axios from "axios";
 
 const baseURL = `http://localhost:3001`;
@@ -144,18 +145,15 @@ const rtDummy = [
 ];
 
 export function fetchRTData(rt) {
-  console.log(rt);
-  return async function(dispatch) {
+  return async function() {
     try {
-      //   const res = await axios.get(`${baseURL}`);
+      const res = await axios.get(`${baseURL}/babyWeigthCategories/${rt}`);
 
-      //   if (!res) {
-      //     throw new Error(`Network Error`);
-      //   }
+      if (!res) {
+        throw new Error(`Network Error`);
+      }
 
-      //   const result = res.json();
-
-      dispatch(rtDataFetchSucess(rtDummy[0]));
+      console.log(res);
     } catch (err) {
       console.log(err);
     }

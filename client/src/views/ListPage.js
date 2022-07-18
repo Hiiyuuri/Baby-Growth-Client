@@ -27,8 +27,6 @@ export default function ListPage() {
 
   const motherListData = useSelector(state => state.list.motherList);
 
-  console.log(motherListData);
-
   const { id } = useParams();
   let title = id;
 
