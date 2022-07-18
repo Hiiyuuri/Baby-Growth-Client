@@ -6,14 +6,44 @@ import { Route, Routes, Router } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import MothersPage from "./views/MothersPage";
 import ListPage from "./views/ListPage";
+import RegisterMom from "./views/RegisterMom";
+import RegisterAdmin from "./views/RegisterAdmin";
+import RegisterPregnancy from "./views/RegisterPregnancy";
+// import InputPregData from "./views/CreatePregnancyData";
+import MapMarkers from "./views/MapMarkers";
+
+import Modal from "./components/Modal/Modal"
+import CreatePregnancyData from "./views/CreatePregnancyData";
+import InputBabyData from "./views/InputBabyData";
+
+
+
+
 
 function App() {
   return (
     <div className="App">
+
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/rt/:id" element={<ListPage />} />
         <Route path="/mothers/:id" element={<MothersPage />} />
+
+
+        {/* ==== rayhan === */}
+        <Route path="/register-mom" element={<RegisterMom />} />
+        <Route path="/register-admin" element={<RegisterAdmin />} />
+        {/* <Route path="/register-pregnancy/:motherId" element={<RegisterPregnancy />} /> */}
+        <Route path="/register-pregnancy" element={<RegisterPregnancy />} />
+        {/* <Route path="/input-preg-data/:PregnancyId" element={<InputPregData />} /> */}
+        <Route path="/create-preg-data" element={<CreatePregnancyData />} />
+        <Route path="/input-baby-data" element={<InputBabyData />} />
+
+
+        <Route path="/map-markers" element={<MapMarkers />} />
+
+
+
       </Routes>
     </div>
   );

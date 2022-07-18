@@ -101,7 +101,7 @@ export const motherList = payload => {
 };
 
 export function fetchCombinedData() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -147,7 +147,7 @@ const rtDummy = [
 
 export function fetchRTData(rt) {
   console.log(rt);
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       //   const res = await axios.get(`${baseURL}`);
 
@@ -165,7 +165,7 @@ export function fetchRTData(rt) {
 }
 
 export function fetchDetailData(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/1`, {
         headers: {
@@ -187,7 +187,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/motherProfile/1`, {
         headers: {
@@ -202,3 +202,121 @@ export function motherListByRT(id) {
     }
   };
 }
+
+
+
+
+// ================= rayhan 
+
+export function fetchMotherListOnly() {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`${baseURL}/listMotherProfile`, {
+        headers: {
+          access_token: localStorage.getItem(`access_token`)
+        }
+      });
+      // console.log(res)
+      return res.data
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export const registerMother = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerMotherProfile',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, latitude:+(inputCreate.lat), longitude:+(inputCreate.lng)}
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const registerUser = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerUser',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, noRT:inputCreate.RT}
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const registerPregnancy = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerPregnancy',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const createPregnancyData = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerPregnancyData',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const inputBabyDataAct = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/inputBabyData',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ================= rayhan 
+
+
