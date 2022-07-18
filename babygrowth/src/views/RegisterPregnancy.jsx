@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from '../components/Navbar/Navbar'
+import Navigation from "../components/Navigation";
 
 function RegisterPregnancy() {
     // const dispatch = useDispatch()
@@ -33,7 +33,7 @@ function RegisterPregnancy() {
 
     return (
 <>
-<Navbar />
+<Navigation />
         <div className="flex-col w-[40%] mx-auto mt-10 border-2 border-slate-200 justify-center p-7 block bg-white shadow-lg rounded-lg">
             <h1 className="text-2xl font-bold mb-5 text-center"> Register New Pregnancy</h1>
 

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Map, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 import { registerMother } from "../store/actions/actionCreator";
 
 
@@ -65,7 +65,7 @@ function RegisterMom() {
 
     return (
         <div>
-            <Navbar />
+            <Navigation />
 
             <div className="col-md-5 mx-auto border rounded p-5"
                 style={{ marginTop: "100px" }}>

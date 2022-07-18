@@ -26,7 +26,7 @@ export default function Navigation() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto" style={{paddingRight:"10px", paddingLeft:"10px"}}>
             <Nav.Link href="/" style={{color:"white", fontSize:"18px"}}>Home</Nav.Link>
-            <Nav.Link href="/" style={{color:"white", fontSize:"18px"}}>Register Admin</Nav.Link>
+            <Nav.Link href="/register-admin" style={{color:"white", fontSize:"18px"}}>Register Admin</Nav.Link>
             <Nav.Link href="/" style={{color:"white", fontSize:"18px"}}>Maps</Nav.Link>
             <Nav.Link href="/" style={{color:"white", fontSize:"18px"}} onClick={HandleLogout}>Logout</Nav.Link>
           </Nav>

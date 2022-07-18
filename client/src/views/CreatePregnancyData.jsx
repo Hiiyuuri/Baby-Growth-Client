@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 import { createPregnancyData } from "../store/actions/actionCreator";
 
 
@@ -36,7 +36,7 @@ function CreatePregnancyData() {
 
     return (
         <div>
-            <Navbar />
+            <Navigation />
 
             <div className="col-md-5 mx-auto border rounded p-5"
                 style={{ marginTop: "100px" }}>
