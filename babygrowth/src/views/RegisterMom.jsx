@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Map, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Navbar from '../components/Navbar/Navbar'
 
 
 function RegisterMom() {
@@ -61,7 +62,8 @@ function RegisterMom() {
 
 
     return (
-
+<>
+<Navbar />
         <div className="flex-col w-[40%] mx-auto mt-10 border-2 border-slate-200 justify-center p-7 block bg-white shadow-lg rounded-lg">
             <h1 className="text-2xl font-bold mb-5 text-center"> Register Mother's Profile</h1>
 
@@ -153,6 +155,7 @@ function RegisterMom() {
 
 
         </div>
+        </>
     );
 }
 

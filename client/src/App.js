@@ -6,12 +6,14 @@ import { Route, Routes, Router } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import MothersPage from "./views/MothersPage";
 import ListPage from "./views/ListPage";
+import Login from './views/Login/Login'
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/rt/:id" element={<ListPage />} />
         <Route path="/mothers/:id" element={<MothersPage />} />
       </Routes>

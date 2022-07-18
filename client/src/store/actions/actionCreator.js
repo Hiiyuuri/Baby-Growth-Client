@@ -235,3 +235,33 @@ export function watchlist() {
     }
   };
 }
+
+// export function PostLogin(form) {
+//   return async function (dispatch) {
+//     try{
+//       const res = await axios({
+//         method: "post",
+//         url: `${baseURL}/login`,
+//         data: form
+//       })
+//       console.log(res)
+//       localStorage.setItem("access_token", res.data.access_token);
+//     }
+//     catch (err){
+//       console.log(err)
+    
+//     }
+//   }
+// }
+export function PostLogin(form) {
+  return (dispatch) => {
+   return fetch(baseURL+"/login",{
+          method: "Post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form)
+         })
+        
+  };
+}
