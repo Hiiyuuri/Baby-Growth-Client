@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Navigation from "../components/Navigation";
-import { createPregnancyData } from "../store/actions/actionCreator";
+import { createBabyData } from "../store/actions/actionCreator";
 
 
 
-function CreatePregnancyData() {
+function CreateBabyData() {
     const dispatch = useDispatch()
     let navigate = useNavigate()
     // let { PregnancyId } = useParams()
@@ -35,12 +35,12 @@ function CreatePregnancyData() {
         e.preventDefault()
         // console.log(inputCreate)
 
-        dispatch(createPregnancyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
+        dispatch(createBabyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
             .then((created) => {
                 navigate(`/`)
                 Swal.fire({
                     title: `Success!`,
-                    text: `Success creating pregnancy data with ID: ${created.data.id} `,
+                    text: `Success creating baby data with ID: ${created.data.id} `,
                     icon: "success",
                 });
             })
@@ -58,7 +58,7 @@ function CreatePregnancyData() {
 
             <div className="col-md-5 mx-auto border rounded p-5"
                 style={{ marginTop: "100px" }}>
-                <h1 className="text-2xl font-bold mb-5 text-center"> Create Pregnancy Data</h1>
+                <h1 className="text-2xl font-bold mb-5 text-center"> Create Baby Data</h1>
 
                 <form
                     onSubmit={handleInput}
@@ -122,4 +122,4 @@ function CreatePregnancyData() {
     );
 }
 
-export default CreatePregnancyData;
+export default CreateBabyData;

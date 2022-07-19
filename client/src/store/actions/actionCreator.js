@@ -263,6 +263,10 @@ export const registerPregnancy = (inputCreate) => {
       data: {...inputCreate, }
     })
     dispatch(fetchCombinedData())
+    
+    if(inputCreate.sudahLahir){
+      return {...created, sudahLahir:true}
+    }
 
     return created
   }
@@ -300,6 +304,22 @@ export const createPregnancyData = (inputCreate) => {
   }
 }
 
+export const createBabyData = (inputCreate) => {
+  return async (dispatch) => {
+    let created = await axios({
+      method: 'POST',
+      url: baseURL + '/registerBabyData',
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: {...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
 export const inputBabyDataAct = (inputCreate) => {
   return async (dispatch) => {
     let created = await axios({
@@ -313,6 +333,20 @@ export const inputBabyDataAct = (inputCreate) => {
     dispatch(fetchCombinedData())
 
     return created
+  }
+}
+
+export const fetchBabyData = (id) => {
+  return async (dispatch) => {
+    let data = await axios({
+      method: 'GET',
+      url: baseURL + `/babyData/${id}`,
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+    })
+
+    return {data}
   }
 }
 

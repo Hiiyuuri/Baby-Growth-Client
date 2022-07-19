@@ -5,6 +5,7 @@ import Map, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Navigation from "../components/Navigation";
 import { registerMother } from "../store/actions/actionCreator";
+import Swal from "sweetalert2";
 
 
 
@@ -52,8 +53,14 @@ function RegisterMom() {
         console.log(inputCreate)
 
         dispatch(registerMother(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
-            .then(() => {
-                navigate(`/register-pregnancy`)
+            .then((created) => {
+                console.log(created.data.id)
+                navigate(`/register-pregnancy?motherId=${created.data.id}`)
+                Swal.fire({
+                    title: "Mother's profile created!",
+                    text: "Please fill the pregnancy form",
+                    icon: "success",
+                });
             })
             .catch((err) => {
                 console.log(err)
@@ -149,8 +156,8 @@ function RegisterMom() {
                         }
                     </div>
 
-                    <button 
-                    className="btn btn-primary btn-lg btn-block bg-success">
+                    <button
+                        className="btn btn-primary btn-lg btn-block bg-success">
                         Submit
                     </button>
 
