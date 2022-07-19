@@ -19,7 +19,6 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
 import { useNavigate } from "react-router-dom";
-
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +30,7 @@ export default function Dashboard() {
     dispatch(allUsers());
   }, []);
 
+  const isLoading = useSelector(state => state.chart.isLoading);
   const combinedData = useSelector(state => state.chart.combinedData);
   const numRT = useSelector(state => state.chart.dataByRT);
   const kurang = useSelector(state => state.statistic.kurang);
@@ -44,7 +44,7 @@ export default function Dashboard() {
   let rtCukup = "";
   let rtBerlebih = "";
 
-  if (kurang.length !== 0) {
+  if (kurang.length !== 0 && isLoading === false) {
     kurang.forEach(el => {
       if (el < 10) {
         rtKurang += `RT 0${el} `;
@@ -53,7 +53,7 @@ export default function Dashboard() {
       }
     });
   }
-  if (cukup.length !== 0) {
+  if (cukup.length !== 0 && isLoading === false) {
     cukup.forEach(el => {
       if (el < 10) {
         rtCukup += `RT 0${el} `;
@@ -62,7 +62,7 @@ export default function Dashboard() {
       }
     });
   }
-  if (berlebih.length !== 0) {
+  if (berlebih.length !== 0 && isLoading === false) {
     berlebih.forEach(el => {
       if (el < 10) {
         rtBerlebih += `RT 0${el} `;
@@ -121,13 +121,38 @@ export default function Dashboard() {
     }
   }
 
+  let pieChart = (
+    <PieChart dataValue={combinedData} style={{ height: "100px" }} />
+  );
+
+  if (isLoading) {
+    pieChart = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
+    combinedData[0] = "Loading...";
+    combinedData[1] = "Loading...";
+    combinedData[2] = "Loading...";
+    rtKurang = "Loading...";
+    rtCukup = "Loading...";
+    rtBerlebih = "Loading...";
+  }
+
   return (
     <div>
       <Navigation />
-      <Container>
-        <Row md="12" style={{ marginTop: "100px" }}>
-          <Col md="6" className="border">
-            <PieChart dataValue={combinedData} style={{ height: "100px" }} />
+      <Container style={{ marginBottom: "25px" }}>
+        <Row md="12" style={{ marginTop: "25px" }}>
+          <Col
+            md="6"
+            className="border"
+            style={{ height: "600px", padding: "5px" }}
+          >
+            {pieChart}
           </Col>
           <Stack md="6" className="col-md-5 mx-auto border">
             <Container>
@@ -212,7 +237,7 @@ export default function Dashboard() {
               </ul>
             </div>
 
-            <Table striped bordered hover>
+            <Table striped bordered hover responsive>
               <thead>
                 <tr>
                   <th>Daftar Pengawasan</th>

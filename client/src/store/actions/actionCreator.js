@@ -1,4 +1,5 @@
 import {
+  FETCH_LOADING,
   COMBINED_DATA_FETCH_SUCCESS,
   RT_DATA_FETCH_SUCCESS,
   PREGNANCY_DATA_FETCH_SUCCESS,
@@ -12,7 +13,8 @@ import {
   MOTHER_PREGNANCY,
   MOTHER_LIST_BY_RT_FETCH_SUCCESS,
   WATCHLIST_FETCH_SUCCESS,
-  ALL_USER_FETCH_SUCCESS
+  ALL_USER_FETCH_SUCCESS,
+  RECORDED_DATE
 } from "./actionType";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,6 +22,12 @@ import axios from "axios";
 
 const baseURL = `http://localhost:3001`;
 
+export const isLoading = payload => {
+  return {
+    type: FETCH_LOADING,
+    payload
+  };
+};
 export const combinedDataFetchSucess = payload => {
   return {
     type: COMBINED_DATA_FETCH_SUCCESS,
@@ -104,6 +112,12 @@ export const allUserFetch = payload => {
     payload
   };
 };
+export const recordedDate = payload => {
+  return {
+    type: RECORDED_DATE,
+    payload
+  };
+};
 
 export function fetchCombinedData() {
   return async function (dispatch) {
@@ -132,6 +146,8 @@ export function fetchCombinedData() {
       dispatch(rtDataFetchSucess(0));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -183,6 +199,8 @@ export function fetchDetailData(id) {
       dispatch(motherPregnancy(res.data.data.PregnancyDatum));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -200,6 +218,8 @@ export function motherListByRT(id) {
       dispatch(motherList(res.data));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -216,61 +236,71 @@ export function allUsers() {
       dispatch(allUserFetch(res.data));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
 
-export const registerMother = (inputCreate) => {
-  return async (dispatch) => {
+export const registerMother = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerMotherProfile',
+      method: "POST",
+      url: baseURL + "/registerMotherProfile",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: { ...inputCreate, latitude: +(inputCreate.lat), longitude: +(inputCreate.lng) }
-    })
-    dispatch(fetchCombinedData())
 
-    return created
-  }
-}
+      data: {
+        ...inputCreate,
+        latitude: +inputCreate.lat,
+        longitude: +inputCreate.lng
+      }
+    });
+    dispatch(fetchCombinedData());
 
-export const registerUser = (inputCreate) => {
-  return async (dispatch) => {
+
+    return created;
+  };
+};
+
+export const registerUser = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerUser',
+      method: "POST",
+      url: baseURL + "/registerUser",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
       data: { ...inputCreate, noRT: inputCreate.RT }
-    })
-    dispatch(fetchCombinedData())
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
 
-export const registerPregnancy = (inputCreate) => {
-  return async (dispatch) => {
+export const registerPregnancy = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerPregnancy',
+      method: "POST",
+      url: baseURL + "/registerPregnancy",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
+
       data: { ...inputCreate, }
     })
-    dispatch(fetchCombinedData())
+    dispatch(fetchCombinedData());
 
     if (inputCreate.sudahLahir) {
       return { ...created, sudahLahir: true }
-    }
+    };
 
-    return created
+    return created;
   }
 }
+
 
 export function fetchMotherListOnly() {
   return async function (dispatch) {
@@ -288,21 +318,23 @@ export function fetchMotherListOnly() {
   };
 }
 
-export const createPregnancyData = (inputCreate) => {
-  return async (dispatch) => {
+export const createPregnancyData = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerPregnancyData',
+      method: "POST",
+      url: baseURL + "/registerPregnancyData",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
+
       data: { ...inputCreate, }
     })
     dispatch(fetchCombinedData())
 
-    return created
-  }
-}
+
+    return created;
+  };
+};
 
 export const createBabyData = (inputCreate) => {
   return async (dispatch) => {
@@ -456,6 +488,10 @@ export const fetchPregnancyData = (id) => {
 
 
 
+    return created;
+  };
+};
+
 export function watchlist() {
   return async function (dispatch) {
     try {
@@ -468,6 +504,8 @@ export function watchlist() {
       dispatch(watchlistFetch(res.data));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -490,15 +528,35 @@ export function watchlist() {
 //   }
 // }
 export function PostLogin(form) {
-  return (dispatch) => {
+
+  return dispatch => {
     return fetch(baseURL + "/login", {
       method: "Post",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(form)
-    })
-
+    });
   };
 }
 
+export const useConverter = () => {
+  const dispatch = useDispatch();
+  const dateConverter = str => {
+    try {
+      let arr = str.split("T");
+
+      let date = arr[0];
+
+      let result = date.split("-").reverse().join("-");
+
+      dispatch(recordedDate(result));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return {
+    dateConverter
+  };
+};

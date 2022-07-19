@@ -1,4 +1,5 @@
 import {
+  FETCH_LOADING,
   COMBINED_DATA_FETCH_SUCCESS,
   RT_DATA_FETCH_SUCCESS,
   PREGNANCY_DATA_FETCH_SUCCESS,
@@ -9,7 +10,8 @@ const initialState = {
   combinedData: [],
   dataByRT: 0,
   pregnancyData: [],
-  babyData: []
+  babyData: [],
+  isLoading: true
 };
 
 function chartReducer(state = initialState, action) {
@@ -22,6 +24,8 @@ function chartReducer(state = initialState, action) {
       return { ...state, pregnancyData: action.payload };
     case BABY_DATA_FETCH_SUCCESS:
       return { ...state, babyData: action.payload };
+    case FETCH_LOADING:
+      return { ...state, isLoading: action.payload };
 
     default:
       return state;
