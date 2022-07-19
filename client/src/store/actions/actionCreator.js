@@ -13,7 +13,8 @@ import {
   MOTHER_PREGNANCY,
   MOTHER_LIST_BY_RT_FETCH_SUCCESS,
   WATCHLIST_FETCH_SUCCESS,
-  ALL_USER_FETCH_SUCCESS
+  ALL_USER_FETCH_SUCCESS,
+  RECORDED_DATE
 } from "./actionType";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -108,6 +109,12 @@ export const watchlistFetch = payload => {
 export const allUserFetch = payload => {
   return {
     type: ALL_USER_FETCH_SUCCESS,
+    payload
+  };
+};
+export const recordedDate = payload => {
+  return {
+    type: RECORDED_DATE,
     payload
   };
 };
@@ -382,3 +389,24 @@ export function PostLogin(form) {
     });
   };
 }
+
+export const useConverter = () => {
+  const dispatch = useDispatch();
+  const dateConverter = str => {
+    try {
+      let arr = str.split("T");
+
+      let date = arr[0];
+
+      let result = date.split("-").reverse().join("-");
+
+      dispatch(recordedDate(result));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return {
+    dateConverter
+  };
+};

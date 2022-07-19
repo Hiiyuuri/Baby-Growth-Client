@@ -60,8 +60,8 @@ export default function ListPage() {
           </Col>
         </Row>
       </Container>
-      <Container>
-        <Table>
+      <Container style={{ marginTop: "25px" }}>
+        <Table striped>
           <thead>
             <th>Nama</th>
             <th>NIK</th>
