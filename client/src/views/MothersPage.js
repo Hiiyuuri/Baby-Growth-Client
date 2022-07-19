@@ -22,13 +22,12 @@ export default function MothersPage() {
     dispatch(fetchDetailData(id));
   }, []);
 
+  const isLoading = useSelector(state => state.chart.isLoading);
   const pregnancyData = useSelector(state => state.chart.pregnancyData);
   const babyData = useSelector(state => state.chart.babyData);
   const motherData = useSelector(state => state.detail.motherData);
   const motherProfile = useSelector(state => state.detail.motherProfile);
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
-
-  //   console.log(motherData);
 
   let filter = {
     key: key
@@ -58,18 +57,44 @@ export default function MothersPage() {
     </div>
   );
 
-  if (pregnancyData.length !== 0) {
-    pregnancyNull = pregnancyBar;
-  }
+  if (isLoading) {
+    motherProfile.name = `Loading...`;
+    motherProfile.NIK = `Loading...`;
+    motherProfile.address = `Loading...`;
+    motherData.name = `Loading...`;
+    motherPregnancy.beratAwal = `Loading...`;
+    motherPregnancy.tanggalDicatat = `Loading...`;
+    pregnancyNull = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
 
-  if (babyData.length !== 0) {
-    babyNull = babyBar;
+    babyNull = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
+  } else {
+    if (pregnancyData.length !== 0) {
+      pregnancyNull = pregnancyBar;
+    }
+
+    if (babyData.length !== 0) {
+      babyNull = babyBar;
+    }
   }
 
   return (
     <div>
       <Navigation />
-      <Container style={{ marginTop: "75px" }}>
+      <Container style={{ marginTop: "25px" }}>
         <h3>
           <b>
             {motherData.name}
@@ -78,7 +103,6 @@ export default function MothersPage() {
       </Container>
       <Container>
         <Stack style={{ marginTop: "25px" }}>
-          {/* <Col className="border" style={{ marginBottom: "50px" }}> */}
           <Tabs
             className=" mb-3"
             justify
@@ -89,15 +113,10 @@ export default function MothersPage() {
             <Tab eventKey="pregnancy" title="Pregnancy Data">
               {pregnancyNull}
             </Tab>
-            <Tab
-              eventKey="baby"
-              title="Baby's Data"
-              disabled={motherData.sudahLahir === true ? false : true}
-            >
+            <Tab eventKey="baby" title="Baby's Data">
               {babyNull}
             </Tab>
           </Tabs>
-          {/* </Col> */}
           <Col>
             <Row md="12" style={{ marginTop: "25px" }}>
               <Col md="6">
@@ -144,13 +163,18 @@ export default function MothersPage() {
                         </Col>
                         <Col style={{ textAlign: "left" }}>
                           <div>
-                            : {motherPregnancy.beratAwal} Kg
+                            : {motherPregnancy.beratAwal}{" "}
+                            <span hidden={isLoading === true ? true : false}>
+                              Kg
+                            </span>
                           </div>
                           <div>
                             :{" "}
-                            {motherData.sudahLahir === true
-                              ? "Sudah Lahir"
-                              : "Belum Lahir"}
+                            {isLoading === true
+                              ? `Loading...`
+                              : motherData.sudahLahir === true
+                                ? "Sudah Lahir"
+                                : "Belum Lahir"}
                           </div>
                           <div>
                             : {motherPregnancy.tanggalDicatat}

@@ -16,6 +16,7 @@ export default function ListPage() {
   }, []);
 
   const motherListData = useSelector(state => state.list.motherList);
+  const isLoading = useSelector(state => state.chart.isLoading);
 
   let title = id;
 
@@ -25,11 +26,15 @@ export default function ListPage() {
     title = `Daftar Ibu Hamil dan Bayi RT ${id}`;
   }
 
+  if (isLoading) {
+    title = `Loading...`;
+  }
+
   return (
     <div>
       <Navigation />
       <Container>
-        <div style={{ marginTop: "75px" }}>
+        <div style={{ marginTop: "25px" }}>
           <h3>
             {title}
           </h3>
