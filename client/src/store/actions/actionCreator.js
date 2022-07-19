@@ -264,8 +264,12 @@ export const registerPregnancy = (inputCreate) => {
     })
     dispatch(fetchCombinedData())
 
-    if (inputCreate.sudahLahir) {
+
+    console.log(inputCreate.sudahLahir,`<<<<<<`)
+    if (inputCreate.sudahLahir === 'true') {
       return { ...created, sudahLahir: true }
+    }else{
+      return { ...created, sudahLahir: false }
     }
 
     return created

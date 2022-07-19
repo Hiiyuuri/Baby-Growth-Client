@@ -82,7 +82,7 @@ function RegisterAdmin() {
                             type="password" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
                     </div>
 
-                    <div className="w-full mb-4 text-black">
+                    {/* <div className="w-full mb-4 text-black">
                         <label className="block mb-1 font-semibold">RT</label>
                         <input
                             onChange={(e) => {
@@ -92,6 +92,33 @@ function RegisterAdmin() {
                                 })
                             }}
                             type="number" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                    </div> */}
+
+                    <div className="w-full mb-4 text-black">
+                        <label className="d-block">Select Island</label>
+                        <select
+                            onChange={(e) => {
+                                setInputCreate({
+                                    ...inputCreate,
+                                    RT: e.target.value
+                                })
+                            }}
+                            defaultValue="blumDiisi"
+                            className="selectpicker block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <option value="blumDiisi" disabled>
+                                Select your option ...
+                            </option>
+                            <option value="1">Pulau Pari</option>
+                            <option value="2">Pulau Tidung</option>
+                            <option value="3">Pulau Panggang</option>
+                            <option value="4">Pulau Kelapa</option>
+                            <option value="5">Pulau Putri</option>
+                            <option value="6">Pulau Harapan</option>
+                            <option value="7">Pulau Untung Jawa</option>
+                            <option value="8">Pulau Lancang Besar</option>
+                            <option value="9">Pulau Pramuka</option>
+                        </select>
+
                     </div>
 
 

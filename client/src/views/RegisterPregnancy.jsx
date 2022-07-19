@@ -39,10 +39,10 @@ function RegisterPregnancy() {
 
         dispatch(registerPregnancy(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
             .then((created) => {
-                // console.log(created)
+                // console.log(created.sudahLahir)
                 if (!created.sudahLahir) {
                     navigate(`/create-preg-data?PregnancyId=${created.data.id}`)
-                }else{
+                } else {
                     navigate(`/create-baby-data?PregnancyId=${created.data.id}`)
                 }
                 Swal.fire({
@@ -71,11 +71,11 @@ function RegisterPregnancy() {
                     onSubmit={handleCreate}
                     className="flex flex-col mb-4 text-gray-700 text-left">
 
-                    <div className="w-full mb-4 text-black">
+                    {query && <div className="w-full mb-4 text-black">
                         <label className="block mb-1 font-semibold">Mother's ID</label>
                         <input
                             // readOnly type="text"
-                            value={query ? query : ''}
+                            value={query }
                             onChange={(e) => {
                                 setInputCreate({
                                     ...inputCreate,
@@ -83,7 +83,23 @@ function RegisterPregnancy() {
                                 })
                             }}
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div>
+                    </div>}
+
+                    {!query && <div className="w-full mb-4 text-black">
+                        <label className="block mb-1 font-semibold">Mother's ID</label>
+                        <input
+                            // readOnly type="text"
+                            // value={query ? query : ''}
+                            onChange={(e) => {
+                                setInputCreate({
+                                    ...inputCreate,
+                                    MotherProfileId: e.target.value
+                                })
+                            }}
+                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                    </div>}
+
+                    
 
                     {/* <div className="w-full mb-4 text-black">
                         <label className="block mb-1 font-semibold">Mother's Name</label>
