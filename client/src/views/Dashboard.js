@@ -20,6 +20,8 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
 import { useNavigate } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -90,11 +92,10 @@ export default function Dashboard() {
   if (numRT !== 0) {
     title = (
       <Row>
-        <Col md="4">
+        <Col md="6" style={{ paddingTop: "5px" }}>
           {islandConverter(numRT)}
         </Col>
-        <br />
-        <Col md="8">
+        <Col md="6" style={{ paddingTop: "5px" }}>
           <Button
             variant="info"
             onClick={() => {
@@ -130,20 +131,57 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#eeee",
+        height: "auto",
+        paddingBottom: "25px"
+      }}
+    >
       <Navigation />
-      <Container style={{ marginBottom: "25px" }}>
-        <Row md="12" style={{ marginTop: "25px" }}>
-          <Col
-            md="6"
-            className="border"
-            style={{ height: "600px", padding: "5px" }}
-          >
-            {pieChart}
+      <Container style={{ padding: "0px" }}>
+        <Row style={{ marginTop: "15px" }}>
+          <Col md="4">
+            <Card>
+              <Card.Header>Pulau Dengan Gizi Kurang Terbanyak</Card.Header>
+              <Card.Body style={{ height: "50px", padding: "10px" }}>
+                <b>
+                  {rtKurang}
+                </b>
+              </Card.Body>
+            </Card>
           </Col>
-          <Stack md="6" className="col-md-5 mx-auto border">
-            <Container>
-              <Row>
+          <Col md="4">
+            <Card>
+              <Card.Header>Pulau Dengan Gizi Cukup Terbanyak</Card.Header>
+              <Card.Body style={{ height: "50px", padding: "10px" }}>
+                <b>
+                  {rtCukup}
+                </b>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>Pulau Dengan Gizi Berlebih Terbanyak</Card.Header>
+              <Card.Body style={{ height: "50px", padding: "10px" }}>
+                <b>
+                  {rtBerlebih}
+                </b>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col md="3" className="">
+            <Stack>
+              <Card style={{ marginBottom: "25px" }}>
+                <Card.Header>
+                  <div style={{ textAlign: "center" }}>
+                    {title}
+                  </div>
+                </Card.Header>
+                <Col />
                 <DropdownButton
                   id="dropdown-item-button"
                   title="Filter Berdasarkan Pulau"
@@ -171,74 +209,66 @@ export default function Dashboard() {
                     );
                   })}
                 </DropdownButton>
-                <Col>
-                  <div style={{ padding: "20px" }}>
-                    <h6>
-                      {title}
-                    </h6>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-            <div>
-              <h5>Jumlah Bayi Berdasarkan Kecukupan Gizi</h5>
-              <Table striped bordered hover>
+              </Card>
+              <Card style={{ marginBottom: "25px" }}>
+                <Card.Header>
+                  <h6>Jumlah Bayi Berdasarkan Kecukupan Gizi</h6>
+                </Card.Header>
+                <Card.Body>
+                  <Table striped bordered hover size="sm">
+                    <thead>
+                      <th>Kurang</th>
+                      <th>Cukup</th>
+                      <th>Berlebih</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          {combinedData[0]}
+                        </td>
+                        <td>
+                          {combinedData[1]}
+                        </td>
+                        <td>
+                          {combinedData[2]}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Card.Body>
+              </Card>
+              <Card>
+                <Card.Header>Jumlah Ibu Hamil</Card.Header>
+                <Card.Body>
+                  <b>
+                    {pregnantMother}
+                  </b>
+                </Card.Body>
+              </Card>
+            </Stack>
+          </Col>
+          <Col md="5" style={{ height: "600px", paddingTop: "20px" }}>
+            {pieChart}
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>Daftar Pengawasan</Card.Header>
+              <Table striped size="sm">
                 <thead>
-                  <th>Kurang</th>
-                  <th>Cukup</th>
-                  <th>Berlebih</th>
+                  <tr>
+                    <th>Nama Pulau</th>
+                    <th>Status</th>
+                    <th>Detail</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      {combinedData[0]}
-                    </td>
-                    <td>
-                      {combinedData[1]}
-                    </td>
-                    <td>
-                      {combinedData[2]}
-                    </td>
-                  </tr>
+                  {watchList.map(el => {
+                    return <WatchlistRow watchlist={el} />;
+                  })}
                 </tbody>
               </Table>
-            </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
-                </li>
-              </ul>
-            </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  Pulau Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
-                </li>
-                <li>
-                  Pulau Dengan Gizi Cukup Terbanyak : <b>{rtCukup}</b>
-                </li>
-                <li>
-                  Pulau Dengan Gizi Berlebih Terbanyak : <b>{rtBerlebih}</b>{" "}
-                </li>
-              </ul>
-            </div>
-
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Daftar Pengawasan</th>
-                  <th>Status</th>
-                  <th>Detail</th>
-                </tr>
-              </thead>
-              <tbody>
-                {watchList.map(el => {
-                  return <WatchlistRow watchlist={el} />;
-                })}
-              </tbody>
-            </Table>
-          </Stack>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </div>

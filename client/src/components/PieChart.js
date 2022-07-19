@@ -9,7 +9,9 @@ export default function PieChart(dataValue) {
   const value = dataValue.dataValue;
   const totalData = value.reduce((a, b) => a + b, 0);
   const image = new Image();
-  image.src = "https://i.ibb.co/gwK9Pzz/Logo3.png";
+  // image.src = "https://i.ibb.co/gwK9Pzz/Logo3.png";
+  image.src = "https://i.ibb.co/QcYXxHz/Logo-180.png";
+  // image.src = "https://i.ibb.co/K9D1m1m/Logo-150.png";
 
   const data = {
     labels: ["Kurang", "Cukup", "Berlebih"],
@@ -39,9 +41,9 @@ export default function PieChart(dataValue) {
         title: {
           display: true,
           text: "Persentase Kecukupan Gizi Bayi Rentang Umur 0-24 Bulan",
-          padding: 10,
+          padding: 0,
           font: {
-            size: 18,
+            size: 15,
             weight: "bold"
           }
         },
