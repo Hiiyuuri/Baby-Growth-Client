@@ -14,10 +14,10 @@ import {
   MOTHER_LIST_BY_RT_FETCH_SUCCESS,
   WATCHLIST_FETCH_SUCCESS,
   ALL_USER_FETCH_SUCCESS,
-  RECORDED_DATE
+  RECORDED_DATE,
+  BABY_ID
 } from "./actionType";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 const baseURL = `http://localhost:3001`;
@@ -118,6 +118,12 @@ export const recordedDate = payload => {
     payload
   };
 };
+export const babyId = payload => {
+  return {
+    type: BABY_ID,
+    payload
+  };
+};
 
 export function fetchCombinedData() {
   return async function(dispatch) {
@@ -191,12 +197,12 @@ export function fetchDetailData(id) {
           access_token: localStorage.getItem(`access_token`)
         }
       });
-
       dispatch(pregnancyDetailFetch(res.data.data));
       dispatch(pregnancyDataFetchSucess(res.data.selisihBulananHamil));
       dispatch(babyDataFetchSucess(res.data.selisihBulananBayi));
       dispatch(motherProfileDetail(res.data.data.MotherProfile));
       dispatch(motherPregnancy(res.data.data.PregnancyDatum));
+      dispatch(babyId(res.data.data.BabyDatum.id));
     } catch (err) {
       console.log(err);
     } finally {
