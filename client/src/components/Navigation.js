@@ -54,7 +54,7 @@ export default function Navigation() {
             <Nav.Link
               style={{ color: "white", fontSize: "18px" }}
               onClick={() => {
-                navigate(`/`);
+                navigate(`/map-markers`);
               }}
             >
               Maps
