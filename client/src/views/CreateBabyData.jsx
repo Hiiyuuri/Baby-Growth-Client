@@ -1,15 +1,28 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import Navigation from "../components/Navigation";
-import { inputBabyDataAct } from "../store/actions/actionCreator";
+import { createBabyData } from "../store/actions/actionCreator";
 
 
 
-function InputBabyData() {
+function CreateBabyData() {
     const dispatch = useDispatch()
     let navigate = useNavigate()
     // let { PregnancyId } = useParams()
+
+    let [searchParams, setSearchParams] = useSearchParams();
+    let [query, setQuery] = useState(
+        searchParams.get("PregnancyId")
+    );
+
+    useEffect(() => {
+        if (+query) {
+            setInputCreate({ ...inputCreate, PregnancyId: +query })
+        }
+
+    }, [])
 
     const [inputCreate, setInputCreate] = useState({
         PregnancyId: '',
@@ -20,11 +33,16 @@ function InputBabyData() {
 
     const handleInput = (e) => {
         e.preventDefault()
-        console.log(inputCreate)
+        // console.log(inputCreate)
 
-        dispatch(inputBabyDataAct(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
-            .then(() => {
+        dispatch(createBabyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
+            .then((created) => {
                 navigate(`/`)
+                Swal.fire({
+                    title: `Success!`,
+                    text: `Success creating baby data with ID: ${created.data.id} `,
+                    icon: "success",
+                });
             })
             .catch((err) => {
                 console.log(err)
@@ -40,7 +58,7 @@ function InputBabyData() {
 
             <div className="col-md-5 mx-auto border rounded p-5"
                 style={{ marginTop: "100px" }}>
-                <h1 className="text-2xl font-bold mb-5 text-center"> Input Baby Data</h1>
+                <h1 className="text-2xl font-bold mb-5 text-center"> Create Baby Data</h1>
 
                 <form
                     onSubmit={handleInput}
@@ -49,8 +67,7 @@ function InputBabyData() {
                     <div className="w-full mb-4 text-black">
                         <label className="block mb-1 font-semibold">Pregnancy ID</label>
                         <input
-                            // readOnly 
-                            // value={inputCreate.PregnancyId}
+                            value={inputCreate.PregnancyId}
                             onChange={(e) => {
                                 setInputCreate({
                                     ...inputCreate,
@@ -74,7 +91,7 @@ function InputBabyData() {
                             type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
                     </div>
 
-                    <div className="w-full mb-4 text-black">
+                    {/* <div className="w-full mb-4 text-black">
                         <label className="block mb-1 font-semibold">Monthly Weight</label>
 
                         <input
@@ -85,7 +102,7 @@ function InputBabyData() {
                                 })
                             }}
                             type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div>
+                    </div> */}
 
                     <button
                         className="btn btn-primary btn-lg btn-block bg-success">
@@ -105,4 +122,4 @@ function InputBabyData() {
     );
 }
 
-export default InputBabyData;
+export default CreateBabyData;

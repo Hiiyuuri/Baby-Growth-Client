@@ -120,7 +120,7 @@ export const recordedDate = payload => {
 };
 
 export function fetchCombinedData() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -184,7 +184,7 @@ export const useDataRT = () => {
 };
 
 export function fetchDetailData(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
@@ -206,7 +206,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
@@ -225,7 +225,7 @@ export function motherListByRT(id) {
 }
 
 export function allUsers() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listUser`, {
         headers: {
@@ -250,6 +250,7 @@ export const registerMother = inputCreate => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
+
       data: {
         ...inputCreate,
         latitude: +inputCreate.lat,
@@ -257,6 +258,7 @@ export const registerMother = inputCreate => {
       }
     });
     dispatch(fetchCombinedData());
+
 
     return created;
   };
@@ -286,13 +288,18 @@ export const registerPregnancy = inputCreate => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: { ...inputCreate }
-    });
+
+      data: { ...inputCreate, }
+    })
     dispatch(fetchCombinedData());
 
+    if (inputCreate.sudahLahir) {
+      return { ...created, sudahLahir: true }
+    };
+
     return created;
-  };
-};
+  }
+}
 
 
 export function fetchMotherListOnly() {
@@ -319,32 +326,174 @@ export const createPregnancyData = inputCreate => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: { ...inputCreate }
-    });
-    dispatch(fetchCombinedData());
+
+      data: { ...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
 
     return created;
   };
 };
 
-export const inputBabyDataAct = inputCreate => {
-  return async dispatch => {
+export const createBabyData = (inputCreate) => {
+  return async (dispatch) => {
     let created = await axios({
-      method: "POST",
-      url: baseURL + "/inputBabyData",
+      method: 'POST',
+      url: baseURL + '/registerBabyData',
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: { ...inputCreate }
+      data: { ...inputCreate, }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const inputBabyDataAct = (inputCreate) => {
+  return async (dispatch) => {
+
+    console.log(inputCreate)
+
+    let arr = [
+      inputCreate.b1,
+      inputCreate.b2,
+      inputCreate.b3,
+      inputCreate.b4,
+      inputCreate.b5,
+      inputCreate.b6,
+      inputCreate.b7,
+      inputCreate.b8,
+      inputCreate.b9,
+      inputCreate.b10,
+      inputCreate.b11,
+      inputCreate.b12,
+      inputCreate.b13,
+      inputCreate.b14,
+      inputCreate.b15,
+      inputCreate.b16,
+      inputCreate.b17,
+      inputCreate.b18,
+      inputCreate.b19,
+      inputCreate.b20,
+      inputCreate.b21,
+      inputCreate.b22,
+      inputCreate.b23,
+      inputCreate.b24,
+    ]
+
+    let beratBulananStr = ''
+
+    arr.forEach(el => {
+      if (el) {
+        beratBulananStr += el + ','
+      }
     });
-    dispatch(fetchCombinedData());
+    beratBulananStr = beratBulananStr.slice(0, -1)
+
+    // console.log(beratBulananStr)
+    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`)
+
+
+
+    let created = await axios({
+      method: 'PUT',
+      url: baseURL + `/babyData/${inputCreate.BabyDataId}`,
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: { ...inputCreate, beratBulanan: beratBulananStr }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const fetchBabyData = (id) => {
+  return async (dispatch) => {
+    let data = await axios({
+      method: 'GET',
+      url: baseURL + `/babyData/${id}`,
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+    })
+
+    return { data }
+  }
+}
+
+export const inputPregnancyData = (inputCreate) => {
+  return async (dispatch) => {
+
+    console.log(inputCreate)
+
+    let arr = [
+      inputCreate.b1,
+      inputCreate.b2,
+      inputCreate.b3,
+      inputCreate.b4,
+      inputCreate.b5,
+      inputCreate.b6,
+      inputCreate.b7,
+      inputCreate.b8,
+      inputCreate.b9,
+    ]
+
+    let beratBulananStr = ''
+
+    arr.forEach(el => {
+      if (el) {
+        beratBulananStr += el + ','
+      }
+    });
+    beratBulananStr = beratBulananStr.slice(0, -1)
+
+    // console.log(beratBulananStr)
+    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`)
+
+
+
+    let created = await axios({
+      method: 'PUT',
+      url: baseURL + `/pregnancyData/${inputCreate.PregnancyDataId}`,
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+      data: { ...inputCreate, beratBulanan: beratBulananStr }
+    })
+    dispatch(fetchCombinedData())
+
+    return created
+  }
+}
+
+export const fetchPregnancyData = (id) => {
+  return async (dispatch) => {
+    let data = await axios({
+      method: 'GET',
+      url: baseURL + `/pregnancyData/${id}`,
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      },
+    })
+
+    return { data }
+  }
+}
+
+
+
 
     return created;
   };
 };
 
 export function watchlist() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/RTStatus`, {
         headers: {
@@ -379,6 +528,7 @@ export function watchlist() {
 //   }
 // }
 export function PostLogin(form) {
+
   return dispatch => {
     return fetch(baseURL + "/login", {
       method: "Post",

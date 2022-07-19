@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import { registerPregnancy } from "../store/actions/actionCreator";
+import Swal from "sweetalert2";
 
 
 
@@ -10,7 +11,20 @@ import { registerPregnancy } from "../store/actions/actionCreator";
 function RegisterPregnancy() {
     const dispatch = useDispatch()
     let navigate = useNavigate()
+    // let { motherId } = useQuery()
     // let { motherId } = useParams()
+
+    let [searchParams, setSearchParams] = useSearchParams();
+    let [query, setQuery] = useState(
+        searchParams.get("motherId")
+    );
+
+    useEffect(() => {
+        if (+query) {
+            setInputCreate({ ...inputCreate, MotherProfileId: +query })
+        }
+
+    }, [])
 
     const [inputCreate, setInputCreate] = useState({
         MotherProfileId: '',
@@ -21,11 +35,21 @@ function RegisterPregnancy() {
 
     const handleCreate = (e) => {
         e.preventDefault()
-        // console.log(inputCreate)
+        console.log(inputCreate)
 
         dispatch(registerPregnancy(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
-            .then(() => {
-                navigate(`/`)
+            .then((created) => {
+                // console.log(created)
+                if (!created.sudahLahir) {
+                    navigate(`/create-preg-data?PregnancyId=${created.data.id}`)
+                }else{
+                    navigate(`/create-baby-data?PregnancyId=${created.data.id}`)
+                }
+                Swal.fire({
+                    title: `Success!`,
+                    text: `Pregnancy with ID : ${created.data.id} Created !`,
+                    icon: "success",
+                });
             })
             .catch((err) => {
                 console.log(err)
@@ -51,7 +75,7 @@ function RegisterPregnancy() {
                         <label className="block mb-1 font-semibold">Mother's ID</label>
                         <input
                             // readOnly type="text"
-                            // value={inputCreate.MotherProfileId}
+                            value={query ? query : ''}
                             onChange={(e) => {
                                 setInputCreate({
                                     ...inputCreate,
@@ -101,18 +125,6 @@ function RegisterPregnancy() {
                             <option value={true}>Baby already born</option>
                         </select>
 
-                    </div>
-
-                    <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">RT</label>
-                        <input
-                            onChange={(e) => {
-                                setInputCreate({
-                                    ...inputCreate,
-                                    RT: e.target.value
-                                })
-                            }}
-                            type="number" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
                     </div>
 
 
