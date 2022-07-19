@@ -9,9 +9,9 @@ export default function WatchlistRow({ watchlist }) {
   const { islandConverter } = useConverter();
 
   let status = (
-    <td className="bg-warning">
+    <Button variant="warning">
       {watchlist.status}
-    </td>
+    </Button>
   );
 
   let num = `RT ${watchlist.noRT}`;
@@ -36,9 +36,9 @@ export default function WatchlistRow({ watchlist }) {
   } else {
     if (watchlist.status === "Critical") {
       status = (
-        <td className="bg-danger text-white">
+        <Button variant="danger">
           {watchlist.status}
-        </td>
+        </Button>
       );
     }
 
@@ -49,10 +49,12 @@ export default function WatchlistRow({ watchlist }) {
 
   return (
     <tr>
-      <td>
+      <td style={{ paddingTop: "10px" }}>
         {num}
       </td>
-      {status}
+      <td>
+        {status}
+      </td>
       <td>
         {button}
       </td>
