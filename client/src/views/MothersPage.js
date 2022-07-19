@@ -1,6 +1,6 @@
 import BarChart from "../components/BarChart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDetailData } from "../store/actions/actionCreator";
+import { fetchDetailData, useConverter } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -19,6 +19,7 @@ export default function MothersPage() {
   const { id } = useParams();
   const [key, setKey] = useState("pregnancy");
   const navigate = useNavigate();
+  const { dateConverter } = useConverter();
 
   useEffect(() => {
     dispatch(fetchDetailData(id));
@@ -30,8 +31,10 @@ export default function MothersPage() {
   const motherData = useSelector(state => state.detail.motherData);
   const motherProfile = useSelector(state => state.detail.motherProfile);
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
+  const recordedDate = useSelector(state => state.detail.recordedDate);
 
   let rtLocation = motherProfile.UserId - 1;
+  dateConverter(motherPregnancy.tanggalDicatat);
 
   let filter = {
     key: key
@@ -195,7 +198,7 @@ export default function MothersPage() {
                                 : "Belum Lahir"}
                           </div>
                           <div>
-                            : {motherPregnancy.tanggalDicatat}
+                            : {recordedDate}
                           </div>
                         </Col>
                       </Row>

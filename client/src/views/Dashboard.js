@@ -145,9 +145,13 @@ export default function Dashboard() {
   return (
     <div>
       <Navigation />
-      <Container>
+      <Container style={{ marginBottom: "25px" }}>
         <Row md="12" style={{ marginTop: "25px" }}>
-          <Col md="6" className="border">
+          <Col
+            md="6"
+            className="border"
+            style={{ height: "600px", padding: "5px" }}
+          >
             {pieChart}
           </Col>
           <Stack md="6" className="col-md-5 mx-auto border">
@@ -233,7 +237,7 @@ export default function Dashboard() {
               </ul>
             </div>
 
-            <Table striped bordered hover>
+            <Table striped bordered hover responsive>
               <thead>
                 <tr>
                   <th>Daftar Pengawasan</th>
