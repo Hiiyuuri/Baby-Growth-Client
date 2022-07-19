@@ -137,9 +137,9 @@ export default function Dashboard() {
     combinedData[0] = "Loading...";
     combinedData[1] = "Loading...";
     combinedData[2] = "Loading...";
-    let rtKurang = "Loading...";
-    let rtCukup = "Loading...";
-    let rtBerlebih = "Loading...";
+    rtKurang = "Loading...";
+    rtCukup = "Loading...";
+    rtBerlebih = "Loading...";
   }
 
   return (

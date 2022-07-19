@@ -11,12 +11,14 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export default function MothersPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [key, setKey] = useState("pregnancy");
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchDetailData(id));
@@ -28,6 +30,8 @@ export default function MothersPage() {
   const motherData = useSelector(state => state.detail.motherData);
   const motherProfile = useSelector(state => state.detail.motherProfile);
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
+
+  let rtLocation = motherProfile.UserId - 1;
 
   let filter = {
     key: key
@@ -95,11 +99,25 @@ export default function MothersPage() {
     <div>
       <Navigation />
       <Container style={{ marginTop: "25px" }}>
-        <h3>
-          <b>
-            {motherData.name}
-          </b>
-        </h3>
+        <Row>
+          <Col md="1">
+            <Button
+              variant="info"
+              onClick={() => {
+                navigate(`/rt/${rtLocation}`);
+              }}
+            >
+              Back to List
+            </Button>
+          </Col>
+          <Col md="11">
+            <h3>
+              <b>
+                {motherData.name}
+              </b>
+            </h3>
+          </Col>
+        </Row>
       </Container>
       <Container>
         <Stack style={{ marginTop: "25px" }}>
@@ -117,7 +135,7 @@ export default function MothersPage() {
               {babyNull}
             </Tab>
           </Tabs>
-          <Col>
+          <Col style={{ marginBottom: "25px" }}>
             <Row md="12" style={{ marginTop: "25px" }}>
               <Col md="6">
                 <Card>
