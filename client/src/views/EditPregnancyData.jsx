@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import Navigation from "../components/Navigation";
-import { fetchBabyData, inputBabyDataAct } from "../store/actions/actionCreator";
+import { fetchBabyData, fetchPregnancyData, inputBabyDataAct, inputPregnancyData } from "../store/actions/actionCreator";
 
 
 
-function InputBabyData() {
+
+function EditPregnancyData() {
     const dispatch = useDispatch()
     let navigate = useNavigate()
-    let { BabyDataId } = useParams()
+    let { PregnancyDataId } = useParams()
 
     const [loading, setLoading] = useState(true)
 
@@ -29,41 +31,7 @@ function InputBabyData() {
     const [beratBulanan, setBeratBulanan] = useState([])
 
     useEffect(() => {
-        dispatch(fetchBabyData(BabyDataId))
-            .then((data) => {
-                // console.log(data.data.data)
-
-                // console.log(data)
-
-
-
-
-                // console.log(inputCreate,`1`)
-                setInputCreate({ ...inputCreate, beratAwal: data.data.data.beratAwal })
-
-
-                setInputCreate({ ...inputCreate, b1: data.data.data.beratBulanan.split(',')[0] })
-                setInputCreate({ ...inputCreate, b2: data.data.data.beratBulanan.split(',')[0] })
-                setInputCreate({ ...inputCreate, b1: data.data.data.beratBulanan.split(',')[0] })
-                setInputCreate({ ...inputCreate, b1: data.data.data.beratBulanan.split(',')[0] })
-
-
-                // console.log(inputCreate,`2`)
-                // setInputCreate({ ...inputCreate, b2: arr1 })
-                // // console.log(inputCreate,`3`)
-                // // setInputCreate({ ...inputCreate, b3: arr[2] })
-                // // console.log(inputCreate,`4`)
-                // // setInputCreate({ ...inputCreate, b4: arr[3] })
-                // // setInputCreate({ ...inputCreate, b5: data.data.data.beratBulanan.split(',')[4] })
-                // // setInputCreate({ ...inputCreate, b6: data.data.data.beratBulanan.split(',')[5] })
-                // // setInputCreate({ ...inputCreate, b7: data.data.data.beratBulanan.split(',')[6] })
-                // // setInputCreate({ ...inputCreate, b8: data.data.data.beratBulanan.split(',')[7] })
-                // // setInputCreate({ ...inputCreate, b9: data.data.data.beratBulanan.split(',')[8] })
-
-                // // console.log(inputCreate)
-
-                return data
-            })
+        dispatch(fetchPregnancyData(PregnancyDataId))
             .then((data) => {
                 console.log(data.data.data, `TEST`)
                 let arr = data.data.data.beratBulanan.split(',')
@@ -81,13 +49,6 @@ function InputBabyData() {
                     b9: arr[8],
                 })
 
-
-                // setInputCreate({ ...inputCreate, b1: `tester`, b2: `tester` })
-                // setInputCreate({ ...inputCreate, })
-                // setInputCreate({ ...inputCreate, b2: data.data.data.beratBulanan.split(',')[1] })
-                // setInputCreate({ ...inputCreate, b3: data.data.data.beratBulanan.split(',')[2] })
-
-
             })
             .finally(() => {
                 setLoading(false)
@@ -100,13 +61,18 @@ function InputBabyData() {
         e.preventDefault()
         // console.log(inputCreate)
 
-        dispatch(inputBabyDataAct({...inputCreate, BabyDataId})) // =============== Nanti tinggal post axios lewat store/action
-            // .then(() => {
-            //     navigate(`/`)
-            // })
-            // .catch((err) => {
-            //     console.log(err)
-            // })
+        dispatch(inputPregnancyData({...inputCreate, PregnancyDataId})) // =============== Nanti tinggal post axios lewat store/action
+            .then(() => {
+                navigate(`/`)
+                Swal.fire({
+                    title: `Success!`,
+                    text: `Success updating pregnancy data `,
+                    icon: "success",
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     if (loading) {
@@ -121,17 +87,17 @@ function InputBabyData() {
 
             <div className="col-md-5 mx-auto border rounded p-5"
                 style={{ marginTop: "40px", marginBottom: "40px" }}>
-                <h1 className="text-2xl font-bold mb-5 text-center"> Input/Edit Baby Data</h1>
+                <h1 className="text-2xl font-bold mb-5 text-center"> Input/Edit Pregnancy Data</h1>
 
                 <form
                     onSubmit={handleInput}
                     className="flex flex-col mb-4 text-gray-700 text-left">
 
                     <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Pregnancy ID</label>
+                        <label className="block mb-1 font-semibold">Baby Data ID</label>
                         <input
                             readOnly
-                            value={BabyDataId}
+                            value={PregnancyDataId}
 
                             type="text"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
@@ -291,4 +257,4 @@ function InputBabyData() {
     );
 }
 
-export default InputBabyData;
+export default EditPregnancyData;
