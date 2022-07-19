@@ -6,7 +6,7 @@ import {
 } from "../actions/actionType";
 
 const initialState = {
-  pregnantMother: 0,
+  pregnantMother: "Loading...",
   kurang: [],
   cukup: [],
   berlebih: []

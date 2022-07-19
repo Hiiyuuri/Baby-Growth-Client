@@ -1,4 +1,5 @@
 import {
+  FETCH_LOADING,
   COMBINED_DATA_FETCH_SUCCESS,
   RT_DATA_FETCH_SUCCESS,
   PREGNANCY_DATA_FETCH_SUCCESS,
@@ -20,6 +21,12 @@ import axios from "axios";
 
 const baseURL = `http://localhost:3001`;
 
+export const isLoading = payload => {
+  return {
+    type: FETCH_LOADING,
+    payload
+  };
+};
 export const combinedDataFetchSucess = payload => {
   return {
     type: COMBINED_DATA_FETCH_SUCCESS,
@@ -132,6 +139,8 @@ export function fetchCombinedData() {
       dispatch(rtDataFetchSucess(0));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -183,6 +192,8 @@ export function fetchDetailData(id) {
       dispatch(motherPregnancy(res.data.data.PregnancyDatum));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -200,6 +211,8 @@ export function motherListByRT(id) {
       dispatch(motherList(res.data));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -216,57 +229,64 @@ export function allUsers() {
       dispatch(allUserFetch(res.data));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
 
-export const registerMother = (inputCreate) => {
-  return async (dispatch) => {
+export const registerMother = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerMotherProfile',
+      method: "POST",
+      url: baseURL + "/registerMotherProfile",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, latitude:+(inputCreate.lat), longitude:+(inputCreate.lng)}
-    })
-    dispatch(fetchCombinedData())
+      data: {
+        ...inputCreate,
+        latitude: +inputCreate.lat,
+        longitude: +inputCreate.lng
+      }
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
 
-export const registerUser = (inputCreate) => {
-  return async (dispatch) => {
+export const registerUser = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerUser',
+      method: "POST",
+      url: baseURL + "/registerUser",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, noRT:inputCreate.RT}
-    })
-    dispatch(fetchCombinedData())
+      data: { ...inputCreate, noRT: inputCreate.RT }
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
 
-export const registerPregnancy = (inputCreate) => {
-  return async (dispatch) => {
+export const registerPregnancy = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerPregnancy',
+      method: "POST",
+      url: baseURL + "/registerPregnancy",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
-    })
-    dispatch(fetchCombinedData())
+      data: { ...inputCreate }
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
+
 
 export function fetchMotherListOnly() {
   return async function (dispatch) {
@@ -284,39 +304,37 @@ export function fetchMotherListOnly() {
   };
 }
 
-export const createPregnancyData = (inputCreate) => {
-  return async (dispatch) => {
+export const createPregnancyData = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerPregnancyData',
+      method: "POST",
+      url: baseURL + "/registerPregnancyData",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
-    })
-    dispatch(fetchCombinedData())
+      data: { ...inputCreate }
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
 
-export const inputBabyDataAct = (inputCreate) => {
-  return async (dispatch) => {
+export const inputBabyDataAct = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/inputBabyData',
+      method: "POST",
+      url: baseURL + "/inputBabyData",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
-    })
-    dispatch(fetchCombinedData())
+      data: { ...inputCreate }
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
-
-
+    return created;
+  };
+};
 
 export function watchlist() {
   return async function(dispatch) {
@@ -330,6 +348,8 @@ export function watchlist() {
       dispatch(watchlistFetch(res.data));
     } catch (err) {
       console.log(err);
+    } finally {
+      dispatch(isLoading(false));
     }
   };
 }
@@ -347,20 +367,18 @@ export function watchlist() {
 //     }
 //     catch (err){
 //       console.log(err)
-    
+
 //     }
 //   }
 // }
 export function PostLogin(form) {
-  return (dispatch) => {
-   return fetch(baseURL+"/login",{
-          method: "Post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form)
-         })
-        
+  return dispatch => {
+    return fetch(baseURL + "/login", {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form)
+    });
   };
 }
-
