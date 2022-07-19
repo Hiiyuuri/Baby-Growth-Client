@@ -53,7 +53,7 @@ function RegisterMom() {
 
         dispatch(registerMother(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
             .then(() => {
-                navigate(`/`)
+                navigate(`/register-pregnancy`)
             })
             .catch((err) => {
                 console.log(err)
@@ -143,7 +143,7 @@ function RegisterMom() {
                                     <img
                                         src="https://i.ibb.co/6yv3wHz/pngwing-com-1.png"
                                         width={40}
-                                        height={40} />
+                                        height={40} alt="" />
                                 </Marker>}
                             </Map>
                         }

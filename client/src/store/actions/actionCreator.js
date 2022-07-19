@@ -287,6 +287,23 @@ export const registerPregnancy = inputCreate => {
   };
 };
 
+
+export function fetchMotherListOnly() {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`${baseURL}/listMotherProfile`, {
+        headers: {
+          access_token: localStorage.getItem(`access_token`)
+        }
+      });
+      // console.log(res)
+      return res.data
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
 export const createPregnancyData = inputCreate => {
   return async dispatch => {
     let created = await axios({
