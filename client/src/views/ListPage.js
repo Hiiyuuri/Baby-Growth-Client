@@ -10,11 +10,13 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useConverter } from "../store/actions/actionCreator";
 
 export default function ListPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { islandConverter } = useConverter();
 
   useEffect(() => {
     dispatch(motherListByRT(id));
@@ -23,13 +25,7 @@ export default function ListPage() {
   const motherListData = useSelector(state => state.list.motherList);
   const isLoading = useSelector(state => state.chart.isLoading);
 
-  let title = id;
-
-  if (title < 10) {
-    title = `Daftar Ibu Hamil dan Bayi RT 0${id}`;
-  } else {
-    title = `Daftar Ibu Hamil dan Bayi RT ${id}`;
-  }
+  let title = `Daftar Ibu Hamil dan Bayi di ${islandConverter(+id)}`;
 
   if (isLoading) {
     title = `Loading...`;

@@ -1,10 +1,12 @@
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useConverter } from "../store/actions/actionCreator";
 
 export default function WatchlistRow({ watchlist }) {
   const navigate = useNavigate();
   const isLoading = useSelector(state => state.chart.isLoading);
+  const { islandConverter } = useConverter();
 
   let status = (
     <td className="bg-warning">
@@ -41,7 +43,7 @@ export default function WatchlistRow({ watchlist }) {
     }
 
     if (watchlist.noRT < 10) {
-      num = `RT 0${watchlist.noRT}`;
+      num = `${islandConverter(watchlist.noRT)}`;
     }
   }
 

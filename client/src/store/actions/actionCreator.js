@@ -120,7 +120,7 @@ export const recordedDate = payload => {
 };
 
 export function fetchCombinedData() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -184,7 +184,7 @@ export const useDataRT = () => {
 };
 
 export function fetchDetailData(id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
@@ -206,7 +206,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
@@ -225,7 +225,7 @@ export function motherListByRT(id) {
 }
 
 export function allUsers() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listUser`, {
         headers: {
@@ -259,7 +259,6 @@ export const registerMother = inputCreate => {
     });
     dispatch(fetchCombinedData());
 
-
     return created;
   };
 };
@@ -289,21 +288,20 @@ export const registerPregnancy = inputCreate => {
         access_token: localStorage.getItem(`access_token`)
       },
 
-      data: { ...inputCreate, }
-    })
+      data: { ...inputCreate }
+    });
     dispatch(fetchCombinedData());
 
     if (inputCreate.sudahLahir) {
-      return { ...created, sudahLahir: true }
-    };
+      return { ...created, sudahLahir: true };
+    }
 
     return created;
-  }
-}
-
+  };
+};
 
 export function fetchMotherListOnly() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile`, {
         headers: {
@@ -311,7 +309,7 @@ export function fetchMotherListOnly() {
         }
       });
       // console.log(res)
-      return res.data
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -327,35 +325,33 @@ export const createPregnancyData = inputCreate => {
         access_token: localStorage.getItem(`access_token`)
       },
 
-      data: { ...inputCreate, }
-    })
-    dispatch(fetchCombinedData())
-
+      data: { ...inputCreate }
+    });
+    dispatch(fetchCombinedData());
 
     return created;
   };
 };
 
-export const createBabyData = (inputCreate) => {
-  return async (dispatch) => {
+export const createBabyData = inputCreate => {
+  return async dispatch => {
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/registerBabyData',
+      method: "POST",
+      url: baseURL + "/registerBabyData",
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: { ...inputCreate, }
-    })
-    dispatch(fetchCombinedData())
+      data: { ...inputCreate }
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
 
-export const inputBabyDataAct = (inputCreate) => {
-  return async (dispatch) => {
-
-    console.log(inputCreate)
+export const inputBabyDataAct = inputCreate => {
+  return async dispatch => {
+    console.log(inputCreate);
 
     let arr = [
       inputCreate.b1,
@@ -381,55 +377,52 @@ export const inputBabyDataAct = (inputCreate) => {
       inputCreate.b21,
       inputCreate.b22,
       inputCreate.b23,
-      inputCreate.b24,
-    ]
+      inputCreate.b24
+    ];
 
-    let beratBulananStr = ''
+    let beratBulananStr = "";
 
     arr.forEach(el => {
       if (el) {
-        beratBulananStr += el + ','
+        beratBulananStr += el + ",";
       }
     });
-    beratBulananStr = beratBulananStr.slice(0, -1)
+    beratBulananStr = beratBulananStr.slice(0, -1);
 
     // console.log(beratBulananStr)
-    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`)
-
-
+    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`);
 
     let created = await axios({
-      method: 'PUT',
+      method: "PUT",
       url: baseURL + `/babyData/${inputCreate.BabyDataId}`,
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
       data: { ...inputCreate, beratBulanan: beratBulananStr }
-    })
-    dispatch(fetchCombinedData())
+    });
+    dispatch(fetchCombinedData());
 
-    return created
-  }
-}
+    return created;
+  };
+};
 
-export const fetchBabyData = (id) => {
-  return async (dispatch) => {
+export const fetchBabyData = id => {
+  return async dispatch => {
     let data = await axios({
-      method: 'GET',
+      method: "GET",
       url: baseURL + `/babyData/${id}`,
       headers: {
         access_token: localStorage.getItem(`access_token`)
-      },
-    })
+      }
+    });
 
-    return { data }
-  }
-}
+    return { data };
+  };
+};
 
-export const inputPregnancyData = (inputCreate) => {
-  return async (dispatch) => {
-
-    console.log(inputCreate)
+export const inputPregnancyData = inputCreate => {
+  return async dispatch => {
+    console.log(inputCreate);
 
     let arr = [
       inputCreate.b1,
@@ -440,60 +433,51 @@ export const inputPregnancyData = (inputCreate) => {
       inputCreate.b6,
       inputCreate.b7,
       inputCreate.b8,
-      inputCreate.b9,
-    ]
+      inputCreate.b9
+    ];
 
-    let beratBulananStr = ''
+    let beratBulananStr = "";
 
     arr.forEach(el => {
       if (el) {
-        beratBulananStr += el + ','
+        beratBulananStr += el + ",";
       }
     });
-    beratBulananStr = beratBulananStr.slice(0, -1)
+    beratBulananStr = beratBulananStr.slice(0, -1);
 
     // console.log(beratBulananStr)
-    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`)
-
-
+    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`);
 
     let created = await axios({
-      method: 'PUT',
+      method: "PUT",
       url: baseURL + `/pregnancyData/${inputCreate.PregnancyDataId}`,
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
       data: { ...inputCreate, beratBulanan: beratBulananStr }
-    })
-    dispatch(fetchCombinedData())
-
-    return created
-  }
-}
-
-export const fetchPregnancyData = (id) => {
-  return async (dispatch) => {
-    let data = await axios({
-      method: 'GET',
-      url: baseURL + `/pregnancyData/${id}`,
-      headers: {
-        access_token: localStorage.getItem(`access_token`)
-      },
-    })
-
-    return { data }
-  }
-}
-
-
-
+    });
+    dispatch(fetchCombinedData());
 
     return created;
   };
 };
 
+export const fetchPregnancyData = id => {
+  return async dispatch => {
+    let data = await axios({
+      method: "GET",
+      url: baseURL + `/pregnancyData/${id}`,
+      headers: {
+        access_token: localStorage.getItem(`access_token`)
+      }
+    });
+
+    return { data };
+  };
+};
+
 export function watchlist() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/RTStatus`, {
         headers: {
@@ -528,7 +512,6 @@ export function watchlist() {
 //   }
 // }
 export function PostLogin(form) {
-
   return dispatch => {
     return fetch(baseURL + "/login", {
       method: "Post",
@@ -556,7 +539,34 @@ export const useConverter = () => {
     }
   };
 
+  const islandConverter = value => {
+    const islands = [
+      "Pulau Pari",
+      "Pulau Tidung",
+      "Pulau Panggang",
+      "Pulau Kelapa",
+      "Pulau Putri",
+      "Pulau Harapan",
+      "Pulau Untung Jawa",
+      "Pulau Lancang Besar",
+      "Pulau Pramuk"
+    ];
+
+    let result = "";
+
+    for (let i = 0; i < islands.length; i++) {
+      const island = islands[i];
+
+      if (value === i + 1) {
+        result = island;
+      }
+    }
+
+    return result;
+  };
+
   return {
-    dateConverter
+    dateConverter,
+    islandConverter
   };
 };

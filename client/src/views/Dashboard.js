@@ -5,7 +5,8 @@ import {
   fetchCombinedData,
   useDataRT,
   watchlist,
-  allUsers
+  allUsers,
+  useConverter
 } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
@@ -23,6 +24,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { fetchRTData } = useDataRT();
+  const { islandConverter } = useConverter();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
@@ -44,81 +46,66 @@ export default function Dashboard() {
   let rtCukup = "";
   let rtBerlebih = "";
 
-  if (kurang.length !== 0 && isLoading === false) {
-    kurang.forEach(el => {
-      if (el < 10) {
-        rtKurang += `RT 0${el} `;
+  if (
+    (isLoading === false && kurang.length !== 0) ||
+    (isLoading === false && cukup.length !== 0) ||
+    (isLoading === false && berlebih.length !== 0)
+  ) {
+    for (let k = 0; k < kurang.length; k++) {
+      const el = kurang[k];
+      if (kurang.length === 1) {
+        rtKurang += `${islandConverter(el)}.`;
+      } else if (kurang.length > 1 && k === kurang.length - 1) {
+        rtKurang += `& ${islandConverter(el)}.`;
       } else {
-        rtKurang += `RT ${el} `;
+        rtKurang += `${islandConverter(el)}, `;
       }
-    });
-  }
-  if (cukup.length !== 0 && isLoading === false) {
-    cukup.forEach(el => {
-      if (el < 10) {
-        rtCukup += `RT 0${el} `;
-      } else {
-        rtCukup += `RT ${el} `;
-      }
-    });
-  }
-  if (berlebih.length !== 0 && isLoading === false) {
-    berlebih.forEach(el => {
-      if (el < 10) {
-        rtBerlebih += `RT 0${el} `;
-      } else {
-        rtBerlebih += `RT ${el} `;
-      }
-    });
-  }
-
-  const numConverter = noRT => {
-    if (noRT < 10) {
-      return `RT 0${noRT}`;
     }
-    return `RT ${noRT}`;
-  };
 
-  let title = <div style={{ textAlign: "left" }}>Data Seluruh RT</div>;
+    for (let c = 0; c < cukup.length; c++) {
+      const el = cukup[c];
+      if (cukup.length === 1) {
+        rtCukup += `${islandConverter(el)}.`;
+      } else if (cukup.length > 1 && c === cukup.length - 1) {
+        rtCukup += `& ${islandConverter(el)}.`;
+      } else {
+        rtCukup += `${islandConverter(el)}, `;
+      }
+    }
+
+    for (let b = 0; b < berlebih.length; b++) {
+      const el = berlebih[b];
+      if (berlebih.length === 1) {
+        rtBerlebih += `${islandConverter(el)}.`;
+      } else if (berlebih.length > 1 && b === berlebih.length - 1) {
+        rtBerlebih += `& ${islandConverter(el)}.`;
+      } else {
+        rtBerlebih += `${islandConverter(el)}, `;
+      }
+    }
+  }
+
+  let title = <div style={{ textAlign: "left" }}>Data Seluruh Pulau</div>;
 
   if (numRT !== 0) {
-    if (numRT < 10) {
-      title = (
-        <Row>
-          <Col>
-            Data RT 0{numRT}
-          </Col>
-          <Col>
-            <Button
-              variant="info"
-              onClick={() => {
-                navigate(`/rt/${numRT}`);
-              }}
-            >
-              Detail
-            </Button>
-          </Col>
-        </Row>
-      );
-    } else {
-      title = (
-        <Row>
-          <Col>
-            Data RT {numRT}
-          </Col>
-          <Col>
-            <Button
-              variant="info"
-              onClick={() => {
-                navigate(`/rt/${watchlist.noRT}`);
-              }}
-            >
-              Detail
-            </Button>
-          </Col>
-        </Row>
-      );
-    }
+    title = (
+      <Row>
+        <Col md="4">
+          {islandConverter(numRT)}
+        </Col>
+        <br />
+        <Col md="8">
+          <Button
+            variant="info"
+            onClick={() => {
+              navigate(`/rt/${numRT}`);
+            }}
+          >
+            Detail
+          </Button>
+        </Col>
+      </Row>
+    );
   }
 
   let pieChart = (
@@ -159,7 +146,7 @@ export default function Dashboard() {
               <Row>
                 <DropdownButton
                   id="dropdown-item-button"
-                  title="Filter by RT"
+                  title="Filter Berdasarkan Pulau"
                   align="end"
                   style={{ marginBottom: "20px", marginTop: "20px" }}
                 >
@@ -168,7 +155,7 @@ export default function Dashboard() {
                       e.preventDefault(dispatch(fetchCombinedData()));
                     }}
                   >
-                    Seluruh RT
+                    Seluruh Pulau
                   </Dropdown.Item>
                   {users.map(el => {
                     return (
@@ -179,16 +166,16 @@ export default function Dashboard() {
                         }}
                         key={el.noRT}
                       >
-                        {numConverter(el.noRT)}
+                        {islandConverter(el.noRT)}
                       </Dropdown.Item>
                     );
                   })}
                 </DropdownButton>
                 <Col>
                   <div style={{ padding: "20px" }}>
-                    <h5>
+                    <h6>
                       {title}
-                    </h5>
+                    </h6>
                   </div>
                 </Col>
               </Row>
@@ -226,13 +213,13 @@ export default function Dashboard() {
             <div style={{ textAlign: "left" }}>
               <ul>
                 <li>
-                  RT Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
+                  Pulau Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
                 </li>
                 <li>
-                  RT Dengan Gizi Cukup Terbanyak : <b>{rtCukup}</b>
+                  Pulau Dengan Gizi Cukup Terbanyak : <b>{rtCukup}</b>
                 </li>
                 <li>
-                  RT Dengan Gizi Berlebih Terbanyak : <b>{rtBerlebih}</b>{" "}
+                  Pulau Dengan Gizi Berlebih Terbanyak : <b>{rtBerlebih}</b>{" "}
                 </li>
               </ul>
             </div>
