@@ -106,7 +106,7 @@ export const allUserFetch = payload => {
 };
 
 export function fetchCombinedData() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -168,7 +168,7 @@ export const useDataRT = () => {
 };
 
 export function fetchDetailData(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
@@ -188,7 +188,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
@@ -205,7 +205,7 @@ export function motherListByRT(id) {
 }
 
 export function allUsers() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listUser`, {
         headers: {
@@ -228,7 +228,7 @@ export const registerMother = (inputCreate) => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, latitude:+(inputCreate.lat), longitude:+(inputCreate.lng)}
+      data: { ...inputCreate, latitude: +(inputCreate.lat), longitude: +(inputCreate.lng) }
     })
     dispatch(fetchCombinedData())
 
@@ -244,7 +244,7 @@ export const registerUser = (inputCreate) => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, noRT:inputCreate.RT}
+      data: { ...inputCreate, noRT: inputCreate.RT }
     })
     dispatch(fetchCombinedData())
 
@@ -260,12 +260,12 @@ export const registerPregnancy = (inputCreate) => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
+      data: { ...inputCreate, }
     })
     dispatch(fetchCombinedData())
-    
-    if(inputCreate.sudahLahir){
-      return {...created, sudahLahir:true}
+
+    if (inputCreate.sudahLahir) {
+      return { ...created, sudahLahir: true }
     }
 
     return created
@@ -296,7 +296,7 @@ export const createPregnancyData = (inputCreate) => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
+      data: { ...inputCreate, }
     })
     dispatch(fetchCombinedData())
 
@@ -312,7 +312,7 @@ export const createBabyData = (inputCreate) => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
+      data: { ...inputCreate, }
     })
     dispatch(fetchCombinedData())
 
@@ -322,13 +322,42 @@ export const createBabyData = (inputCreate) => {
 
 export const inputBabyDataAct = (inputCreate) => {
   return async (dispatch) => {
+
+    console.log(inputCreate)
+
+    let arr = [
+      inputCreate.b1,
+      inputCreate.b2,
+      inputCreate.b3,
+      inputCreate.b4,
+      inputCreate.b5,
+      inputCreate.b6,
+      inputCreate.b7,
+      inputCreate.b8,
+      inputCreate.b9,
+    ]
+
+    let beratBulananStr = ''
+
+    arr.forEach(el => {
+      if (el) {
+        beratBulananStr += el + ','
+      }
+    });
+
+    beratBulananStr = beratBulananStr.slice(0, -1)
+    // console.log(beratBulananStr)
+    console.log({ ...inputCreate, beratBulanan: beratBulananStr },`ini zlr`)
+
+
+
     let created = await axios({
-      method: 'POST',
-      url: baseURL + '/inputBabyData',
+      method: 'PUT',
+      url: baseURL + `/babyData/${inputCreate.BabyDataId}`,
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-      data: {...inputCreate, }
+      data: { ...inputCreate, beratBulanan: beratBulananStr }
     })
     dispatch(fetchCombinedData())
 
@@ -346,14 +375,14 @@ export const fetchBabyData = (id) => {
       },
     })
 
-    return {data}
+    return { data }
   }
 }
 
 
 
 export function watchlist() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/RTStatus`, {
         headers: {
@@ -381,20 +410,20 @@ export function watchlist() {
 //     }
 //     catch (err){
 //       console.log(err)
-    
+
 //     }
 //   }
 // }
 export function PostLogin(form) {
   return (dispatch) => {
-   return fetch(baseURL+"/login",{
-          method: "Post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form)
-         })
-        
+    return fetch(baseURL + "/login", {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form)
+    })
+
   };
 }
 
