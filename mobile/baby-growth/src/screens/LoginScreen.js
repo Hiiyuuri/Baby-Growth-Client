@@ -17,6 +17,7 @@ export default function LoginScreen(props) {
     const {navigation}=props;
     const [isLoading,setLoading]=useState(false);
   const [nik, setNik] = useState("");
+  const [password, setPassword] = useState("");
   let needtoRerender=false;
   useFocusEffect(
     React.useCallback(() => {
@@ -28,7 +29,7 @@ export default function LoginScreen(props) {
         await AsyncStorage.removeItem(`name`);
         await AsyncStorage.removeItem(`address`);
         await AsyncStorage.removeItem(`detailArticle`);
-        
+        await AsyncStorage.removeItem(`access_token`);
       }
   
       fn();
@@ -44,6 +45,7 @@ const getData=(loginInfo)=>{
     const valueNIK = await AsyncStorage.setItem(`nik`,loginInfo.NIK);
     const valueName = await AsyncStorage.setItem(`name`,loginInfo.name);
     const valueAddress = await AsyncStorage.setItem(`address`,loginInfo.address);
+    const valueToken = await AsyncStorage.setItem(`access_token`,loginInfo.access_token);
     navigation.navigate('Home');
   }
 
@@ -56,7 +58,7 @@ const onLogin = (event => {
   
   const fn = async () => {
     try{
-      const result = await axios.post(url+"/nik",{nik:nik},{});
+      const result = await axios.post(url+"/login",{nik:nik,password:password},{});
       if(result){
         // console.log(result.data);
         getData(result.data);
@@ -76,7 +78,7 @@ const onLogin = (event => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../../assets/logoedit.png')} />
-      <Text>Masukan NIK untuk menggunakan aplikasi</Text>
+      <Text style={{ color: 'white' }}>Masukan NIK dan password untuk menggunakan aplikasi</Text>
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
@@ -89,9 +91,10 @@ const onLogin = (event => {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
+          secureTextEntry={true}
           placeholder="Password"
           placeholderTextColor="#003f5c"
-          onChangeText={(nik) => setNik(nik)}
+          onChangeText={(password) => setPassword(password)}
         />
       </View>
       { //data!=undefined?  getData(data.login) : <Text></Text>
@@ -108,7 +111,7 @@ const onLogin = (event => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#008080",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
   },
  
   inputView: {
-    backgroundColor: "#FFC0CB",
+    backgroundColor: "#fff",
     borderRadius: 30,
     width: "70%",
     height: 45,

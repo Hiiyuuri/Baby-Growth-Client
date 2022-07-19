@@ -61,8 +61,8 @@ export default function HomeScreen(props) {
   })
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text style={{fontSize: 32}}>Categories</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor: "#008080" }}>
+    <Text style={{fontSize: 32,color:'white'}}>Categories</Text>
       { category!=[]? <FlatList
             horizontal={true}
             data={category}

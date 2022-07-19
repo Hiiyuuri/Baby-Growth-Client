@@ -7,16 +7,13 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
-import ChartBayi from './src/screens/ChartBayi';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {createStackNavigator} from '@react-navigation/stack';
 import ArticleScreen from './src/screens/ArticleScreen';
 import ArticleDetail from './src/screens/ArticleDetail';
 import ChartIbu from './src/screens/ChartIbu';
@@ -136,8 +133,6 @@ function MyDrawer() {
 
 export default function App() {
 
-
-  
   return (
       <NavigationContainer>
 {/*           

@@ -3,37 +3,42 @@ import { ScrollView ,Button, FlatList, Text, TextInput, View, TouchableHighlight
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useFocusEffect } from '@react-navigation/native';
-
+import SelectDropdown from 'react-native-select-dropdown'
 import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
-// import {LineChart} from 'react-native-charts-wrapper';
+  BarChart
+} from "react-native-chart-kit-with-pressable-bar-graph";
+import Modal from "react-native-modal";
 import { Dimensions } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import url from '../config/config';
+import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 
 export default function ChartIbu({navigation}) {
   const screenWidth = Dimensions.get("window").width;
   const [pregnancy, setPregnancy] = useState({})
   const [selectedData,setSelectedData]=useState([]);
+  const [setArticle,setDisplayedArticle]=useState([]);
   const [selectedBabyData,setSelectedBabyData]=useState([]);
   const [dateData,setDateData]=useState([]);
   const [dateBabyData,setDateBabyData]=useState([]);
-  const needtoRerender=false;
+  const [modalShown,setModalShown]=useState(false);
+  let needtoRerender=false;
+
   useFocusEffect(
     React.useCallback(() => {
       console.log("Use effect called")
     const fn = async () => {
-      const valueNIK = await AsyncStorage.getItem(`nik`);
-      console.log("NIK Adalah"+valueNIK)
-      if (valueNIK) {
+      const access_token = await AsyncStorage.getItem(`access_token`);
+      console.log("Token Adalah"+access_token)
+      setPregnancy([]);
+      setDateData([]);
+      setDateBabyData([]);
+      setSelectedBabyData([]);
+      setSelectedData([]);
+
+      if (access_token) {
         try {
-          const result = await axios.post(url+"/pregnancy",{nik:valueNIK});
+          const result = await axios.get(url+"/pregnancy",{headers:{access_token:access_token}});
           if (result) {
             console.log(result.data);
             setPregnancy(result.data);
@@ -82,6 +87,36 @@ export default function ChartIbu({navigation}) {
   //   fn();
 
   // }, [needtoRerender])
+  function displayModalMother(indexMonth){
+    console.log(indexMonth);
+    console.log(dateData[indexMonth]);
+    const fn = async () => {
+        try {
+          const result = await axios.get(url+"/categoryMonth/"+indexMonth);
+          if (result) {
+            console.log(result.data);
+            if(result.data.Articles.length!=0){
+              setDisplayedArticle(result.data.Articles[0]);
+              setModalShown(true);
+            }
+            
+          } else {
+            console.log("Error found")
+          }
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+    
+
+    fn();
+    
+  }
+
+  function displayModalBaby(indexMonth){
+    
+  }
 
   const displayChart=(event=>{
       let tempStr=event.PregnancyDatum.beratAwal+","+event.PregnancyDatum.beratBulanan;
@@ -128,16 +163,55 @@ export default function ChartIbu({navigation}) {
   }
     
   return (
-    <ScrollView >
-    <Text>History Berat Kehamilan Ibu</Text>
-    { pregnancy.length!=0? <FlatList
+    <ScrollView>
+      <View style={styles.container}> 
+      
+    <Text>History Kehamilan Ibu</Text>
+    <Modal            
+          animationType = {"fade"}  
+          transparent = {false}  
+          visible = {modalShown}  
+          onRequestClose = {() =>{ console.log("Modal has been closed.") } }>  
+          {/*All views of Modal*/}  
+              <View style = {styles.modal}>
+              <Card>
+                <Card.Content>
+                <Card.Cover source={{ uri: setArticle.imageUrl }} />
+                    <Paragraph>{setArticle.text}</Paragraph>
+                </Card.Content>
+                
+            </Card> 
+              <Button title="Kembali ke chart" onPress = {() => {  
+                  setModalShown(false)}}/>  
+          </View>  
+        </Modal>  
+    {/* */}
+{ pregnancy.length!=0? <SelectDropdown
+	data={pregnancy}
+	onSelect={(selectedItem, index) => {
+    console.log(selectedItem.name, index)
+    displayChart(selectedItem)
+	}}
+	buttonTextAfterSelection={(selectedItem, index) => {
+		// text represented after item is selected
+		// if data array is an array of objects then return selectedItem.property to render after item is selected
+		return selectedItem.name
+	}}
+	rowTextForSelection={(item, index) => {
+		// text represented for each item in dropdown
+		// if data array is an array of objects then return item.property to represent item in dropdown
+		return item.name
+	}}
+/>  : <Text>No Pregnancy Data Yet</Text>
+}
+    {/* { pregnancy.length!=0? <FlatList
             horizontal={true}
             data={pregnancy}
             renderItem={({item})=><Button onPress={()=>displayChart(item)} title={item.name}></Button>}
             keyExtractor={(item)=>item.id}
             
-        ></FlatList> : <Text>Loading</Text>
-          }
+        ></FlatList> : <Text>No Pregnancy Data Yet</Text>
+          } */}
     {selectedData.length!=0?<View><Text>History Berat Badan Ibu</Text><BarChart
       data={{
         labels: dateData,
@@ -151,7 +225,7 @@ export default function ChartIbu({navigation}) {
       height={220}
       yAxisLabel=""
       yAxisSuffix="kg"
-      yAxisInterval={1} // optional, defaults to 1
+      yAxisInterval={0.5} // optional, defaults to 1
       chartConfig={{
         backgroundColor: "#ff0fff",
         backgroundGradientFrom: "#eeeeee",
@@ -174,7 +248,7 @@ export default function ChartIbu({navigation}) {
         borderRadius: 16
       }}
     /></View>: <Text>Silahkan pilih periode kehamilan yang ingin dilihat</Text>}
-    {selectedBabyData.length!=0?<View><Text>History Berat Bayi</Text><BarChart
+    {selectedBabyData.length!=0?<View><Text>History Berat Bayi</Text><BarChart onDataPointClick={(data)=>{displayModalMother(data.index)}} 
       data={{
         labels: dateBabyData,
         datasets: [
@@ -189,9 +263,9 @@ export default function ChartIbu({navigation}) {
       yAxisSuffix="kg"
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
-        backgroundColor: "#ff00f0",
-        backgroundGradientFrom: "#ffcffb",
-        backgroundGradientTo: "#fff0f0",
+        backgroundColor: "#ffffff",
+        backgroundGradientFrom: "#eeeeee",
+        backgroundGradientTo: "#eeeeee",
         decimalPlaces: 2, // optional, defaults to 2dp
         color: (opacity = 1) => `rgba(1, 1, 1, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(15, 15, 15, ${opacity})`,
@@ -210,6 +284,8 @@ export default function ChartIbu({navigation}) {
         borderRadius: 16
       }}
     /></View>: <Text></Text>}
+    
+    </View>
   </ScrollView >
   );
 }
@@ -217,8 +293,28 @@ export default function ChartIbu({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#008080",
     alignItems: 'center',
     justifyContent: 'center',
   },
+  chart: {
+    flex: 1
+  },
+  modal: {  
+    justifyContent: 'center',  
+    alignItems: 'center',   
+    backgroundColor : "#00BCD4",   
+    height: 300 ,  
+    width: '80%',  
+    borderRadius:10,  
+    borderWidth: 1,  
+    borderColor: '#fff',    
+    marginTop: 80,  
+    marginLeft: 40,  
+     
+     },
+     tinyLogo: {
+      width: 50,
+      height: 50,
+    }  
 });

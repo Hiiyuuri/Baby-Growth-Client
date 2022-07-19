@@ -1,35 +1,50 @@
 // import CreateForm from "../components/CreateForm";
 import PieChart from "../components/PieChart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCombinedData, fetchRTData } from "../store/actions/actionCreator";
+import {
+  fetchCombinedData,
+  useDataRT,
+  watchlist,
+  allUsers
+} from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
-import Navbar from "../components/Navbar";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Navigation from "../components/Navigation";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-
+import WatchlistRow from "../components/WatchlistRow";
+import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { fetchRTData } = useDataRT();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
+    dispatch(watchlist());
+    dispatch(allUsers());
   }, []);
 
+  const isLoading = useSelector(state => state.chart.isLoading);
   const combinedData = useSelector(state => state.chart.combinedData);
+  const numRT = useSelector(state => state.chart.dataByRT);
   const kurang = useSelector(state => state.statistic.kurang);
   const cukup = useSelector(state => state.statistic.cukup);
   const berlebih = useSelector(state => state.statistic.berlebih);
   const pregnantMother = useSelector(state => state.statistic.pregnantMother);
+  const watchList = useSelector(state => state.list.watchList);
+  const users = useSelector(state => state.user.allUsers);
 
   let rtKurang = "";
   let rtCukup = "";
   let rtBerlebih = "";
 
-  if (kurang.length !== 0) {
+  if (kurang.length !== 0 && isLoading === false) {
     kurang.forEach(el => {
       if (el < 10) {
         rtKurang += `RT 0${el} `;
@@ -38,7 +53,7 @@ export default function Dashboard() {
       }
     });
   }
-  if (cukup.length !== 0) {
+  if (cukup.length !== 0 && isLoading === false) {
     cukup.forEach(el => {
       if (el < 10) {
         rtCukup += `RT 0${el} `;
@@ -47,7 +62,7 @@ export default function Dashboard() {
       }
     });
   }
-  if (berlebih.length !== 0) {
+  if (berlebih.length !== 0 && isLoading === false) {
     berlebih.forEach(el => {
       if (el < 10) {
         rtBerlebih += `RT 0${el} `;
@@ -57,41 +72,134 @@ export default function Dashboard() {
     });
   }
 
+  const numConverter = noRT => {
+    if (noRT < 10) {
+      return `RT 0${noRT}`;
+    }
+    return `RT ${noRT}`;
+  };
+
+  let title = <div style={{ textAlign: "left" }}>Data Seluruh RT</div>;
+
+  if (numRT !== 0) {
+    if (numRT < 10) {
+      title = (
+        <Row>
+          <Col>
+            Data RT 0{numRT}
+          </Col>
+          <Col>
+            <Button
+              variant="info"
+              onClick={() => {
+                navigate(`/rt/${numRT}`);
+              }}
+            >
+              Detail
+            </Button>
+          </Col>
+        </Row>
+      );
+    } else {
+      title = (
+        <Row>
+          <Col>
+            Data RT {numRT}
+          </Col>
+          <Col>
+            <Button
+              variant="info"
+              onClick={() => {
+                navigate(`/rt/${watchlist.noRT}`);
+              }}
+            >
+              Detail
+            </Button>
+          </Col>
+        </Row>
+      );
+    }
+  }
+
+  let pieChart = (
+    <PieChart dataValue={combinedData} style={{ height: "100px" }} />
+  );
+
+  if (isLoading) {
+    pieChart = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
+    combinedData[0] = "Loading...";
+    combinedData[1] = "Loading...";
+    combinedData[2] = "Loading...";
+    rtKurang = "Loading...";
+    rtCukup = "Loading...";
+    rtBerlebih = "Loading...";
+  }
+
   return (
     <div>
-      <Navbar />
-      <Container>
-        <Row md="12" style={{ marginTop: "100px" }}>
-          <Col md="6" className="border">
-            <PieChart dataValue={combinedData} style={{ height: "100px" }} />
+      <Navigation />
+      <Container style={{ marginBottom: "25px" }}>
+        <Row md="12" style={{ marginTop: "25px" }}>
+          <Col
+            md="6"
+            className="border"
+            style={{ height: "600px", padding: "5px" }}
+          >
+            {pieChart}
           </Col>
           <Stack md="6" className="col-md-5 mx-auto border">
+            <Container>
+              <Row>
+                <DropdownButton
+                  id="dropdown-item-button"
+                  title="Filter by RT"
+                  align="end"
+                  style={{ marginBottom: "20px", marginTop: "20px" }}
+                >
+                  <Dropdown.Item
+                    onClick={e => {
+                      e.preventDefault(dispatch(fetchCombinedData()));
+                    }}
+                  >
+                    Seluruh RT
+                  </Dropdown.Item>
+                  {users.map(el => {
+                    return (
+                      <Dropdown.Item
+                        as="button"
+                        onClick={e => {
+                          e.preventDefault(fetchRTData(el.noRT));
+                        }}
+                        key={el.noRT}
+                      >
+                        {numConverter(el.noRT)}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+                <Col>
+                  <div style={{ padding: "20px" }}>
+                    <h5>
+                      {title}
+                    </h5>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
             <div>
-              <Dropdown
-                onClick={() => {
-                  fetchRTData(1);
-                }}
-                style={{ marginBottom: "20px", marginTop: "20px" }}
-              >
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Filter by RT
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">RT 1</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">RT 2</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">RT 3</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div>
+              <h5>Jumlah Bayi Berdasarkan Kecukupan Gizi</h5>
               <Table striped bordered hover>
                 <thead>
-                  <tr>
-                    <th>Kurang</th>
-                    <th>Cukup</th>
-                    <th>Berlebih</th>
-                  </tr>
+                  <th>Kurang</th>
+                  <th>Cukup</th>
+                  <th>Berlebih</th>
                 </thead>
                 <tbody>
                   <tr>
@@ -111,6 +219,13 @@ export default function Dashboard() {
             <div style={{ textAlign: "left" }}>
               <ul>
                 <li>
+                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
+                </li>
+              </ul>
+            </div>
+            <div style={{ textAlign: "left" }}>
+              <ul>
+                <li>
                   RT Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
                 </li>
                 <li>
@@ -121,14 +236,8 @@ export default function Dashboard() {
                 </li>
               </ul>
             </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
-                </li>
-              </ul>
-            </div>
-            <Table striped bordered hover>
+
+            <Table striped bordered hover responsive>
               <thead>
                 <tr>
                   <th>Daftar Pengawasan</th>
@@ -137,27 +246,9 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>RT 01</td>
-                  <td className="bg-danger text-white">Critical</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>RT 04</td>
-                  <td className="bg-danger text-white">Critical</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>RT 02</td>
-                  <td className="bg-warning text-black">Warning</td>
-                  <td>
-                    <Button className="bg-info">Detail</Button>
-                  </td>
-                </tr>
+                {watchList.map(el => {
+                  return <WatchlistRow watchlist={el} />;
+                })}
               </tbody>
             </Table>
           </Stack>

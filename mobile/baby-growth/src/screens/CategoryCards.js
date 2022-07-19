@@ -9,7 +9,7 @@ export default function CategoryCard({ getDetail, item }) {
             marginTop: StatusBar.currentHeight || 0,
             marginLeft: 5,
             marginRight: 5,
-            background: '#f9f2ff'
+            background: '#008080'
         },
         item: {
             backgroundColor: '#f9c2ff',

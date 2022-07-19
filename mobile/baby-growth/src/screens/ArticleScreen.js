@@ -39,13 +39,13 @@ export default function ArticleScreen({ navigation, route }) {
   })
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor: "#008080" }}>
     <Text style={{fontSize: 32}}>Articles</Text>
-      { article!=[]? <FlatList
+      { article.length!=0? <FlatList
             data={article}
             renderItem={({item})=><ArticleCard item={item} getDetail={navigateToDetail} ></ArticleCard>}
             keyExtractor={(item)=>item.id}
-        ></FlatList> : <Text>Loading</Text>
+        ></FlatList> : <Text>No article for this category yet</Text>
           }
     </View>
   );

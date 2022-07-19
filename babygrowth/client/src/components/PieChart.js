@@ -7,8 +7,9 @@ ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 export default function PieChart(dataValue) {
   const value = dataValue.dataValue;
-
   const totalData = value.reduce((a, b) => a + b, 0);
+  const image = new Image();
+  image.src = "https://i.ibb.co/gwK9Pzz/Logo3.png";
 
   const data = {
     labels: ["Kurang", "Cukup", "Berlebih"],
@@ -59,9 +60,36 @@ export default function PieChart(dataValue) {
           }
           return `${percentage}%`;
         }
+      },
+      id: "custom_canvas_background_image",
+      beforeDraw: chart => {
+        if (image.complete) {
+          const ctx = chart.ctx;
+          const { top, left, width, height } = chart.chartArea;
+          const x = left + width / 2 - image.width / 2;
+          const y = top + height / 2 - image.height / 2;
+          ctx.drawImage(image, x, y);
+        } else {
+          image.onload = () => chart.draw();
+        }
       }
     },
     responsive: true
+  };
+
+  const plugin = {
+    id: "custom_canvas_background_image",
+    beforeDraw: chart => {
+      if (image.complete) {
+        const ctx = chart.ctx;
+        const { top, left, width, height } = chart.chartArea;
+        const x = left + width / 2 - image.width / 2;
+        const y = top + height / 2 - image.height / 2;
+        ctx.drawImage(image, x, y);
+      } else {
+        image.onload = () => chart.draw();
+      }
+    }
   };
 
   return (
@@ -71,6 +99,7 @@ export default function PieChart(dataValue) {
         redraw="true"
         datasetIdKey="totalData"
         options={option}
+        plugins={[plugin]}
       />
     </div>
   );

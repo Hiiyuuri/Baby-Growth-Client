@@ -1,35 +1,28 @@
-import BarChart from "../components/BarChart";
 import { useDispatch, useSelector } from "react-redux";
 import { motherListByRT } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Dropdown from "react-bootstrap/Dropdown";
-import Navbar from "../components/Navbar";
-import Stack from "react-bootstrap/Stack";
+import Navigation from "../components/Navigation";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import { useState } from "react";
 import ListPageRow from "../components/ListPageRow";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function ListPage() {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(motherListByRT());
+    dispatch(motherListByRT(id));
   }, []);
 
   const motherListData = useSelector(state => state.list.motherList);
+  const isLoading = useSelector(state => state.chart.isLoading);
 
-  console.log(motherListData);
-
-  const { id } = useParams();
   let title = id;
 
   if (title < 10) {
@@ -38,18 +31,37 @@ export default function ListPage() {
     title = `Daftar Ibu Hamil dan Bayi RT ${id}`;
   }
 
+  if (isLoading) {
+    title = `Loading...`;
+  }
+
   return (
     <div>
-      <Navbar />
+      <Navigation />
       <Container>
-        <div style={{ marginTop: "75px" }}>
-          <h3>
-            {title}
-          </h3>
-        </div>
+        <Row>
+          <Col md="2">
+            <Button
+              variant="info"
+              style={{ textAlign: "left", marginTop: "25px" }}
+              onClick={() => {
+                navigate(`/dashboard`);
+              }}
+            >
+              Back to Dashboard
+            </Button>
+          </Col>
+          <Col md="8">
+            <div style={{ marginTop: "25px" }}>
+              <h3>
+                {title}
+              </h3>
+            </div>
+          </Col>
+        </Row>
       </Container>
-      <Container>
-        <Table>
+      <Container style={{ marginTop: "25px" }}>
+        <Table striped>
           <thead>
             <th>Nama</th>
             <th>NIK</th>

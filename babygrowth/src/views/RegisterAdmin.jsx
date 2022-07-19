@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import Navigation from "../components/Navigation";
 
 function RegisterAdmin() {
     // const dispatch = useDispatch()
@@ -32,7 +32,9 @@ function RegisterAdmin() {
 
 
     return (
-
+        <>
+        
+        <Navigation/>
         <div className="flex-col w-[40%] mx-auto mt-10 border-2 border-slate-200 justify-center p-7 block bg-white shadow-lg rounded-lg">
             <h1 className="text-2xl font-bold mb-5 text-center"> Register New Admin</h1>
 
@@ -99,6 +101,7 @@ function RegisterAdmin() {
 
 
         </div>
+        </>
     );
 }
 
