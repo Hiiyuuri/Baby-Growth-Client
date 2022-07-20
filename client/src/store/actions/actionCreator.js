@@ -293,7 +293,6 @@ export const registerPregnancy = inputCreate => {
       headers: {
         access_token: localStorage.getItem(`access_token`)
       },
-
       data: { ...inputCreate }
     });
     dispatch(fetchCombinedData());

@@ -124,7 +124,7 @@ function EditBabyData() {
                     className="flex flex-col mb-4 text-gray-700 text-left">
 
                     <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Pregnancy Data ID</label>
+                        <label className="block mb-1 font-semibold">Baby Data ID</label>
                         <input
                             readOnly
                             value={BabyDataId}
