@@ -43,9 +43,6 @@ function App() {
         <Route path="/edit-baby-data/:BabyDataId" element={<EditBabyData />} />
 
         <Route path="/map-markers" element={<MapMarkers />} />
-
-
-
       </Routes>
     </div>
   );

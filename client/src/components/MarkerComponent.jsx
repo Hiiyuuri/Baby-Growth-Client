@@ -30,20 +30,20 @@ const MarkerComponent = ({ el }) => {
 
       <Modal show={show} onHide={handleClose} className="h-100 d-flex align-items-center justify-content-center">
         <Modal.Header>
-          <Modal.Title>Mother's Detail</Modal.Title>
+          <Modal.Title>Detail Ibu</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>Name: {el.name} </div>
+          <div>Nama: {el.name} </div>
           <div>NIK: {el.NIK} </div>
-          <div>NIK: {el.address} </div>
+          <div>Alamat: {el.address} </div>
 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Tutup
           </Button>
           <Button variant="primary" onClick={()=> { openInNewTab(`https://www.google.com/maps/place/${el.latitude},${el.longitude}`)}}>
-            Get Direction
+            Arahkan ke Lokasi
           </Button>
         </Modal.Footer>
       </Modal>
