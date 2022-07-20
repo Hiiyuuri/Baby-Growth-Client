@@ -25,7 +25,7 @@ function MapMarkers() {
 
       <div className="position-relative">
         <div className="position-absolute">
-          <div className="m-3 w-300 h-50 ">
+          {/* <div className="m-3 w-300 h-50 ">
             <span
               className=" h2 px-2 py-1 m-5 w-300 h-200 rounded text-white"
               style={{
@@ -34,7 +34,7 @@ function MapMarkers() {
             >
               Lokasi-Lokasi Ibu
             </span>
-          </div>
+          </div> */}
 
           <div className="position-relative">
             <Map
