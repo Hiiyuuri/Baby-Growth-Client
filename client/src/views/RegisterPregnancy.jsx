@@ -156,8 +156,8 @@ function RegisterPregnancy() {
                 <option value="blumDiisi" disabled>
                   Select your option ...
                 </option>
-                <option value={false}>Bayi sudah lahir</option>
-                <option value={true}>Bayi belum lahir</option>
+                <option value={false}>Bayi belum lahir</option>
+                <option value={true}>Bayi sudah lahir</option>
               </select>
             </div>
 

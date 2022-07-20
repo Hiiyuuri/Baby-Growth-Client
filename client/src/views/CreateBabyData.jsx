@@ -12,6 +12,7 @@ function CreateBabyData() {
   let navigate = useNavigate();
   // let { PregnancyId } = useParams()
 
+
   let [searchParams, setSearchParams] = useSearchParams();
   let [query, setQuery] = useState(searchParams.get("PregnancyId"));
 
@@ -33,7 +34,7 @@ function CreateBabyData() {
 
     dispatch(createBabyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
       .then((created) => {
-        navigate(`/`);
+        navigate(`/mothers/${inputCreate.PregnancyId}`);
         Swal.fire({
           title: `Success!`,
           text: `Success creating baby data with ID: ${created.data.id} `,

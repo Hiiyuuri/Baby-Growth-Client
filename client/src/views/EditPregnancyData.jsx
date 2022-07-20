@@ -66,7 +66,7 @@ function EditPregnancyData() {
 
     dispatch(inputPregnancyData({ ...inputCreate, PregnancyDataId })) // =============== Nanti tinggal post axios lewat store/action
       .then(() => {
-        navigate(`/`);
+        navigate(`/mothers/${motherId}`);
         Swal.fire({
           title: `Success!`,
           text: `Success updating pregnancy data `,
