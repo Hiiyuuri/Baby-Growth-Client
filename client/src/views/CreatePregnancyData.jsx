@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Navigation from "../components/Navigation";
 import { createPregnancyData } from "../store/actions/actionCreator";
+
 
 
 
@@ -53,68 +55,68 @@ function CreatePregnancyData() {
 
 
     return (
-        <div>
+        <div className="h-full" style={{
+            backgroundColor: "#eeee",
+            minHeight: "100vh"
+        }}>
             <Navigation />
 
-            <div className="col-md-5 mx-auto border rounded p-5"
-                style={{ marginTop: "100px" }}>
-                <h1 className="text-2xl font-bold mb-5 text-center"> Create Pregnancy Data</h1>
+            <Card className="mx-auto" style={{ width: "40vw", marginTop: "30px", marginBottom: "10px", borderRadius: "10px" }}>
+                <Card.Header className="h2 text-white"
+                    style={{
+                        background: "#29b57d",
+                        borderRadius: "10px 10px 0px 0px"
+                    }}>
+                    Buat Data Kehamilan Baru
 
-                <form
-                    onSubmit={handleInput}
-                    className="flex flex-col mb-4 text-gray-700 text-left">
+                </Card.Header>
+                <Card.Body className="p-4" style={{ padding: "10px" }}>
+                    <form
+                        onSubmit={handleInput}
+                        className="flex flex-col mb-4 text-gray-700 text-left">
 
-                    <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Pregnancy ID</label>
-                        <input
-                            value={inputCreate.PregnancyId}
-                            onChange={(e) => {
-                                setInputCreate({
-                                    ...inputCreate,
-                                    PregnancyId: e.target.value
-                                })
-                            }}
-                            type="text"
-                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div>
+                        <div className="w-full mb-4 text-black">
+                            <label className="block mb-1 font-semibold">ID Kehamilan (Pregnancy ID)</label>
+                            <input
+                                value={inputCreate.PregnancyId}
+                                onChange={(e) => {
+                                    setInputCreate({
+                                        ...inputCreate,
+                                        PregnancyId: e.target.value
+                                    })
+                                }}
+                                type="text"
+                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                        </div>
 
-                    <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Initial Weight</label>
+                        <div className="w-full mb-4 text-black">
+                            <label className="block mb-1 font-semibold">Berat Awal Ibu</label>
 
-                        <input
-                            onChange={(e) => {
-                                setInputCreate({
-                                    ...inputCreate,
-                                    beratAwal: e.target.value
-                                })
-                            }}
-                            type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div>
+                            <input
+                                onChange={(e) => {
+                                    setInputCreate({
+                                        ...inputCreate,
+                                        beratAwal: e.target.value
+                                    })
+                                }}
+                                type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                        </div>
 
-                    {/* <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Monthly Weight</label>
-
-                        <input
-                            onChange={(e) => {
-                                setInputCreate({
-                                    ...inputCreate,
-                                    beratBulanan: e.target.value
-                                })
-                            }}
-                            type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div> */}
-
-                    <button
-                        className="btn btn-primary btn-lg btn-block bg-success">
-                        Submit
-                    </button>
+                        <button
+                            className="btn btn-primary btn-lg btn-block "
+                            style={{
+                                background: "#29b57d"
+                            }}>
+                            Submit
+                        </button>
 
 
-                </form>
+                    </form>
 
 
+                </Card.Body>
+            </Card>
 
-            </div>
 
 
         </div>

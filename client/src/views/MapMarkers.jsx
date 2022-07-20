@@ -27,10 +27,10 @@ function MapMarkers() {
 
     useEffect(() => {
         dispatch(fetchMotherListOnly())
-        .then((data)=>{
-            // console.log(data)
-            setCoords(data)
-        })
+            .then((data) => {
+                // console.log(data)
+                setCoords(data)
+            })
     }, []);
 
 
@@ -39,37 +39,42 @@ function MapMarkers() {
         <div>
             <Navigation />
 
-            <div className="col-md-9 mx-auto border rounded p-5"
-                style={{ marginTop: "100px" }}>
-                <h2 className="text-2xl font-bold mb-5 text-center">Registered Mother Locations</h2>
-                <div className="w-full mb-4 text-black">
+            <div className="position-relative">
+                <div className="position-absolute">
+                    <div className="m-3 w-300 h-50 ">
+                        <span className=" h2 px-2 py-1 m-5 w-300 h-200 rounded text-white"
+                            style={{
+                                background: "#29b57d"
+                            }}
+                        >
+                            Lokasi-Lokasi Ibu
+                        </span>
 
+                    </div>
 
-                    <Map
-                        initialViewState={{
-                            longitude: 106.582581,
-                            latitude: -5.776457,
-                            zoom: 9
-                        }}
-                        style={{ width: '70vw', height: '70vh', margin: "auto" }}
-                        mapStyle="mapbox://styles/mapbox/streets-v9"
-                        mapboxAccessToken="pk.eyJ1IjoicmF5aGFubXVzdG9mYSIsImEiOiJjbDVtZ2p1MHQwOWQwM2pwMjNmdmlzNjgwIn0.x5rAaXLjR6yQDLuNQGinlQ"
-                    >
+                    <div className="position-relative">
+                        <Map
+                            initialViewState={{
+                                longitude: 106.582581,
+                                latitude: -5.776457,
+                                zoom: 9
+                            }}
+                            style={{ width: '100vw', height: '100vh', margin: "auto" }}
+                            mapStyle="mapbox://styles/mapbox/streets-v9"
+                            mapboxAccessToken="pk.eyJ1IjoicmF5aGFubXVzdG9mYSIsImEiOiJjbDVtZ2p1MHQwOWQwM2pwMjNmdmlzNjgwIn0.x5rAaXLjR6yQDLuNQGinlQ"
+                        >
 
-                        {coords.map((el) => {
-                            return <MarkerComponent el={el} key={el.id} />
-                        })}
-                    </Map>
+                            {coords.map((el) => {
+                                return <MarkerComponent el={el} key={el.id} />
+                            })}
+                        </Map>
+                    </div>
 
                 </div>
 
-
-
-
-
             </div>
 
-        </div>
+        </div >
 
 
     );
