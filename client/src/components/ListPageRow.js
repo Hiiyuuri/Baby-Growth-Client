@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { React, useState } from "react";
 import Select from "react-select";
+import { Button } from "react-bootstrap";
 
 export default function ListPageRow({ data }) {
   const navigate = useNavigate();
@@ -72,7 +73,19 @@ export default function ListPageRow({ data }) {
         </Dropdown>
       </td> */}
       <MyComponent />
+      <td>
+        <Button
+          variant="info"
+          style={{ textAlign: "left" }}
+          onClick={() => {
+            navigate(`/register-pregnancy?motherId=${data.id}`);
+          }}
+        >
+          Regist. Kehamilan Baru
+        </Button>
+      </td>
       <td />
+
     </tr>
   );
 }

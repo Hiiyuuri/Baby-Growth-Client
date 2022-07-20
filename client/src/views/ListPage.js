@@ -33,7 +33,17 @@ export default function ListPage() {
   }
 
   return (
-    <div>
+    <div className="h-full"
+      style={{
+        backgroundColor: "#eeee",
+        minHeight: "100vh",
+      }}
+    >
+      {/* <div
+    onClick={()=>{
+      console.log(motherListData)
+    }}
+    > test</div> */}
       <Navigation />
       <Container>
         <Row>
@@ -55,13 +65,14 @@ export default function ListPage() {
           </Col>
         </Row>
       </Container>
-      <Container style={{ marginTop: "25px" }}>
+      <Container className="bg-white border" style={{ marginTop: "25px", borderRadius: "10px"}}>
         <Table striped>
           <thead>
             <th>Nama</th>
             <th>NIK</th>
             <th>Alamat</th>
             <th>Data Bayi & Kehamilan</th>
+            <th>Register Kehamilan Baru</th>
           </thead>
           <tbody>
             {motherListData.map((data) => {
