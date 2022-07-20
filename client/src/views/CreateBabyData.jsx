@@ -38,7 +38,15 @@ function CreateBabyData() {
         });
       })
       .catch((err) => {
-        console.log(err);
+        if (err.message === "Request failed with status code 400") {
+          Swal.fire({
+            title: "Invalid Input!",
+            text: err.response.data.message,
+            icon: "error",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#29b57d",
+          });
+        }
       });
   };
 

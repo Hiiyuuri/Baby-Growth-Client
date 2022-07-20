@@ -5,6 +5,7 @@ import Navigation from "../components/Navigation";
 import { registerUser } from "../store/actions/actionCreator";
 import Card from "react-bootstrap/Card";
 import Footer from "../components/Footer";
+import Swal from "sweetalert2";
 
 function RegisterAdmin() {
   const dispatch = useDispatch();
@@ -14,17 +15,25 @@ function RegisterAdmin() {
     username: "",
     password: "",
     email: "",
-    RT: ""
+    RT: "",
   });
 
-  const handleCreate = e => {
+  const handleCreate = (e) => {
     e.preventDefault();
-    dispatch(registerUser(inputCreate)) 
+    dispatch(registerUser(inputCreate))
       .then(() => {
         navigate(`/`);
       })
-      .catch(err => {
-        console.log(err);
+      .catch((err) => {
+        if (err.message === "Request failed with status code 400") {
+          Swal.fire({
+            title: "Invalid Input!",
+            text: err.response.data.message,
+            icon: "error",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#29b57d",
+          });
+        }
       });
   };
 
@@ -33,8 +42,8 @@ function RegisterAdmin() {
       className="h-full"
       style={{
         backgroundColor: "#eeee",
-        height: "100vh",
-        paddingBottom: "25px"
+        minHeight: "100vh",
+        paddingBottom: "10px",
       }}
     >
       <Navigation />
@@ -45,14 +54,14 @@ function RegisterAdmin() {
           width: "40vw",
           marginTop: "15px",
           borderRadius: "10px",
-          marginBottom: "50px"
+          marginBottom: "50px",
         }}
       >
         <Card.Header
           className="h2 text-white"
           style={{
             background: "#29b57d",
-            borderRadius: "10px 10px 0px 0px"
+            borderRadius: "10px 10px 0px 0px",
           }}
         >
           Register Admin Baru
@@ -65,10 +74,10 @@ function RegisterAdmin() {
             <div className="w-full mb-4 text-black">
               <label className="block mb-1 font-semibold">Username</label>
               <input
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    username: e.target.value
+                    username: e.target.value,
                   });
                 }}
                 type="text"
@@ -79,10 +88,10 @@ function RegisterAdmin() {
             <div className="w-full mb-4 text-black">
               <label className="block mb-1 font-semibold">Email</label>
               <input
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    email: e.target.value
+                    email: e.target.value,
                   });
                 }}
                 type="text"
@@ -93,10 +102,10 @@ function RegisterAdmin() {
             <div className="w-full mb-4 text-black">
               <label className="block mb-1 font-semibold">Password</label>
               <input
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    password: e.target.value
+                    password: e.target.value,
                   });
                 }}
                 type="password"
@@ -106,14 +115,14 @@ function RegisterAdmin() {
             <div className="w-full mb-4 text-black">
               <label className="d-block">Pilih Pulau</label>
               <select
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    RT: e.target.value
+                    RT: e.target.value,
                   });
                 }}
                 defaultValue="blumDiisi"
-                className="selectpicker block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                className="selectpicker block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               >
                 <option value="blumDiisi" disabled>
                   Select your option ...
@@ -131,10 +140,12 @@ function RegisterAdmin() {
             </div>
 
             <button
-              className="btn btn-primary btn-lg btn-block "
+              className="btn btn-primary btn-lg btn-block mb-2"
               style={{
-                background: "#29b57d"
+                background: "#29b57d",
+                border: "white",
               }}
+              type="submit"
             >
               Submit
             </button>

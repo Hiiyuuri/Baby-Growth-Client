@@ -10,7 +10,6 @@ import Footer from "../components/Footer";
 function RegisterPregnancy() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
- 
 
   let [searchParams, setSearchParams] = useSearchParams();
   let [query, setQuery] = useState(searchParams.get("motherId"));
@@ -44,7 +43,15 @@ function RegisterPregnancy() {
         });
       })
       .catch((err) => {
-        console.log(err);
+        if (err.message === "Request failed with status code 400") {
+          Swal.fire({
+            title: "Invalid Input!",
+            text: err.response.data.message,
+            icon: "error",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#29b57d",
+          });
+        }
       });
   };
 

@@ -25,9 +25,10 @@ export default function Navigation() {
     localStorage.clear();
     navigate("/login");
     Swal.fire({
-      title: "LOG OUT!",
-      text: "Youve been out",
+      title: "You've been succesfully logged out!",
       icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#29b57d",
     });
   };
 
