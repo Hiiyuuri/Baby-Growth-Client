@@ -39,11 +39,6 @@ export default function ListPage() {
         minHeight: "100vh",
       }}
     >
-      {/* <div
-    onClick={()=>{
-      console.log(motherListData)
-    }}
-    > test</div> */}
       <Navigation />
       <Container>
         <Row>

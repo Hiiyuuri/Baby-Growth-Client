@@ -39,8 +39,6 @@ function EditPregnancyData() {
     dispatch(fetchPregnancyData(PregnancyDataId))
       .then((data) => {
         let arr = data.data.data.beratBulanan.split(",");
-
-        console.log(data);
         setInputCreate({
           ...inputCreate,
           beratAwal: data.data.data.beratAwal,
@@ -62,9 +60,7 @@ function EditPregnancyData() {
 
   const handleInput = (e) => {
     e.preventDefault();
-    // console.log(inputCreate)
-
-    dispatch(inputPregnancyData({ ...inputCreate, PregnancyDataId })) // =============== Nanti tinggal post axios lewat store/action
+    dispatch(inputPregnancyData({ ...inputCreate, PregnancyDataId }))
       .then(() => {
         navigate(`/mothers/${motherId}`);
         Swal.fire({

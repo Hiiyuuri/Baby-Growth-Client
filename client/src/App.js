@@ -1,15 +1,12 @@
-// import logo from "./logo.svg";
+
 import "./App.css";
 import { Route, Routes, Router } from "react-router-dom";
-// import PieChart from "./components/PieChart";
-// import BarChart from "./components/BarChart";
 import Dashboard from "./views/Dashboard";
 import MothersPage from "./views/MothersPage";
 import ListPage from "./views/ListPage";
 import RegisterMom from "./views/RegisterMom";
 import RegisterAdmin from "./views/RegisterAdmin";
 import RegisterPregnancy from "./views/RegisterPregnancy";
-// import InputPregData from "./views/CreatePregnancyData";
 import MapMarkers from "./views/MapMarkers";
 import Modal from "./components/Modal/Modal";
 import CreatePregnancyData from "./views/CreatePregnancyData";
@@ -17,7 +14,6 @@ import InputBabyData from "./views/EditPregnancyData";
 import Login from "./views/Login/Login";
 import MainPage from "./views/MainPage";
 import CreateBabyData from "./views/CreateBabyData";
-// import InputPregnancyData from "./views/EditBabyData";
 import EditBabyData from "./views/EditBabyData";
 import EditPregnancyData from "./views/EditPregnancyData";
 import NavigationGuard from "./views/navguard/NavigationGuard";

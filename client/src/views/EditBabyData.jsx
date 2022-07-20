@@ -50,7 +50,6 @@ function EditBabyData() {
   useEffect(() => {
     dispatch(fetchBabyData(BabyDataId))
       .then((data) => {
-        console.log(data.data.data, `TEST`);
         let arr = data.data.data.beratBulanan.split(",");
         setInputCreate({
           ...inputCreate,
@@ -82,16 +81,13 @@ function EditBabyData() {
         });
       })
       .finally(() => {
-        console.log(inputCreate);
         setLoading(false);
       });
   }, [loading]);
 
   const handleInput = (e) => {
     e.preventDefault();
-    // console.log(inputCreate)
-
-    dispatch(inputBabyDataAct({ ...inputCreate, BabyDataId })) // =============== Nanti tinggal post axios lewat store/action
+    dispatch(inputBabyDataAct({ ...inputCreate, BabyDataId }))
       .then(() => {
         navigate(`/mothers/${motherId}`);
         Swal.fire({

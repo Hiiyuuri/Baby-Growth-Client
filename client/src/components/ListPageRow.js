@@ -48,31 +48,7 @@ export default function ListPageRow({ data }) {
       <td>
         {data.address}
       </td>
-      {/* <td>
-        <Dropdown
-          className="col-6 container"
-          hidden={isLoading === true ? true : false}
-        >
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Pilih
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            {data.Pregnancies.map(el => {
-              return (
-                <Dropdown.Item
-                  onClick={() => {
-                    navigate(`/mothers/${el.id}`);
-                  }}
-                >
-                  {el.name}
-                </Dropdown.Item>
-              );
-            })}
-          </Dropdown.Menu>
-        </Dropdown>
-      </td> */}
-      <MyComponent />
+          <MyComponent />
       <td>
         <Button
           variant="info"
