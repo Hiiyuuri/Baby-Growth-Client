@@ -7,11 +7,19 @@ import Logo from "../asset/logo.png";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
-import { useConverter } from "../store/actions/actionCreator";
+import { useConverter, fetchUserDetail } from "../store/actions/actionCreator";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Navigation() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { islandConverter } = useConverter();
+
+  useEffect(() => {
+    dispatch(fetchUserDetail());
+  }, []);
+
   const HandleLogout = e => {
     e.preventDefault();
     localStorage.clear();
@@ -25,7 +33,7 @@ export default function Navigation() {
 
   const userDetail = useSelector(state => state.user.userDetail);
 
-  let islandName = islandConverter(userDetail.id);
+  let islandName = islandConverter(+userDetail.id);
 
   if (userDetail.id === 1) {
     islandName = "";

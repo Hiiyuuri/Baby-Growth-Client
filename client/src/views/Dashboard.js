@@ -134,7 +134,7 @@ export default function Dashboard() {
     <div
       style={{
         backgroundColor: "#eeee",
-        height: "auto",
+        height: "auto" || "100vh",
         paddingBottom: "25px"
       }}
     >
@@ -142,19 +142,58 @@ export default function Dashboard() {
       <Container style={{ padding: "0px" }}>
         <Row style={{ marginTop: "15px" }}>
           <Col md="4">
-            <Card>
-              <Card.Header>Pulau Dengan Gizi Kurang Terbanyak</Card.Header>
-              <Card.Body style={{ height: "50px", padding: "10px" }}>
-                <b>
+            <Card
+              style={{
+                borderRadius: "10px",
+                background: "linear-gradient(to bottom, #EB6A47, #E74418)",
+                height: "100px"
+              }}
+            >
+              <Card.Header
+                style={{
+                  color: "white",
+                  height: "25px",
+                  paddingTop: "0px"
+                }}
+              >
+                Pulau Dengan Gizi Terburuk
+              </Card.Header>
+              <Card.Body
+                style={{
+                  height: "50px",
+                  padding: "10px"
+                }}
+              >
+                <b style={{ color: "white" }}>
                   {rtKurang}
                 </b>
               </Card.Body>
             </Card>
           </Col>
           <Col md="4">
-            <Card>
-              <Card.Header>Pulau Dengan Gizi Cukup Terbanyak</Card.Header>
-              <Card.Body style={{ height: "50px", padding: "10px" }}>
+            <Card
+              style={{
+                borderRadius: "10px",
+                background: "linear-gradient(to bottom, #00A855, #00753B)",
+                height: "100px"
+              }}
+            >
+              <Card.Header
+                style={{
+                  color: "white",
+                  height: "25px",
+                  paddingTop: "0px"
+                }}
+              >
+                Pulau Dengan Gizi Ideal
+              </Card.Header>
+              <Card.Body
+                style={{
+                  height: "50px",
+                  padding: "10px",
+                  color: "white"
+                }}
+              >
                 <b>
                   {rtCukup}
                 </b>
@@ -162,9 +201,30 @@ export default function Dashboard() {
             </Card>
           </Col>
           <Col md="4">
-            <Card>
-              <Card.Header>Pulau Dengan Gizi Berlebih Terbanyak</Card.Header>
-              <Card.Body style={{ height: "50px", padding: "10px" }}>
+            <Card
+              style={{
+                borderRadius: "10px",
+                background: "linear-gradient(to bottom, #FDE723, #FFCD20)",
+                height: "100px",
+                color: "#050336"
+              }}
+            >
+              <Card.Header
+                style={{
+                  color: "#050336",
+                  height: "25px",
+                  paddingTop: "0px"
+                }}
+              >
+                Pulau Dengan Gizi Berlebih
+              </Card.Header>
+              <Card.Body
+                style={{
+                  height: "50px",
+                  padding: "10px",
+                  backgroundColor: "#ffce5633"
+                }}
+              >
                 <b>
                   {rtBerlebih}
                 </b>
@@ -173,9 +233,9 @@ export default function Dashboard() {
           </Col>
         </Row>
         <Row style={{ marginTop: "15px" }}>
-          <Col md="3" className="">
+          <Col md="3">
             <Stack>
-              <Card style={{ marginBottom: "25px" }}>
+              <Card style={{ marginBottom: "25px", borderRadius: "10px" }}>
                 <Card.Header>
                   <div style={{ textAlign: "center" }}>
                     {title}
@@ -183,6 +243,7 @@ export default function Dashboard() {
                 </Card.Header>
                 <Col />
                 <DropdownButton
+                  variant="info"
                   id="dropdown-item-button"
                   title="Filter Berdasarkan Pulau"
                   align="end"
@@ -210,7 +271,7 @@ export default function Dashboard() {
                   })}
                 </DropdownButton>
               </Card>
-              <Card style={{ marginBottom: "25px" }}>
+              <Card style={{ marginBottom: "25px", borderRadius: "10px" }}>
                 <Card.Header>
                   <h6>Jumlah Bayi Berdasarkan Kecukupan Gizi</h6>
                 </Card.Header>
@@ -237,7 +298,7 @@ export default function Dashboard() {
                   </Table>
                 </Card.Body>
               </Card>
-              <Card>
+              <Card style={{ borderRadius: "10px" }}>
                 <Card.Header>Jumlah Ibu Hamil</Card.Header>
                 <Card.Body>
                   <b>
@@ -251,8 +312,32 @@ export default function Dashboard() {
             {pieChart}
           </Col>
           <Col md="4">
-            <Card>
+            <Card style={{ borderRadius: "10px" }}>
               <Card.Header>Daftar Pengawasan</Card.Header>
+              <Card.Body>
+                <Col>
+                  <Row
+                    style={{
+                      textAlign: "left"
+                    }}
+                  >
+                    <Col style={{ padding: "5px" }}>
+                      <Button variant="warning">Warning</Button>
+                    </Col>
+                    <Col>1-5 Bayi Dengan Gizi Kurang</Col>
+                  </Row>
+                  <Row style={{ textAlign: "left" }}>
+                    <Col style={{ padding: "5px" }}>
+                      <Button variant="danger">Critical</Button>
+                    </Col>
+                    <Col>
+                      {">"} 5 Bayi Dengan Gizi Kurang
+                    </Col>
+                  </Row>
+                </Col>
+              </Card.Body>
+            </Card>
+            <Card style={{ marginTop: "15px", borderRadius: "10px" }}>
               <Table striped size="sm">
                 <thead>
                   <tr>
