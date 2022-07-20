@@ -5,7 +5,8 @@ import {
   fetchCombinedData,
   useDataRT,
   watchlist,
-  allUsers
+  allUsers,
+  useConverter
 } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
@@ -19,11 +20,13 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
 import { useNavigate } from "react-router-dom";
+import Card from "react-bootstrap/Card";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { fetchRTData } = useDataRT();
+  const { islandConverter } = useConverter();
 
   useEffect(() => {
     dispatch(fetchCombinedData());
@@ -31,6 +34,7 @@ export default function Dashboard() {
     dispatch(allUsers());
   }, []);
 
+  const isLoading = useSelector(state => state.chart.isLoading);
   const combinedData = useSelector(state => state.chart.combinedData);
   const numRT = useSelector(state => state.chart.dataByRT);
   const kurang = useSelector(state => state.statistic.kurang);
@@ -44,97 +48,143 @@ export default function Dashboard() {
   let rtCukup = "";
   let rtBerlebih = "";
 
-  if (kurang.length !== 0) {
-    kurang.forEach(el => {
-      if (el < 10) {
-        rtKurang += `RT 0${el} `;
+  if (
+    (isLoading === false && kurang.length !== 0) ||
+    (isLoading === false && cukup.length !== 0) ||
+    (isLoading === false && berlebih.length !== 0)
+  ) {
+    for (let k = 0; k < kurang.length; k++) {
+      const el = kurang[k];
+      if (kurang.length === 1) {
+        rtKurang += `${islandConverter(el)}.`;
+      } else if (kurang.length > 1 && k === kurang.length - 1) {
+        rtKurang += `& ${islandConverter(el)}.`;
       } else {
-        rtKurang += `RT ${el} `;
+        rtKurang += `${islandConverter(el)}, `;
       }
-    });
-  }
-  if (cukup.length !== 0) {
-    cukup.forEach(el => {
-      if (el < 10) {
-        rtCukup += `RT 0${el} `;
-      } else {
-        rtCukup += `RT ${el} `;
-      }
-    });
-  }
-  if (berlebih.length !== 0) {
-    berlebih.forEach(el => {
-      if (el < 10) {
-        rtBerlebih += `RT 0${el} `;
-      } else {
-        rtBerlebih += `RT ${el} `;
-      }
-    });
-  }
-
-  const numConverter = noRT => {
-    if (noRT < 10) {
-      return `RT 0${noRT}`;
     }
-    return `RT ${noRT}`;
-  };
 
-  let title = <div style={{ textAlign: "left" }}>Data Seluruh RT</div>;
+    for (let c = 0; c < cukup.length; c++) {
+      const el = cukup[c];
+      if (cukup.length === 1) {
+        rtCukup += `${islandConverter(el)}.`;
+      } else if (cukup.length > 1 && c === cukup.length - 1) {
+        rtCukup += `& ${islandConverter(el)}.`;
+      } else {
+        rtCukup += `${islandConverter(el)}, `;
+      }
+    }
+
+    for (let b = 0; b < berlebih.length; b++) {
+      const el = berlebih[b];
+      if (berlebih.length === 1) {
+        rtBerlebih += `${islandConverter(el)}.`;
+      } else if (berlebih.length > 1 && b === berlebih.length - 1) {
+        rtBerlebih += `& ${islandConverter(el)}.`;
+      } else {
+        rtBerlebih += `${islandConverter(el)}, `;
+      }
+    }
+  }
+
+  let title = <div style={{ textAlign: "left" }}>Data Seluruh Pulau</div>;
 
   if (numRT !== 0) {
-    if (numRT < 10) {
-      title = (
-        <Row>
-          <Col>
-            Data RT 0{numRT}
-          </Col>
-          <Col>
-            <Button
-              variant="info"
-              onClick={() => {
-                navigate(`/rt/${numRT}`);
-              }}
-            >
-              Detail
-            </Button>
-          </Col>
-        </Row>
-      );
-    } else {
-      title = (
-        <Row>
-          <Col>
-            Data RT {numRT}
-          </Col>
-          <Col>
-            <Button
-              variant="info"
-              onClick={() => {
-                navigate(`/rt/${watchlist.noRT}`);
-              }}
-            >
-              Detail
-            </Button>
-          </Col>
-        </Row>
-      );
-    }
+    title = (
+      <Row>
+        <Col md="6" style={{ paddingTop: "5px" }}>
+          {islandConverter(numRT)}
+        </Col>
+        <Col md="6" style={{ paddingTop: "5px" }}>
+          <Button
+            variant="info"
+            onClick={() => {
+              navigate(`/rt/${numRT}`);
+            }}
+          >
+            Detail
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+
+  let pieChart = (
+    <PieChart dataValue={combinedData} style={{ height: "100px" }} />
+  );
+
+  if (isLoading) {
+    pieChart = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
+    combinedData[0] = "Loading...";
+    combinedData[1] = "Loading...";
+    combinedData[2] = "Loading...";
+    rtKurang = "Loading...";
+    rtCukup = "Loading...";
+    rtBerlebih = "Loading...";
   }
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#eeee",
+        height: "auto",
+        paddingBottom: "25px"
+      }}
+    >
       <Navigation />
-      <Container>
-        <Row md="12" style={{ marginTop: "100px" }}>
-          <Col md="6" className="border">
-            <PieChart dataValue={combinedData} style={{ height: "100px" }} />
+      <Container style={{ padding: "0px" }}>
+        <Row style={{ marginTop: "15px" }}>
+          <Col md="4">
+            <Card>
+              <Card.Header>Pulau Dengan Gizi Kurang Terbanyak</Card.Header>
+              <Card.Body style={{ height: "50px", padding: "10px" }}>
+                <b>
+                  {rtKurang}
+                </b>
+              </Card.Body>
+            </Card>
           </Col>
-          <Stack md="6" className="col-md-5 mx-auto border">
-            <Container>
-              <Row>
+          <Col md="4">
+            <Card>
+              <Card.Header>Pulau Dengan Gizi Cukup Terbanyak</Card.Header>
+              <Card.Body style={{ height: "50px", padding: "10px" }}>
+                <b>
+                  {rtCukup}
+                </b>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>Pulau Dengan Gizi Berlebih Terbanyak</Card.Header>
+              <Card.Body style={{ height: "50px", padding: "10px" }}>
+                <b>
+                  {rtBerlebih}
+                </b>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col md="3" className="">
+            <Stack>
+              <Card style={{ marginBottom: "25px" }}>
+                <Card.Header>
+                  <div style={{ textAlign: "center" }}>
+                    {title}
+                  </div>
+                </Card.Header>
+                <Col />
                 <DropdownButton
                   id="dropdown-item-button"
-                  title="Filter by RT"
+                  title="Filter Berdasarkan Pulau"
                   align="end"
                   style={{ marginBottom: "20px", marginTop: "20px" }}
                 >
@@ -143,7 +193,7 @@ export default function Dashboard() {
                       e.preventDefault(dispatch(fetchCombinedData()));
                     }}
                   >
-                    Seluruh RT
+                    Seluruh Pulau
                   </Dropdown.Item>
                   {users.map(el => {
                     return (
@@ -154,79 +204,71 @@ export default function Dashboard() {
                         }}
                         key={el.noRT}
                       >
-                        {numConverter(el.noRT)}
+                        {islandConverter(el.noRT)}
                       </Dropdown.Item>
                     );
                   })}
                 </DropdownButton>
-                <Col>
-                  <div style={{ padding: "20px" }}>
-                    <h5>
-                      {title}
-                    </h5>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-            <div>
-              <h5>Jumlah Bayi Berdasarkan Kecukupan Gizi</h5>
-              <Table striped bordered hover>
+              </Card>
+              <Card style={{ marginBottom: "25px" }}>
+                <Card.Header>
+                  <h6>Jumlah Bayi Berdasarkan Kecukupan Gizi</h6>
+                </Card.Header>
+                <Card.Body>
+                  <Table striped bordered hover size="sm">
+                    <thead>
+                      <th>Kurang</th>
+                      <th>Cukup</th>
+                      <th>Berlebih</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          {combinedData[0]}
+                        </td>
+                        <td>
+                          {combinedData[1]}
+                        </td>
+                        <td>
+                          {combinedData[2]}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Card.Body>
+              </Card>
+              <Card>
+                <Card.Header>Jumlah Ibu Hamil</Card.Header>
+                <Card.Body>
+                  <b>
+                    {pregnantMother}
+                  </b>
+                </Card.Body>
+              </Card>
+            </Stack>
+          </Col>
+          <Col md="5" style={{ height: "600px", paddingTop: "20px" }}>
+            {pieChart}
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>Daftar Pengawasan</Card.Header>
+              <Table striped size="sm">
                 <thead>
-                  <th>Kurang</th>
-                  <th>Cukup</th>
-                  <th>Berlebih</th>
+                  <tr>
+                    <th>Nama Pulau</th>
+                    <th>Status</th>
+                    <th>Detail</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      {combinedData[0]}
-                    </td>
-                    <td>
-                      {combinedData[1]}
-                    </td>
-                    <td>
-                      {combinedData[2]}
-                    </td>
-                  </tr>
+                  {watchList.map(el => {
+                    return <WatchlistRow watchlist={el} />;
+                  })}
                 </tbody>
               </Table>
-            </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  Jumlah Ibu Hamil : <b>{pregnantMother}</b>
-                </li>
-              </ul>
-            </div>
-            <div style={{ textAlign: "left" }}>
-              <ul>
-                <li>
-                  RT Dengan Gizi Kurang Terbanyak : <b>{rtKurang}</b>
-                </li>
-                <li>
-                  RT Dengan Gizi Cukup Terbanyak : <b>{rtCukup}</b>
-                </li>
-                <li>
-                  RT Dengan Gizi Berlebih Terbanyak : <b>{rtBerlebih}</b>{" "}
-                </li>
-              </ul>
-            </div>
-
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Daftar Pengawasan</th>
-                  <th>Status</th>
-                  <th>Detail</th>
-                </tr>
-              </thead>
-              <tbody>
-                {watchList.map(el => {
-                  return <WatchlistRow watchlist={el} />;
-                })}
-              </tbody>
-            </Table>
-          </Stack>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </div>

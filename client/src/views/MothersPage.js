@@ -1,6 +1,6 @@
 import BarChart from "../components/BarChart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDetailData } from "../store/actions/actionCreator";
+import { fetchDetailData, useConverter } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,24 +11,31 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export default function MothersPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [key, setKey] = useState("pregnancy");
+  const navigate = useNavigate();
+  const { dateConverter } = useConverter();
 
   useEffect(() => {
     dispatch(fetchDetailData(id));
   }, []);
 
+  const isLoading = useSelector(state => state.chart.isLoading);
   const pregnancyData = useSelector(state => state.chart.pregnancyData);
   const babyData = useSelector(state => state.chart.babyData);
   const motherData = useSelector(state => state.detail.motherData);
   const motherProfile = useSelector(state => state.detail.motherProfile);
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
+  const recordedDate = useSelector(state => state.detail.recordedDate);
+  const babyId = useSelector(state => state.detail.babyId);
 
-  //   console.log(motherData);
+  let rtLocation = motherProfile.UserId - 1;
+  dateConverter(motherPregnancy.tanggalDicatat);
 
   let filter = {
     key: key
@@ -58,47 +65,105 @@ export default function MothersPage() {
     </div>
   );
 
-  if (pregnancyData.length !== 0) {
-    pregnancyNull = pregnancyBar;
-  }
+  if (isLoading) {
+    motherProfile.name = `Loading...`;
+    motherProfile.NIK = `Loading...`;
+    motherProfile.address = `Loading...`;
+    motherData.name = `Loading...`;
+    motherPregnancy.beratAwal = `Loading...`;
+    motherPregnancy.tanggalDicatat = `Loading...`;
+    pregnancyNull = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
 
-  if (babyData.length !== 0) {
-    babyNull = babyBar;
+    babyNull = (
+      <Container>
+        <img
+          src="https://cdn.dribbble.com/users/194846/screenshots/1452453/loadingspinner.gif"
+          style={{ width: "500px" }}
+        />
+      </Container>
+    );
+  } else {
+    if (pregnancyData.length !== 0) {
+      pregnancyNull = pregnancyBar;
+    }
+
+    if (babyData.length !== 0) {
+      babyNull = babyBar;
+    }
   }
 
   return (
     <div>
       <Navigation />
-      <Container style={{ marginTop: "75px" }}>
-        <h3>
-          <b>
-            {motherData.name}
-          </b>
-        </h3>
+      <Container md="12" style={{ marginTop: "25px" }}>
+        <Row>
+          <Col md="1">
+            <Button
+              variant="info"
+              onClick={() => {
+                navigate(`/rt/${rtLocation}`);
+              }}
+            >
+              Back to List
+            </Button>
+          </Col>
+          <Col md="10">
+            <h3>
+              <b>
+                {motherData.name}
+              </b>
+            </h3>
+          </Col>
+        </Row>
       </Container>
       <Container>
-        <Stack style={{ marginTop: "25px" }}>
-          {/* <Col className="border" style={{ marginBottom: "50px" }}> */}
+        <Stack md="12" style={{ marginTop: "25px" }}>
           <Tabs
-            className=" mb-3"
+            className="mb-3"
             justify
             style={{ marginBottom: "50px" }}
             activeKey={key}
             onSelect={k => setKey(k)}
           >
             <Tab eventKey="pregnancy" title="Pregnancy Data">
-              {pregnancyNull}
+              <Col md="1">
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    navigate(`../edit-pregnancy-data/${id}`);
+                  }}
+                >
+                  Edit Data
+                </Button>
+              </Col>
+              <Col>
+                {pregnancyNull}
+              </Col>
             </Tab>
-            <Tab
-              eventKey="baby"
-              title="Baby's Data"
-              disabled={motherData.sudahLahir === true ? false : true}
-            >
-              {babyNull}
+            <Tab eventKey="baby" title="Baby's Data">
+              <Col md="1">
+                <Button
+                  variant="info"
+                  onClick={() => {
+                    navigate(`../edit-baby-data/${babyId}`);
+                  }}
+                >
+                  Edit Data
+                </Button>
+              </Col>
+              <Col>
+                {babyNull}
+              </Col>
             </Tab>
           </Tabs>
-          {/* </Col> */}
-          <Col>
+          <Col style={{ marginBottom: "25px" }}>
             <Row md="12" style={{ marginTop: "25px" }}>
               <Col md="6">
                 <Card>
@@ -144,16 +209,21 @@ export default function MothersPage() {
                         </Col>
                         <Col style={{ textAlign: "left" }}>
                           <div>
-                            : {motherPregnancy.beratAwal} Kg
+                            : {motherPregnancy.beratAwal}{" "}
+                            <span hidden={isLoading === true ? true : false}>
+                              Kg
+                            </span>
                           </div>
                           <div>
                             :{" "}
-                            {motherData.sudahLahir === true
-                              ? "Sudah Lahir"
-                              : "Belum Lahir"}
+                            {isLoading === true
+                              ? `Loading...`
+                              : motherData.sudahLahir === true
+                                ? "Sudah Lahir"
+                                : "Belum Lahir"}
                           </div>
                           <div>
-                            : {motherPregnancy.tanggalDicatat}
+                            : {recordedDate}
                           </div>
                         </Col>
                       </Row>
