@@ -558,8 +558,6 @@ export const useLogin = () => {
           text: "Welcome",
           icon: "success"
         });
-        dispatch(userDetailFetch(userDetail));
-        console.log(response.data);
       } catch (err) {
         console.log(err);
         Swal.fire({
@@ -570,6 +568,7 @@ export const useLogin = () => {
       }
     };
   };
+
   return {
     PostLogin
   };
@@ -622,3 +621,24 @@ export const useConverter = () => {
     islandConverter
   };
 };
+
+export function fetchUserDetail() {
+  return async function(dispatch) {
+    try {
+      const id = localStorage.getItem(`id`);
+      const username = localStorage.getItem(`username`);
+      const role = localStorage.getItem(`role`);
+
+      const userDetail = {
+        id,
+        username,
+        role
+      };
+
+      dispatch(userDetailFetch(userDetail));
+      dispatch();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
