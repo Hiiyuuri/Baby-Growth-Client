@@ -1,4 +1,3 @@
-
 import "./App.css";
 import { Route, Routes, Router } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
@@ -21,7 +20,7 @@ import NavigationGuardLogin from "./views/navguard/NavigationGuardLogin";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ margin: 0, padding: 0 }}>
       <Routes>
         <Route
           path="/"

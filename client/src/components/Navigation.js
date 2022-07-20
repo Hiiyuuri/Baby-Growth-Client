@@ -20,18 +20,18 @@ export default function Navigation() {
     dispatch(fetchUserDetail());
   }, []);
 
-  const HandleLogout = e => {
+  const HandleLogout = (e) => {
     e.preventDefault();
     localStorage.clear();
     navigate("/login");
     Swal.fire({
       title: "LOG OUT!",
       text: "Youve been out",
-      icon: "success"
+      icon: "success",
     });
   };
 
-  const userDetail = useSelector(state => state.user.userDetail);
+  const userDetail = useSelector((state) => state.user.userDetail);
 
   let userId = +userDetail.id - 1;
 
@@ -46,7 +46,7 @@ export default function Navigation() {
       expand="lg"
       style={{
         background:
-          "linear-gradient(to right, #03a786, #29b57d, #008a45, #00753b)"
+          "linear-gradient(to right, #03a786, #29b57d, #008a45, #00753b)",
       }}
     >
       <Container>
@@ -65,9 +65,16 @@ export default function Navigation() {
             style={{ paddingRight: "10px", paddingLeft: "10px" }}
           >
             <Nav.Link
-              style={{ color: "white", fontSize: "18px" }}
+              class="hover-bold"
+              style={{ color: "white", fontSize: "18px", alignSelf: "center" }}
               onClick={() => {
                 navigate(`/`);
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#D3D3D3";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "white";
               }}
             >
               Home
@@ -76,6 +83,12 @@ export default function Navigation() {
               style={{ color: "white", fontSize: "18px" }}
               onClick={() => {
                 navigate(`/register-admin`);
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#D3D3D3";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "white";
               }}
               hidden={userDetail.role !== "SuperAdmin" ? true : false}
             >
@@ -86,12 +99,24 @@ export default function Navigation() {
               onClick={() => {
                 navigate(`/map-markers`);
               }}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#D3D3D3";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "white";
+              }}
             >
               Maps
             </Nav.Link>
             <Nav.Link
               style={{ color: "white", fontSize: "18px" }}
               onClick={HandleLogout}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#D3D3D3";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "white";
+              }}
             >
               Logout
             </Nav.Link>
@@ -100,7 +125,7 @@ export default function Navigation() {
         <Nav>
           <Container>
             <Col style={{ color: "white", fontWeight: "bold" }}>
-              Hallo {userDetail.username} !
+              Welcome, {userDetail.username}!
             </Col>
             <Col style={{ color: "white" }}>
               {userDetail.role} {islandName}
