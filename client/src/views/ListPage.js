@@ -33,7 +33,17 @@ export default function ListPage() {
   }
 
   return (
-    <div>
+    <div className="h-full"
+      style={{
+        backgroundColor: "#eeee",
+        minHeight: "100vh",
+      }}
+    >
+      {/* <div
+    onClick={()=>{
+      console.log(motherListData)
+    }}
+    > test</div> */}
       <Navigation />
       <Container>
         <Row>
@@ -62,6 +72,7 @@ export default function ListPage() {
             <th>NIK</th>
             <th>Alamat</th>
             <th>Data Bayi & Kehamilan</th>
+            <th>Register Kehamilan Baru</th>
           </thead>
           <tbody>
             {motherListData.map((data) => {
