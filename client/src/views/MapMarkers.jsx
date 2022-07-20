@@ -13,18 +13,8 @@ function MapMarkers() {
   let navigate = useNavigate();
 
   const [coords, setCoords] = useState([]);
-  // const [coords, setCoords] = useState([
-  //     { id: 1, lat: -5.794452, lng: 106.484141, name: 'suparjo' },
-  //     { id: 2, lat: -5.798108, lng: 106.497670, name: 'sutiyem' },
-  //     { id: 3, lat: -5.857511, lng: 106.619297, name: 'tsunade' },
-  //     { id: 4, lat: -5.655742, lng: 106.566803, name: 'wanwan' },
-  //     { id: 5, lat: -5.653082, lng: 106.580337, name: 'vexana' },
-  // ]
-  // )
-
   useEffect(() => {
     dispatch(fetchMotherListOnly()).then((data) => {
-      // console.log(data)
       setCoords(data);
     });
   }, []);

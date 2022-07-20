@@ -49,9 +49,7 @@ function RegisterMom() {
 
   const handleCreate = e => {
     e.preventDefault();
-    console.log(inputCreate);
-
-    dispatch(registerMother(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
+     dispatch(registerMother(inputCreate))
       .then(created => {
         navigate(`/register-pregnancy?motherId=${created.data.id}`);
         Swal.fire({

@@ -19,9 +19,7 @@ function RegisterAdmin() {
 
   const handleCreate = e => {
     e.preventDefault();
-    console.log(inputCreate);
-
-    dispatch(registerUser(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
+    dispatch(registerUser(inputCreate)) 
       .then(() => {
         navigate(`/`);
       })
@@ -105,19 +103,6 @@ function RegisterAdmin() {
                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               />
             </div>
-
-            {/* <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">RT</label>
-                        <input
-                            onChange={(e) => {
-                                setInputCreate({
-                                    ...inputCreate,
-                                    RT: e.target.value
-                                })
-                            }}
-                            type="number" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div> */}
-
             <div className="w-full mb-4 text-black">
               <label className="d-block">Pilih Pulau</label>
               <select

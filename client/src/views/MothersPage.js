@@ -41,10 +41,6 @@ export default function MothersPage() {
   dateConverter(motherPregnancy.tanggalDicatat);
 
   let adminId = +userDetail.id;
-
-  console.log(motherProfile.UserId, `<<<RT`);
-  console.log(adminId);
-
   let filter = {
     key: key
   };

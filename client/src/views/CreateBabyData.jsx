@@ -10,9 +10,6 @@ import Footer from "../components/Footer";
 function CreateBabyData() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  // let { PregnancyId } = useParams()
-
-
   let [searchParams, setSearchParams] = useSearchParams();
   let [query, setQuery] = useState(searchParams.get("PregnancyId"));
 
@@ -30,9 +27,8 @@ function CreateBabyData() {
 
   const handleInput = (e) => {
     e.preventDefault();
-    // console.log(inputCreate)
 
-    dispatch(createBabyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
+    dispatch(createBabyData(inputCreate))
       .then((created) => {
         navigate(`/mothers/${inputCreate.PregnancyId}`);
         Swal.fire({
