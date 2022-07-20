@@ -5,6 +5,7 @@ import Navigation from "../components/Navigation";
 import { registerPregnancy } from "../store/actions/actionCreator";
 import Swal from "sweetalert2";
 import { Card } from "react-bootstrap";
+import Footer from "../components/Footer";
 
 function RegisterPregnancy() {
   const dispatch = useDispatch();
@@ -24,14 +25,14 @@ function RegisterPregnancy() {
   const [inputCreate, setInputCreate] = useState({
     MotherProfileId: "",
     name: "",
-    sudahLahir: Boolean
+    sudahLahir: Boolean,
   });
 
-  const handleCreate = e => {
+  const handleCreate = (e) => {
     e.preventDefault();
 
     dispatch(registerPregnancy(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
-      .then(created => {
+      .then((created) => {
         // console.log(created.sudahLahir)
         if (!created.sudahLahir) {
           navigate(`/create-preg-data?PregnancyId=${created.data.id}`);
@@ -41,10 +42,10 @@ function RegisterPregnancy() {
         Swal.fire({
           title: `Success!`,
           text: `Pregnancy with ID : ${created.data.id} Created !`,
-          icon: "success"
+          icon: "success",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -54,7 +55,7 @@ function RegisterPregnancy() {
       className="h-full"
       style={{
         backgroundColor: "#eeee",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
       <Navigation />
@@ -64,14 +65,14 @@ function RegisterPregnancy() {
           width: "40vw",
           marginTop: "30px",
           marginBottom: "10px",
-          borderRadius: "10px"
+          borderRadius: "10px",
         }}
       >
         <Card.Header
           className="h2 text-white"
           style={{
             background: "#29b57d",
-            borderRadius: "10px 10px 0px 0px"
+            borderRadius: "10px 10px 0px 0px",
           }}
         >
           Register Kehamilan Baru
@@ -81,37 +82,39 @@ function RegisterPregnancy() {
             onSubmit={handleCreate}
             className="flex flex-col mb-4 text-gray-700 text-left"
           >
-            {query &&
+            {query && (
               <div className="w-full mb-4 text-black">
                 <label className="block mb-1 font-semibold">ID Ibu</label>
                 <input
                   // readOnly type="text"
                   value={query}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      MotherProfileId: e.target.value
+                      MotherProfileId: e.target.value,
                     });
                   }}
                   className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
-              </div>}
+              </div>
+            )}
 
-            {!query &&
+            {!query && (
               <div className="w-full mb-4 text-black">
                 <label className="block mb-1 font-semibold">Id Ibu</label>
                 <input
                   // readOnly type="text"
                   // value={query ? query : ''}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      MotherProfileId: e.target.value
+                      MotherProfileId: e.target.value,
                     });
                   }}
                   className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 />
-              </div>}
+              </div>
+            )}
 
             {/* <div className="w-full mb-4 text-black">
                         <label className="block mb-1 font-semibold">Mother's Name</label>
@@ -127,10 +130,10 @@ function RegisterPregnancy() {
               </label>
 
               <input
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    name: e.target.value
+                    name: e.target.value,
                   });
                 }}
                 type="text"
@@ -141,10 +144,10 @@ function RegisterPregnancy() {
             <div className="w-full mb-4 text-black">
               <label className="d-block">Status Kehamilan</label>
               <select
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    sudahLahir: e.target.value
+                    sudahLahir: e.target.value,
                   });
                 }}
                 defaultValue="blumDiisi"
@@ -153,15 +156,15 @@ function RegisterPregnancy() {
                 <option value="blumDiisi" disabled>
                   Select your option ...
                 </option>
-                <option value={false}>Bayi sudah lahir</option>
-                <option value={true}>Bayi belum lahir</option>
+                <option value={false}>Bayi belum lahir</option>
+                <option value={true}>Bayi sudah lahir</option>
               </select>
             </div>
 
             <button
               className="btn btn-primary btn-lg btn-block "
               style={{
-                background: "#29b57d"
+                background: "#29b57d",
               }}
             >
               Submit
@@ -252,6 +255,7 @@ function RegisterPregnancy() {
 
 
             </div> */}
+      <Footer />
     </div>
   );
 }
