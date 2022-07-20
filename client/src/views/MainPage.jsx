@@ -74,7 +74,7 @@ function MainPage() {
             marginLeft: "50px",
           }}
         >
-          FORM INPUT
+          PENDAFTARAN IBU
         </div>
         <Footer />
       </div>
