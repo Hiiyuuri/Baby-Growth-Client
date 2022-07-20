@@ -100,8 +100,6 @@ export default function MothersPage() {
     }
   }
 
-  console.log(id);
-
   return (
     <div>
       <Navigation />
