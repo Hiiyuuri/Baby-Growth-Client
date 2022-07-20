@@ -32,6 +32,8 @@ export default function MothersPage() {
   const motherProfile = useSelector(state => state.detail.motherProfile);
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
   const recordedDate = useSelector(state => state.detail.recordedDate);
+  const babyId = useSelector(state => state.detail.babyId);
+  const pregnancyId = useSelector(state => state.detail.pregnancyId);
 
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
@@ -101,7 +103,7 @@ export default function MothersPage() {
   return (
     <div>
       <Navigation />
-      <Container style={{ marginTop: "25px" }}>
+      <Container md="12" style={{ marginTop: "25px" }}>
         <Row>
           <Col md="1">
             <Button
@@ -113,7 +115,7 @@ export default function MothersPage() {
               Back to List
             </Button>
           </Col>
-          <Col md="11">
+          <Col md="10">
             <h3>
               <b>
                 {motherData.name}
@@ -123,19 +125,47 @@ export default function MothersPage() {
         </Row>
       </Container>
       <Container>
-        <Stack style={{ marginTop: "25px" }}>
+        <Stack md="12" style={{ marginTop: "25px" }}>
           <Tabs
-            className=" mb-3"
+            className="mb-3"
             justify
             style={{ marginBottom: "50px" }}
             activeKey={key}
             onSelect={k => setKey(k)}
           >
             <Tab eventKey="pregnancy" title="Pregnancy Data">
-              {pregnancyNull}
+              <Col md="1">
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    navigate(`../edit-pregnancy-data/${pregnancyId}`);
+                  }}
+                >
+                  Edit Data
+                </Button>
+              </Col>
+              <Col>
+                {pregnancyNull}
+              </Col>
             </Tab>
-            <Tab eventKey="baby" title="Baby's Data">
-              {babyNull}
+            <Tab
+              eventKey="baby"
+              title="Baby's Data"
+              disabled={motherData.sudahLahir ? false : true}
+            >
+              <Col md="1">
+                <Button
+                  variant="info"
+                  onClick={() => {
+                    navigate(`../edit-baby-data/${babyId}`);
+                  }}
+                >
+                  Edit Data
+                </Button>
+              </Col>
+              <Col>
+                {babyNull}
+              </Col>
             </Tab>
           </Tabs>
           <Col style={{ marginBottom: "25px" }}>

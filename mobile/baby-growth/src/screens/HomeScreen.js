@@ -37,7 +37,7 @@ export default function HomeScreen(props) {
         }
   
       }
-  
+      navigation.setOptions({ title: "Title"})
       fn();
     }, [needtoRerender])
   );
@@ -45,7 +45,7 @@ export default function HomeScreen(props) {
   // useEffect(() => {
     
 
-  // }, [needtoRerender])
+  // },[])
 
   const navigateToDetail = (event=>{
     //console.log(data);

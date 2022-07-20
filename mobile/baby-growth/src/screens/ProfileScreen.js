@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {Button,FlatList,Text,TextInput,View,TouchableHighlight,Image,StatusBar,StyleSheet} from "react-native";
+import {Button,FlatList,Text,TextInput,View,TouchableHighlight,Image,StatusBar,StyleSheet,TouchableOpacity} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfileScreen(props) {
   const {navigation}=props;
   const [mother,setMother]=useState({})
+
+  const ubahPassword=(event)=>{
+    // let res = await fetch("https://restaurant-server-p3-challenge.herokuapp.com/menu");
+    // res= res.json()
+    // console.log(res);
+    // console.log(loginInfo);
+    navigation.navigate('ChangePassword');
+    
+    
+  }
 
   useEffect(() => {
     console.log("Use effect called")
@@ -16,7 +26,7 @@ export default function ProfileScreen(props) {
         console.log(valueName);
         setMother({address:valueAddress,NIK:valueNIK,name:valueName});
       }else{
-        navigation.navigate('Login');
+        navigation.navigate('Logout');
       }
       
     }
@@ -25,11 +35,22 @@ export default function ProfileScreen(props) {
 
 }, [])
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor: "#FFC0CB" }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor: "#008080" }}>
     <Image style={styles.image} source={require('../../assets/logoedit.png')} />
-    <Text style={{ color: 'white' }}>Hello {mother.name}</Text>
-      <Text style={{ color: 'white' }}>Your address: {mother.address}</Text>
-      <Text style={{ color: 'white' }}>Your NIK: {mother.NIK}</Text>
+    <Text style={{ color: 'white',fontSize: 22,fontWeight: 'bold',marginBottom: 10}}>Halo Ibu {mother.name}</Text>
+    <View style={{flexDirection: 'row'}}>
+      <View style={{marginRight: 4}}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'left',color: 'white',marginBottom: 10 }}>Alamat Anda</Text>
+      <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'left',color: 'white' }}>NIK Anda</Text>
+      </View>
+      <View style={{marginRight: 4}}>
+      <Text style={{ fontSize: 18, textAlign: 'left',color: 'white',marginBottom: 10 }}>: {mother.address}</Text>
+      <Text style={{ fontSize: 18, textAlign: 'left',color: 'white' }}>: {mother.NIK}</Text>
+      </View>
+      </View>
+      <TouchableOpacity onPress={ubahPassword} style={styles.loginBtn}>
+        <Text style={{ color: 'white' }}>Ganti Password</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -38,7 +59,7 @@ export default function ProfileScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFC0CB",
+    backgroundColor: "#008080",
     alignItems: "center",
     justifyContent: "center",
   },

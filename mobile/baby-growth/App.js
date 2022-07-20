@@ -17,6 +17,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ArticleScreen from './src/screens/ArticleScreen';
 import ArticleDetail from './src/screens/ArticleDetail';
 import ChartIbu from './src/screens/ChartIbu';
+import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 
 function MyBottomDrawer() {
   
@@ -26,7 +27,8 @@ function MyBottomDrawer() {
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarButton: [
           "Articles",
-          "ArticleDetail"
+          "ArticleDetail",
+          "ChangePassword"
         ].includes(route.name)
           ? () => {
               return null;
@@ -40,6 +42,18 @@ function MyBottomDrawer() {
           component={ArticleScreen}
           options={{
             tabBarLabel: 'Articles',
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="chart-timeline" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="ChangePassword"
+          component={ChangePasswordScreen}
+          options={{
+            tabBarLabel: 'ChangePassword',
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="chart-timeline" color={color} size={size} />
             ),
@@ -50,6 +64,7 @@ function MyBottomDrawer() {
           component={ArticleDetail}
           options={{
             tabBarLabel: 'ArticleDetail',
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="chart-timeline" color={color} size={size} />
             ),
@@ -60,6 +75,7 @@ function MyBottomDrawer() {
           component={HomeScreen}
           options={{
             tabBarLabel: 'Categories',
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="chart-timeline" color={color} size={size} />
             ),
@@ -70,6 +86,7 @@ function MyBottomDrawer() {
           component={ChartIbu}
           options={{
             tabBarLabel: 'Baby Growth',
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="calendar-month" color={color} size={size} />
             ),
@@ -80,6 +97,7 @@ function MyBottomDrawer() {
           component={ProfileScreen}
           options={{
             tabBarLabel: 'Profile',
+            headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="account-circle" color={color} size={size} />
             ),
@@ -121,11 +139,18 @@ function MyDrawer() {
       useLegacyImplementation
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={MyBottomDrawer}/>
-      <Drawer.Screen name="Logout" component={LoginScreen} />
+      <Drawer.Screen name="Home" component={MyBottomDrawer} options={{
+            headerTitle:'Welcome to BabyGrowth',
+            headerTintColor: '#008080',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          }
+      }}/>
+      <Drawer.Screen name="Logout" component={LoginScreen} options={{
+            headerShown: false
+      }}/>
       {/* <Drawer.Screen name="Home" component={HomeScreen}/> */}
         {/* <Drawer.Screen name="ChartBayi" component={ChartBayi} /> */}
-        <Drawer.Screen name="Settings" component={ProfileScreen} />
     </Drawer.Navigator>
   );
 }

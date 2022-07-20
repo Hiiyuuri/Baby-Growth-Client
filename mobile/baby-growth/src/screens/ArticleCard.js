@@ -7,7 +7,11 @@ export default function ArticleCard({  item,getDetail }) {
         container: {
             flex: 1,
             marginTop: StatusBar.currentHeight || 0,
-            background: '#f9f2ff'
+            background: '#f9f2ff',
+            borderRadius: 10,
+            marginRight: 15,
+                    paddingRight: 15,
+                    paddingBottom: 30,
         },
         item: {
             backgroundColor: '#f9c2ff',
@@ -17,6 +21,8 @@ export default function ArticleCard({  item,getDetail }) {
         },
         title: {
             fontSize: 32,
+            textAlign: 'center',
+            color: 'white'
         },
         description: {
             fontSize: 20, 
@@ -41,7 +47,10 @@ export default function ArticleCard({  item,getDetail }) {
 
     return (
         <View style={styles.container}>
-            <Card key={item.id}>
+            <Card key={item.id} style={{
+    backgroundColor: 'white',
+    borderRadius: 15,
+    overflow: 'hidden'}}>
                 <Card.Content>
                     <Title>{item.id}</Title>
                 </Card.Content>

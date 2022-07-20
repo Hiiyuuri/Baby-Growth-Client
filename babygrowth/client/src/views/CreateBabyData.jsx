@@ -4,12 +4,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Navigation from "../components/Navigation";
-import { createPregnancyData } from "../store/actions/actionCreator";
+import { createBabyData } from "../store/actions/actionCreator";
 
 
 
-
-function CreatePregnancyData() {
+function CreateBabyData() {
     const dispatch = useDispatch()
     let navigate = useNavigate()
     // let { PregnancyId } = useParams()
@@ -37,12 +36,12 @@ function CreatePregnancyData() {
         e.preventDefault()
         // console.log(inputCreate)
 
-        dispatch(createPregnancyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
+        dispatch(createBabyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
             .then((created) => {
                 navigate(`/`)
                 Swal.fire({
                     title: `Success!`,
-                    text: `Success creating pregnancy data with ID: ${created.data.id} `,
+                    text: `Success creating baby data with ID: ${created.data.id} `,
                     icon: "success",
                 });
             })
@@ -67,7 +66,7 @@ function CreatePregnancyData() {
                         background: "#29b57d",
                         borderRadius: "10px 10px 0px 0px"
                     }}>
-                    Buat Data Kehamilan Baru
+                    Buat Data Bayi Baru
 
                 </Card.Header>
                 <Card.Body className="p-4" style={{ padding: "10px" }}>
@@ -90,7 +89,7 @@ function CreatePregnancyData() {
                         </div>
 
                         <div className="w-full mb-4 text-black">
-                            <label className="block mb-1 font-semibold">Berat Awal Ibu</label>
+                            <label className="block mb-1 font-semibold">Berat Awal Bayi</label>
 
                             <input
                                 onChange={(e) => {
@@ -101,6 +100,7 @@ function CreatePregnancyData() {
                                 }}
                                 type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
                         </div>
+
 
                         <button
                             className="btn btn-primary btn-lg btn-block "
@@ -124,4 +124,4 @@ function CreatePregnancyData() {
     );
 }
 
-export default CreatePregnancyData;
+export default CreateBabyData;

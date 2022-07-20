@@ -40,7 +40,7 @@ export default function ArticleScreen({ navigation, route }) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor: "#008080" }}>
-    <Text style={{fontSize: 32}}>Articles</Text>
+    <Text style={{fontSize: 32,color: 'white'}}>Articles</Text>
       { article.length!=0? <FlatList
             data={article}
             renderItem={({item})=><ArticleCard item={item} getDetail={navigateToDetail} ></ArticleCard>}

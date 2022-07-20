@@ -9,17 +9,19 @@ export default function CategoryCard({ getDetail, item }) {
             marginTop: StatusBar.currentHeight || 0,
             marginLeft: 5,
             marginRight: 5,
-            background: '#008080'
+            background: '#008080',
         },
         item: {
             backgroundColor: '#f9c2ff',
             padding: 5,
             marginVertical: 8,
             marginHorizontal: 16,
+            alignItems: "center",
+    justifyContent: "center",
         },
         title: {
-            fontSize: 32,
-            color: 'green'
+            color: '#008080',
+            textAlign: 'center'
         },
         description: {
             fontSize: 20, 
@@ -43,11 +45,14 @@ export default function CategoryCard({ getDetail, item }) {
 
     return (
         <View style={styles.container}>
-            <Card key={item.id}>
+            <Card key={item.id} onPress={onClickedDetail} style={{
+    backgroundColor: 'white',
+    borderRadius: 10,
+    overflow: 'hidden'}}>
                 <Card.Cover source={{ uri: item.imageUrl }} />
-                <Title>{item.names}</Title>
+                <Title style={styles.title}>{item.names}</Title>
                 <Card.Actions>
-                    <Button onPress={onClickedDetail}>Get articles</Button>
+                    <Button onPress={onClickedDetail}>Lihat artikel</Button>
                 </Card.Actions>
             </Card>
         </View>

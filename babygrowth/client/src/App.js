@@ -13,9 +13,13 @@ import RegisterPregnancy from "./views/RegisterPregnancy";
 import MapMarkers from "./views/MapMarkers";
 import Modal from "./components/Modal/Modal"
 import CreatePregnancyData from "./views/CreatePregnancyData";
-import InputBabyData from "./views/InputBabyData";
+import InputBabyData from "./views/EditPregnancyData";
 import Login from './views/Login/Login';
 import MainPage from "./views/MainPage";
+import CreateBabyData from "./views/CreateBabyData";
+// import InputPregnancyData from "./views/EditBabyData";
+import EditBabyData from "./views/EditBabyData";
+import EditPregnancyData from "./views/EditPregnancyData";
 
 function App() {
   return (
@@ -27,17 +31,18 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/rt/:id" element={<ListPage />} />
         <Route path="/mothers/:id" element={<MothersPage />} />
-        <Route path="/register-mom" element={<RegisterMom />} />
+
         <Route path="/register-admin" element={<RegisterAdmin />} />
-        {/* <Route path="/register-pregnancy/:motherId" element={<RegisterPregnancy />} /> */}
+        <Route path="/register-mom" element={<RegisterMom />} />
         <Route path="/register-pregnancy" element={<RegisterPregnancy />} />
-        {/* <Route path="/input-preg-data/:PregnancyId" element={<InputPregData />} /> */}
+
         <Route path="/create-preg-data" element={<CreatePregnancyData />} />
-        <Route path="/input-baby-data" element={<InputBabyData />} />
+        <Route path="/create-baby-data" element={<CreateBabyData />} />
+
+        <Route path="/edit-pregnancy-data/:PregnancyDataId" element={<EditPregnancyData />} />
+        <Route path="/edit-baby-data/:BabyDataId" element={<EditBabyData />} />
+
         <Route path="/map-markers" element={<MapMarkers />} />
-
-
-
       </Routes>
     </div>
   );

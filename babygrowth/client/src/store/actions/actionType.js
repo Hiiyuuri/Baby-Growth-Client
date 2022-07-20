@@ -13,10 +13,13 @@ export const PREGNANCY_DETAIL = "profile/motherData";
 export const MOTHER_DETAIL = "profile/motherDetail";
 export const MOTHER_PREGNANCY = "profile/motherPregnancy";
 export const RECORDED_DATE = "profile/recordedDate";
+export const BABY_ID = "profile/babyId";
+export const PREGNANCY_ID = "profile/pregnancyId";
 
 export const MOTHER_LIST_BY_RT_FETCH_SUCCESS = "listByRt/motherList";
 export const WATCHLIST_FETCH_SUCCESS = "list/watchlist";
 
 export const ALL_USER_FETCH_SUCCESS = "userAll/fetchSuccess";
+export const USER_DETAIL = "userDetail/fetchSuccess";
 
 export const FETCH_LOADING = "fetch/loading";

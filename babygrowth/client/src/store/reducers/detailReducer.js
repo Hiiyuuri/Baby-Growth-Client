@@ -2,14 +2,18 @@ import {
   PREGNANCY_DETAIL,
   MOTHER_DETAIL,
   MOTHER_PREGNANCY,
-  RECORDED_DATE
+  RECORDED_DATE,
+  BABY_ID,
+  PREGNANCY_ID
 } from "../actions/actionType";
 
 const initialState = {
   motherData: {},
   motherProfile: {},
   motherPregnancy: {},
-  recordedDate: ""
+  recordedDate: "",
+  babyId: 0,
+  pregnancyId: 0
 };
 
 function detailReducer(state = initialState, action) {
@@ -22,6 +26,10 @@ function detailReducer(state = initialState, action) {
       return { ...state, motherPregnancy: action.payload };
     case RECORDED_DATE:
       return { ...state, recordedDate: action.payload };
+    case BABY_ID:
+      return { ...state, babyId: action.payload };
+    case PREGNANCY_ID:
+      return { ...state, pregnancyId: action.payload };
 
     default:
       return state;

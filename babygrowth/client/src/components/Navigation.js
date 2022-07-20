@@ -5,8 +5,21 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../asset/logo.png";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import Col from "react-bootstrap/Col";
+import { useConverter, fetchUserDetail } from "../store/actions/actionCreator";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 export default function Navigation() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { islandConverter } = useConverter();
+
+  useEffect(() => {
+    dispatch(fetchUserDetail());
+  }, []);
+
   const HandleLogout = e => {
     e.preventDefault();
     localStorage.clear();
@@ -17,6 +30,17 @@ export default function Navigation() {
       icon: "success"
     });
   };
+
+  const userDetail = useSelector(state => state.user.userDetail);
+
+  let userId = +userDetail.id - 1;
+
+  let islandName = islandConverter(userId);
+
+  if (userDetail.id === 1) {
+    islandName = "";
+  }
+
   return (
     <Navbar
       expand="lg"
@@ -54,7 +78,7 @@ export default function Navigation() {
             <Nav.Link
               style={{ color: "white", fontSize: "18px" }}
               onClick={() => {
-                navigate(`/`);
+                navigate(`/map-markers`);
               }}
             >
               Maps
@@ -67,6 +91,16 @@ export default function Navigation() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <Nav>
+          <Container>
+            <Col style={{ color: "white", fontWeight: "bold" }}>
+              Hallo {userDetail.username} !
+            </Col>
+            <Col style={{ color: "white" }}>
+              {userDetail.role} {islandName}
+            </Col>
+          </Container>
+        </Nav>
       </Container>
     </Navbar>
   );
