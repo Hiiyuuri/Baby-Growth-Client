@@ -5,6 +5,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Navigation from "../components/Navigation";
 import { createPregnancyData } from "../store/actions/actionCreator";
+import Footer from "../components/Footer";
 
 function CreatePregnancyData() {
   const dispatch = useDispatch();
@@ -23,23 +24,23 @@ function CreatePregnancyData() {
   const [inputCreate, setInputCreate] = useState({
     PregnancyId: "",
     beratAwal: "",
-    beratBulanan: ""
+    beratBulanan: "",
   });
 
-  const handleInput = e => {
+  const handleInput = (e) => {
     e.preventDefault();
     // console.log(inputCreate)
 
     dispatch(createPregnancyData(inputCreate)) // =============== Nanti tinggal post axios lewat store/action
-      .then(created => {
+      .then((created) => {
         navigate(`/`);
         Swal.fire({
           title: `Success!`,
           text: `Success creating pregnancy data with ID: ${created.data.id} `,
-          icon: "success"
+          icon: "success",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -49,7 +50,7 @@ function CreatePregnancyData() {
       className="h-full"
       style={{
         backgroundColor: "#eeee",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
       <Navigation />
@@ -60,14 +61,14 @@ function CreatePregnancyData() {
           width: "40vw",
           marginTop: "30px",
           marginBottom: "10px",
-          borderRadius: "10px"
+          borderRadius: "10px",
         }}
       >
         <Card.Header
           className="h2 text-white"
           style={{
             background: "#29b57d",
-            borderRadius: "10px 10px 0px 0px"
+            borderRadius: "10px 10px 0px 0px",
           }}
         >
           Buat Data Kehamilan Baru
@@ -83,10 +84,10 @@ function CreatePregnancyData() {
               </label>
               <input
                 value={inputCreate.PregnancyId}
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    PregnancyId: e.target.value
+                    PregnancyId: e.target.value,
                   });
                 }}
                 type="text"
@@ -98,10 +99,10 @@ function CreatePregnancyData() {
               <label className="block mb-1 font-semibold">Berat Awal Ibu</label>
 
               <input
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    beratAwal: e.target.value
+                    beratAwal: e.target.value,
                   });
                 }}
                 type="text"
@@ -112,7 +113,7 @@ function CreatePregnancyData() {
             <button
               className="btn btn-primary btn-lg btn-block "
               style={{
-                background: "#29b57d"
+                background: "#29b57d",
               }}
             >
               Submit
@@ -120,6 +121,7 @@ function CreatePregnancyData() {
           </form>
         </Card.Body>
       </Card>
+      <Footer />
     </div>
   );
 }

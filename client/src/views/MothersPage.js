@@ -13,6 +13,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Footer from "../components/Footer";
 
 export default function MothersPage() {
   const dispatch = useDispatch();
@@ -25,21 +26,21 @@ export default function MothersPage() {
     dispatch(fetchDetailData(id));
   }, []);
 
-  const isLoading = useSelector(state => state.chart.isLoading);
-  const pregnancyData = useSelector(state => state.chart.pregnancyData);
-  const babyData = useSelector(state => state.chart.babyData);
-  const motherData = useSelector(state => state.detail.motherData);
-  const motherProfile = useSelector(state => state.detail.motherProfile);
-  const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
-  const recordedDate = useSelector(state => state.detail.recordedDate);
-  const babyId = useSelector(state => state.detail.babyId);
-  const pregnancyId = useSelector(state => state.detail.pregnancyId);
+  const isLoading = useSelector((state) => state.chart.isLoading);
+  const pregnancyData = useSelector((state) => state.chart.pregnancyData);
+  const babyData = useSelector((state) => state.chart.babyData);
+  const motherData = useSelector((state) => state.detail.motherData);
+  const motherProfile = useSelector((state) => state.detail.motherProfile);
+  const motherPregnancy = useSelector((state) => state.detail.motherPregnancy);
+  const recordedDate = useSelector((state) => state.detail.recordedDate);
+  const babyId = useSelector((state) => state.detail.babyId);
+  const pregnancyId = useSelector((state) => state.detail.pregnancyId);
 
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
 
   let filter = {
-    key: key
+    key: key,
   };
 
   let pregnancyNull = (
@@ -119,9 +120,7 @@ export default function MothersPage() {
           </Col>
           <Col md="10">
             <h3>
-              <b>
-                {motherData.name}
-              </b>
+              <b>{motherData.name}</b>
             </h3>
           </Col>
         </Row>
@@ -133,7 +132,7 @@ export default function MothersPage() {
             justify
             style={{ marginBottom: "50px" }}
             activeKey={key}
-            onSelect={k => setKey(k)}
+            onSelect={(k) => setKey(k)}
           >
             <Tab eventKey="pregnancy" title="Pregnancy Data">
               <Col md="1">
@@ -146,9 +145,7 @@ export default function MothersPage() {
                   Edit Data
                 </Button>
               </Col>
-              <Col>
-                {pregnancyNull}
-              </Col>
+              <Col>{pregnancyNull}</Col>
             </Tab>
             <Tab
               eventKey="baby"
@@ -165,9 +162,7 @@ export default function MothersPage() {
                   Edit Data
                 </Button>
               </Col>
-              <Col>
-                {babyNull}
-              </Col>
+              <Col>{babyNull}</Col>
             </Tab>
           </Tabs>
           <Col style={{ marginBottom: "25px" }}>
@@ -186,15 +181,9 @@ export default function MothersPage() {
                           </ul>
                         </Col>
                         <Col style={{ textAlign: "left" }}>
-                          <div>
-                            : {motherProfile.name}
-                          </div>
-                          <div>
-                            : {motherProfile.NIK}
-                          </div>
-                          <div>
-                            : {motherProfile.address}
-                          </div>
+                          <div>: {motherProfile.name}</div>
+                          <div>: {motherProfile.NIK}</div>
+                          <div>: {motherProfile.address}</div>
                         </Col>
                       </Row>
                     </Card.Text>
@@ -226,12 +215,10 @@ export default function MothersPage() {
                             {isLoading === true
                               ? `Loading...`
                               : motherData.sudahLahir === true
-                                ? "Sudah Lahir"
-                                : "Belum Lahir"}
+                              ? "Sudah Lahir"
+                              : "Belum Lahir"}
                           </div>
-                          <div>
-                            : {recordedDate}
-                          </div>
+                          <div>: {recordedDate}</div>
                         </Col>
                       </Row>
                     </Card.Text>
@@ -242,6 +229,7 @@ export default function MothersPage() {
           </Col>
         </Stack>
       </Container>
+      <Footer />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import {
   useDataRT,
   watchlist,
   allUsers,
-  useConverter
+  useConverter,
 } from "../store/actions/actionCreator";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
@@ -21,6 +21,7 @@ import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import Footer from "../components/Footer";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -34,15 +35,15 @@ export default function Dashboard() {
     dispatch(allUsers());
   }, []);
 
-  const isLoading = useSelector(state => state.chart.isLoading);
-  const combinedData = useSelector(state => state.chart.combinedData);
-  const numRT = useSelector(state => state.chart.dataByRT);
-  const kurang = useSelector(state => state.statistic.kurang);
-  const cukup = useSelector(state => state.statistic.cukup);
-  const berlebih = useSelector(state => state.statistic.berlebih);
-  const pregnantMother = useSelector(state => state.statistic.pregnantMother);
-  const watchList = useSelector(state => state.list.watchList);
-  const users = useSelector(state => state.user.allUsers);
+  const isLoading = useSelector((state) => state.chart.isLoading);
+  const combinedData = useSelector((state) => state.chart.combinedData);
+  const numRT = useSelector((state) => state.chart.dataByRT);
+  const kurang = useSelector((state) => state.statistic.kurang);
+  const cukup = useSelector((state) => state.statistic.cukup);
+  const berlebih = useSelector((state) => state.statistic.berlebih);
+  const pregnantMother = useSelector((state) => state.statistic.pregnantMother);
+  const watchList = useSelector((state) => state.list.watchList);
+  const users = useSelector((state) => state.user.allUsers);
 
   let rtKurang = "";
   let rtCukup = "";
@@ -135,7 +136,7 @@ export default function Dashboard() {
       style={{
         backgroundColor: "#eeee",
         height: "auto" || "100vh",
-        paddingBottom: "25px"
+        paddingBottom: "25px",
       }}
     >
       <Navigation />
@@ -146,14 +147,14 @@ export default function Dashboard() {
               style={{
                 borderRadius: "10px",
                 background: "linear-gradient(to bottom, #EB6A47, #E74418)",
-                height: "100px"
+                height: "100px",
               }}
             >
               <Card.Header
                 style={{
                   color: "white",
                   height: "25px",
-                  paddingTop: "0px"
+                  paddingTop: "0px",
                 }}
               >
                 Pulau Dengan Gizi Terburuk
@@ -161,12 +162,10 @@ export default function Dashboard() {
               <Card.Body
                 style={{
                   height: "50px",
-                  padding: "10px"
+                  padding: "10px",
                 }}
               >
-                <b style={{ color: "white" }}>
-                  {rtKurang}
-                </b>
+                <b style={{ color: "white" }}>{rtKurang}</b>
               </Card.Body>
             </Card>
           </Col>
@@ -175,14 +174,14 @@ export default function Dashboard() {
               style={{
                 borderRadius: "10px",
                 background: "linear-gradient(to bottom, #00A855, #00753B)",
-                height: "100px"
+                height: "100px",
               }}
             >
               <Card.Header
                 style={{
                   color: "white",
                   height: "25px",
-                  paddingTop: "0px"
+                  paddingTop: "0px",
                 }}
               >
                 Pulau Dengan Gizi Ideal
@@ -191,12 +190,10 @@ export default function Dashboard() {
                 style={{
                   height: "50px",
                   padding: "10px",
-                  color: "white"
+                  color: "white",
                 }}
               >
-                <b>
-                  {rtCukup}
-                </b>
+                <b>{rtCukup}</b>
               </Card.Body>
             </Card>
           </Col>
@@ -206,14 +203,14 @@ export default function Dashboard() {
                 borderRadius: "10px",
                 background: "linear-gradient(to bottom, #FDE723, #FFCD20)",
                 height: "100px",
-                color: "#050336"
+                color: "#050336",
               }}
             >
               <Card.Header
                 style={{
                   color: "#050336",
                   height: "25px",
-                  paddingTop: "0px"
+                  paddingTop: "0px",
                 }}
               >
                 Pulau Dengan Gizi Berlebih
@@ -222,12 +219,10 @@ export default function Dashboard() {
                 style={{
                   height: "50px",
                   padding: "10px",
-                  backgroundColor: "#ffce5633"
+                  backgroundColor: "#ffce5633",
                 }}
               >
-                <b>
-                  {rtBerlebih}
-                </b>
+                <b>{rtBerlebih}</b>
               </Card.Body>
             </Card>
           </Col>
@@ -237,9 +232,7 @@ export default function Dashboard() {
             <Stack>
               <Card style={{ marginBottom: "25px", borderRadius: "10px" }}>
                 <Card.Header>
-                  <div style={{ textAlign: "center" }}>
-                    {title}
-                  </div>
+                  <div style={{ textAlign: "center" }}>{title}</div>
                 </Card.Header>
                 <Col />
                 <DropdownButton
@@ -250,17 +243,17 @@ export default function Dashboard() {
                   style={{ marginBottom: "20px", marginTop: "20px" }}
                 >
                   <Dropdown.Item
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault(dispatch(fetchCombinedData()));
                     }}
                   >
                     Seluruh Pulau
                   </Dropdown.Item>
-                  {users.map(el => {
+                  {users.map((el) => {
                     return (
                       <Dropdown.Item
                         as="button"
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault(fetchRTData(el.noRT));
                         }}
                         key={el.noRT}
@@ -284,15 +277,9 @@ export default function Dashboard() {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>
-                          {combinedData[0]}
-                        </td>
-                        <td>
-                          {combinedData[1]}
-                        </td>
-                        <td>
-                          {combinedData[2]}
-                        </td>
+                        <td>{combinedData[0]}</td>
+                        <td>{combinedData[1]}</td>
+                        <td>{combinedData[2]}</td>
                       </tr>
                     </tbody>
                   </Table>
@@ -301,9 +288,7 @@ export default function Dashboard() {
               <Card style={{ borderRadius: "10px" }}>
                 <Card.Header>Jumlah Ibu Hamil</Card.Header>
                 <Card.Body>
-                  <b>
-                    {pregnantMother}
-                  </b>
+                  <b>{pregnantMother}</b>
                 </Card.Body>
               </Card>
             </Stack>
@@ -318,7 +303,7 @@ export default function Dashboard() {
                 <Col>
                   <Row
                     style={{
-                      textAlign: "left"
+                      textAlign: "left",
                     }}
                   >
                     <Col style={{ padding: "5px" }}>
@@ -330,9 +315,7 @@ export default function Dashboard() {
                     <Col style={{ padding: "5px" }}>
                       <Button variant="danger">Critical</Button>
                     </Col>
-                    <Col>
-                      {">"} 5 Bayi Dengan Gizi Kurang
-                    </Col>
+                    <Col>{">"} 5 Bayi Dengan Gizi Kurang</Col>
                   </Row>
                 </Col>
               </Card.Body>
@@ -347,7 +330,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {watchList.map(el => {
+                  {watchList.map((el) => {
                     return <WatchlistRow watchlist={el} />;
                   })}
                 </tbody>
@@ -356,6 +339,7 @@ export default function Dashboard() {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 }
