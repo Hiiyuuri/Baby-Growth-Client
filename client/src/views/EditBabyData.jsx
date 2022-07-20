@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -92,17 +93,17 @@ function EditBabyData() {
         // console.log(inputCreate)
 
         dispatch(inputBabyDataAct({ ...inputCreate, BabyDataId })) // =============== Nanti tinggal post axios lewat store/action
-        .then(() => {
-            navigate(`/`)
-            Swal.fire({
-                title: `Success!`,
-                text: `Success updating baby data `,
-                icon: "success",
-            });
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then(() => {
+                navigate(`/`)
+                Swal.fire({
+                    title: `Success!`,
+                    text: `Success updating baby data `,
+                    icon: "success",
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     if (loading) {
@@ -115,373 +116,382 @@ function EditBabyData() {
         <div>
             <Navigation />
 
-            <div className="col-md-5 mx-auto border rounded p-5"
-                style={{ marginTop: "40px", marginBottom: "40px" }}>
-                <h1 className="text-2xl font-bold mb-5 text-center"> Input/Edit Baby Data</h1>
+            <Card className="mx-auto" style={{ width: "40vw", marginTop: "30px", marginBottom: "10px", borderRadius: "10px" }}>
+                <Card.Header className="h2 text-white"
+                    style={{
+                        background: "#29b57d",
+                        borderRadius: "10px 10px 0px 0px"
+                    }}>
+                    Perbarui Data Bayi
 
-                <form
-                    onSubmit={handleInput}
-                    className="flex flex-col mb-4 text-gray-700 text-left">
+                </Card.Header>
+                <Card.Body className="p-4" style={{ padding: "10px" }}>
+                    <form
+                        onSubmit={handleInput}
+                        className="flex flex-col mb-4 text-gray-700 text-left">
 
-                    <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Baby Data ID</label>
-                        <input
-                            readOnly
-                            value={BabyDataId}
+                        <div className="w-full mb-4 text-black">
+                            <label className="block mb-1 font-weight-bold">ID Data Bayi (Baby Data ID)</label>
+                            <input
+                                readOnly
+                                value={BabyDataId}
 
-                            type="text"
-                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div>
+                                type="text"
+                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                        </div>
 
-                    <div className="w-full mb-4 text-black">
-                        <label className="block mb-1 font-semibold">Initial Weight (kg)</label>
+                        <div className="w-full mb-4 text-black">
+                            <label className="block mb-1 font-weight-bold">Berat Awal Bayi (kg)</label>
 
-                        <input
-                            value={inputCreate.beratAwal}
-                            onChange={(e) => {
-                                setInputCreate({
-                                    ...inputCreate,
-                                    beratAwal: e.target.value
-                                })
-                            }}
-                            type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                    </div>
+                            <input
+                                value={inputCreate.beratAwal}
+                                onChange={(e) => {
+                                    setInputCreate({
+                                        ...inputCreate,
+                                        beratAwal: e.target.value
+                                    })
+                                }}
+                                type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                        </div>
 
-                    <div className="w-full mb-4 text-black">
-                        <p className="block mb-1 font-weight-bold">Monthly Weight (kg)</p>
+                        <div className="w-full mb-4 text-black">
+                            <p className="block mb-1 font-weight-bold">Berat Bulanan Bayi (kg)</p>
 
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-sm">
-                                    <div >
-                                        <label className="px-2">Month 1 :</label>
-                                        <input
-                                            value={inputCreate.b1}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b1: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-sm">
+                                        <div >
+                                            <label className="px-2">Month 1 :</label>
+                                            <input
+                                                value={inputCreate.b1}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b1: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+                                        <div >
+                                            <label className="px-2">Month 2 :</label>
+                                            <input
+                                                value={inputCreate.b2}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b2: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+                                        <div >
+                                            <label className="px-2">Month 3 :</label>
+                                            <input
+                                                value={inputCreate.b3}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b3: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 4 :</label>
+                                            <input
+                                                value={inputCreate.b4}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b4: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 5 :</label>
+                                            <input
+                                                value={inputCreate.b5}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b5: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 6 :</label>
+                                            <input
+                                                value={inputCreate.b6}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b6: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 7 :</label>
+                                            <input
+                                                value={inputCreate.b7}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b7: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 8 :</label>
+                                            <input
+                                                value={inputCreate.b8}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b8: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 9 :</label>
+                                            <input
+                                                value={inputCreate.b9}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b9: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 10 :</label>
+                                            <input
+                                                value={inputCreate.b10}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b10: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 11 :</label>
+                                            <input
+                                                value={inputCreate.b11}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b11: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+
+                                        <div >
+                                            <label className="px-2">Month 12 :</label>
+                                            <input
+                                                value={inputCreate.b12}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b12: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
                                     </div>
-                                    <div >
-                                        <label className="px-2">Month 2 :</label>
-                                        <input
-                                            value={inputCreate.b2}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b2: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-                                    <div >
-                                        <label className="px-2">Month 3 :</label>
-                                        <input
-                                            value={inputCreate.b3}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b3: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                    <div className="col-sm">
+                                        <div >
+                                            <label className="px-2">Month 13 :</label>
+                                            <input
+                                                value={inputCreate.b13}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b13: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+                                        <div >
+                                            <label className="px-2">Month 14 :</label>
+                                            <input
+                                                value={inputCreate.b14}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b14: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
+                                        <div >
+                                            <label className="px-2">Month 15 :</label>
+                                            <input
+                                                value={inputCreate.b15}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b15: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 4 :</label>
-                                        <input
-                                            value={inputCreate.b4}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b4: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 16 :</label>
+                                            <input
+                                                value={inputCreate.b16}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b16: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 5 :</label>
-                                        <input
-                                            value={inputCreate.b5}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b5: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 17 :</label>
+                                            <input
+                                                value={inputCreate.b17}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b17: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 6 :</label>
-                                        <input
-                                            value={inputCreate.b6}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b6: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 18 :</label>
+                                            <input
+                                                value={inputCreate.b18}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b18: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 7 :</label>
-                                        <input
-                                            value={inputCreate.b7}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b7: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 19 :</label>
+                                            <input
+                                                value={inputCreate.b19}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b19: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 8 :</label>
-                                        <input
-                                            value={inputCreate.b8}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b8: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 20 :</label>
+                                            <input
+                                                value={inputCreate.b20}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b20: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 9 :</label>
-                                        <input
-                                            value={inputCreate.b9}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b9: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 21 :</label>
+                                            <input
+                                                value={inputCreate.b21}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b21: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 10 :</label>
-                                        <input
-                                            value={inputCreate.b10}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b10: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 22 :</label>
+                                            <input
+                                                value={inputCreate.b22}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b22: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 11 :</label>
-                                        <input
-                                            value={inputCreate.b11}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b11: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
+                                        <div >
+                                            <label className="px-2">Month 23 :</label>
+                                            <input
+                                                value={inputCreate.b23}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b23: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
 
-                                    <div >
-                                        <label className="px-2">Month 12 :</label>
-                                        <input
-                                            value={inputCreate.b12}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b12: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-                                </div>
-                                <div className="col-sm">
-                                    <div >
-                                        <label className="px-2">Month 13 :</label>
-                                        <input
-                                            value={inputCreate.b13}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b13: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-                                    <div >
-                                        <label className="px-2">Month 14 :</label>
-                                        <input
-                                            value={inputCreate.b14}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b14: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-                                    <div >
-                                        <label className="px-2">Month 15 :</label>
-                                        <input
-                                            value={inputCreate.b15}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b15: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 16 :</label>
-                                        <input
-                                            value={inputCreate.b16}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b16: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 17 :</label>
-                                        <input
-                                            value={inputCreate.b17}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b17: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 18 :</label>
-                                        <input
-                                            value={inputCreate.b18}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b18: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 19 :</label>
-                                        <input
-                                            value={inputCreate.b19}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b19: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 20 :</label>
-                                        <input
-                                            value={inputCreate.b20}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b20: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 21 :</label>
-                                        <input
-                                            value={inputCreate.b21}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b21: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 22 :</label>
-                                        <input
-                                            value={inputCreate.b22}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b22: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 23 :</label>
-                                        <input
-                                            value={inputCreate.b23}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b23: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
-                                    </div>
-
-                                    <div >
-                                        <label className="px-2">Month 24 :</label>
-                                        <input
-                                            value={inputCreate.b24}
-                                            onChange={(e) => {
-                                                setInputCreate({
-                                                    ...inputCreate,
-                                                    b24: e.target.value
-                                                })
-                                            }}
-                                            type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        <div >
+                                            <label className="px-2">Month 24 :</label>
+                                            <input
+                                                value={inputCreate.b24}
+                                                onChange={(e) => {
+                                                    setInputCreate({
+                                                        ...inputCreate,
+                                                        b24: e.target.value
+                                                    })
+                                                }}
+                                                type="text" className="px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></input>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
                         </div>
 
+                        <button
+                            className="btn btn-primary btn-lg btn-block "
+                            style={{
+                                background: "#29b57d"
+                            }}>
+                            Submit
+                        </button>
 
 
+                    </form>
 
+                </Card.Body>
+            </Card>
 
-                    </div>
-
-                    <button
-                        className="btn btn-primary btn-lg btn-block bg-success">
-                        Submit
-                    </button>
-
-
-                </form>
-
-
-
-            </div >
 
 
         </div >
