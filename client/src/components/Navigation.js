@@ -33,7 +33,9 @@ export default function Navigation() {
 
   const userDetail = useSelector(state => state.user.userDetail);
 
-  let islandName = islandConverter(+userDetail.id);
+  let userId = +userDetail.id - 1;
+
+  let islandName = islandConverter(userId);
 
   if (userDetail.id === 1) {
     islandName = "";
