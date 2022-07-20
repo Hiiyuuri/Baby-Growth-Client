@@ -65,7 +65,7 @@ export default function ListPage() {
           </Col>
         </Row>
       </Container>
-      <Container style={{ marginTop: "25px" }}>
+      <Container className="bg-white border" style={{ marginTop: "25px", borderRadius: "10px"}}>
         <Table striped>
           <thead>
             <th>Nama</th>
