@@ -10,12 +10,12 @@ import {
   inputBabyDataAct,
   inputPregnancyData
 } from "../store/actions/actionCreator";
+import { useSelector } from "react-redux";
 
 function EditPregnancyData() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   let { PregnancyDataId } = useParams();
-
   const [loading, setLoading] = useState(true);
 
   const [inputCreate, setInputCreate] = useState({
@@ -32,13 +32,15 @@ function EditPregnancyData() {
   });
 
   const [beratBulanan, setBeratBulanan] = useState([]);
+  const motherId = useSelector(state => state.detail.motherData.id);
 
   useEffect(
     () => {
       dispatch(fetchPregnancyData(PregnancyDataId))
         .then(data => {
-          console.log(data.data.data, `TEST`);
           let arr = data.data.data.beratBulanan.split(",");
+
+          console.log(data);
           setInputCreate({
             ...inputCreate,
             beratAwal: data.data.data.beratAwal,
@@ -293,7 +295,7 @@ function EditPregnancyData() {
           <button
             className="btn btn-danger btn-lg btn-block "
             onClick={() => {
-              navigate(`../mothers/`);
+              navigate(`../mothers/${motherId}`);
             }}
           >
             Cancel
