@@ -15,7 +15,8 @@ import {
   WATCHLIST_FETCH_SUCCESS,
   ALL_USER_FETCH_SUCCESS,
   RECORDED_DATE,
-  BABY_ID
+  BABY_ID,
+  PREGNANCY_ID
 } from "./actionType";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -124,9 +125,15 @@ export const babyId = payload => {
     payload
   };
 };
+export const pregnancyId = payload => {
+  return {
+    type: PREGNANCY_ID,
+    payload
+  };
+};
 
 export function fetchCombinedData() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -190,18 +197,20 @@ export const useDataRT = () => {
 };
 
 export function fetchDetailData(id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
           access_token: localStorage.getItem(`access_token`)
         }
       });
+
       dispatch(pregnancyDetailFetch(res.data.data));
       dispatch(pregnancyDataFetchSucess(res.data.selisihBulananHamil));
       dispatch(babyDataFetchSucess(res.data.selisihBulananBayi));
       dispatch(motherProfileDetail(res.data.data.MotherProfile));
       dispatch(motherPregnancy(res.data.data.PregnancyDatum));
+      dispatch(pregnancyId(res.data.data.PregnancyDatum.id));
       dispatch(babyId(res.data.data.BabyDatum.id));
     } catch (err) {
       console.log(err);
@@ -212,7 +221,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
@@ -231,7 +240,7 @@ export function motherListByRT(id) {
 }
 
 export function allUsers() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listUser`, {
         headers: {
@@ -297,11 +306,11 @@ export const registerPregnancy = inputCreate => {
     });
     dispatch(fetchCombinedData());
 
-    console.log(inputCreate.sudahLahir, `<<<<<<`)
-    if (inputCreate.sudahLahir === 'true') {
-      return { ...created, sudahLahir: true }
+    console.log(inputCreate.sudahLahir, `<<<<<<`);
+    if (inputCreate.sudahLahir === "true") {
+      return { ...created, sudahLahir: true };
     } else {
-      return { ...created, sudahLahir: false }
+      return { ...created, sudahLahir: false };
     }
 
     return created;
@@ -309,7 +318,7 @@ export const registerPregnancy = inputCreate => {
 };
 
 export function fetchMotherListOnly() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile`, {
         headers: {
@@ -485,7 +494,7 @@ export const fetchPregnancyData = id => {
 };
 
 export function watchlist() {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
       const res = await axios.get(`${baseURL}/RTStatus`, {
         headers: {
