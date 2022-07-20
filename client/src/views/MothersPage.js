@@ -38,8 +38,6 @@ export default function MothersPage() {
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
 
-  console.log(pregnancyId);
-
   let filter = {
     key: key
   };
@@ -150,7 +148,11 @@ export default function MothersPage() {
                 {pregnancyNull}
               </Col>
             </Tab>
-            <Tab eventKey="baby" title="Baby's Data">
+            <Tab
+              eventKey="baby"
+              title="Baby's Data"
+              disabled={motherData.sudahLahir ? false : true}
+            >
               <Col md="1">
                 <Button
                   variant="info"

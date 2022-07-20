@@ -14,12 +14,15 @@ import {
   MOTHER_LIST_BY_RT_FETCH_SUCCESS,
   WATCHLIST_FETCH_SUCCESS,
   ALL_USER_FETCH_SUCCESS,
+  USER_DETAIL,
   RECORDED_DATE,
   BABY_ID,
   PREGNANCY_ID
 } from "./actionType";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const baseURL = `http://localhost:3001`;
 
@@ -110,6 +113,12 @@ export const watchlistFetch = payload => {
 export const allUserFetch = payload => {
   return {
     type: ALL_USER_FETCH_SUCCESS,
+    payload
+  };
+};
+export const userDetailFetch = payload => {
+  return {
+    type: USER_DETAIL,
     payload
   };
 };
@@ -229,7 +238,6 @@ export function motherListByRT(id) {
         }
       });
 
-      console.log(res.data);
       dispatch(motherList(res.data));
     } catch (err) {
       console.log(err);
@@ -511,34 +519,61 @@ export function watchlist() {
   };
 }
 
-// export function PostLogin(form) {
-//   return async function (dispatch) {
-//     try{
-//       const res = await axios({
-//         method: "post",
-//         url: `${baseURL}/login`,
-//         data: form
-//       })
-//       console.log(res)
-//       localStorage.setItem("access_token", res.data.access_token);
-//     }
-//     catch (err){
-//       console.log(err)
+export const useLogin = () => {
+  const navigate = useNavigate();
 
-//     }
-//   }
-// }
-export function PostLogin(form) {
-  return dispatch => {
-    return fetch(baseURL + "/login", {
-      method: "Post",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(form)
-    });
+  const PostLogin = form => {
+    return async function(dispatch) {
+      try {
+        const response = await axios.post(`${baseURL}/login`, form, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!response) {
+          throw { message: response.statusText };
+        }
+
+        const access_token = response.data.access_token;
+        const id = response.data.id;
+        const username = response.data.username;
+        const role = response.data.role;
+
+        const userDetail = {
+          id: response.data.id,
+          username: response.data.username,
+          role: response.data.role
+        };
+
+        localStorage.setItem(`access_token`, access_token);
+        localStorage.setItem(`id`, id);
+        localStorage.setItem(`username`, username);
+        localStorage.setItem(`role`, role);
+
+        navigate("/");
+
+        Swal.fire({
+          title: "Login Success",
+          text: "Welcome",
+          icon: "success"
+        });
+        dispatch(userDetailFetch(userDetail));
+        console.log(response.data);
+      } catch (err) {
+        console.log(err);
+        Swal.fire({
+          title: "ERROR",
+          text: err.message,
+          icon: "error"
+        });
+      }
+    };
   };
-}
+  return {
+    PostLogin
+  };
+};
 
 export const useConverter = () => {
   const dispatch = useDispatch();

@@ -20,5 +20,6 @@ export const MOTHER_LIST_BY_RT_FETCH_SUCCESS = "listByRt/motherList";
 export const WATCHLIST_FETCH_SUCCESS = "list/watchlist";
 
 export const ALL_USER_FETCH_SUCCESS = "userAll/fetchSuccess";
+export const USER_DETAIL = "userDetail/fetchSuccess";
 
 export const FETCH_LOADING = "fetch/loading";

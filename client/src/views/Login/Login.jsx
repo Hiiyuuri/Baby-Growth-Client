@@ -5,8 +5,9 @@ import {useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import {useState} from "react"
 import Swal from "sweetalert2";
-import {PostLogin} from '../../store/actions/actionCreator'
+import {useLogin} from '../../store/actions/actionCreator'
 function Login() {
+  const {PostLogin} = useLogin()
 
   const [inputFormLogin, setInputFormLogin] = useState({
     email: "",
@@ -18,29 +19,6 @@ function Login() {
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     dispatch(PostLogin(inputFormLogin))
-    .then((response) =>{
-      console.log(response)
-      if(!response.ok){
-        throw {message: response.statusText}
-      }
-      return response.json()
-     })
-     .then((data)=>{
-      localStorage.setItem("access_token", data.access_token);
-      navigate('/');
-      Swal.fire({
-        title: "Login Success",
-        text: "Welcome",
-        icon: "success",
-      });
-     })
-     .catch((err) => {
-      Swal.fire({
-        title: "ERROR",
-        text: err.message,
-        icon: "error",
-      })
-    })
   };
   return (
     <>
