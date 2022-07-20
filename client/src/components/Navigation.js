@@ -57,7 +57,7 @@ export default function Navigation() {
           }}
         >
           <img src={Logo} style={{ width: "48px" }} alt="" />
-          <b style={{ color: "whitesmoke" }}>BabyGrowth</b>
+          <b style={{ color: "whitesmoke", cursor: "pointer" }}>BabyGrowth</b>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
