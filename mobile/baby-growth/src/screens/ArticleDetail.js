@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Text, View, TouchableHighlight, Image, StatusBar, StyleSheet } from "react-native";
+import { ScrollView,FlatList, Text, View, TouchableHighlight, Image,Dimensions, StatusBar, StyleSheet } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
-export default function ArticleDetail({ navigation, route }) {
-    const item = route.params.item
+export default function ArticleDetail({ item }) {
+    // const item = route.params.item
+    const { width, height } = Dimensions.get('window');
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             marginTop: StatusBar.currentHeight || 0,
-            background: '#f9f2ff'
+            background: '#f9f2ff',
+            width,
+            alignItems:'center'
         },
         item: {
             backgroundColor: '#f9c2ff',
@@ -39,16 +43,18 @@ export default function ArticleDetail({ navigation, route }) {
     })
 
     return (
+        <ScrollView nestedScrollEnabled={true}>
         <View style={styles.container}>
             <Card>
                 <Card.Content>
                 <Card.Cover source={{ uri: item.imageUrl }} />
                     <Title>{item.name}</Title>
-                    <Paragraph>{item.text}</Paragraph>
+                    <Paragraph>{item.text.replace('\\n', '\n')}</Paragraph>
                 </Card.Content>
                 
             </Card>
         </View>
+        </ScrollView>
     )
 
 

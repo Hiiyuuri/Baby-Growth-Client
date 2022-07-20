@@ -49,11 +49,8 @@ export default function CategoryCard({ getDetail, item }) {
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden'}}>
-                <Card.Cover source={{ uri: item.imageUrl }} />
+                {/* <Card.Cover source={{ uri: item.imageUrl }} /> */}
                 <Title style={styles.title}>{item.names}</Title>
-                <Card.Actions>
-                    <Button onPress={onClickedDetail}>Lihat artikel</Button>
-                </Card.Actions>
             </Card>
         </View>
     )
