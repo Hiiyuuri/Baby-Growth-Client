@@ -50,8 +50,13 @@ export default function Navigation() {
       }}
     >
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand
+          onClick={() => {
+            navigate(`/`);
+          }}
+        >
           <img src={Logo} style={{ width: "48px" }} alt="" />
+          <b style={{ color: "whitesmoke" }}>BabyGrowth</b>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -72,6 +77,7 @@ export default function Navigation() {
               onClick={() => {
                 navigate(`/register-admin`);
               }}
+              hidden={userDetail.role !== "SuperAdmin" ? true : false}
             >
               Register Admin
             </Nav.Link>

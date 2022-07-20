@@ -14,7 +14,6 @@ import url from '../config/config';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { useIsFocused } from '@react-navigation/native';
 export default function ChartIbu({ navigation }) {
-  const screenWidth = Dimensions.get("window").width;
   const [pregnancy, setPregnancy] = useState({})
   const [selectedData, setSelectedData] = useState([]);
   const [setArticle, setDisplayedArticle] = useState([]);
@@ -24,50 +23,10 @@ export default function ChartIbu({ navigation }) {
   const [dateBabyData, setDateBabyData] = useState([]);
   const [modalShown, setModalShown] = useState(false);
   const [beratTooltip, setBeratTooltip] = useState("");
-  let needtoRerender = false;
-  // This hook returns `true` if the screen is focused, `false` otherwise
   const isFocused = useIsFocused();
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     console.log("Use effect called")
-  //   const fn = async () => {
-  //     const access_token = await AsyncStorage.getItem(`access_token`);
-  //     console.log("Token Adalah"+access_token)
-  //     setPregnancy([]);
-  //     setDateData([]);
-  //     setDateBabyData([]);
-  //     setSelectedBabyData([]);
-  //     setSelectedData([]);
-
-  //     if (access_token) {
-  //       try {
-  //         const result = await axios.get(url+"/pregnancy",{headers:{access_token:access_token}});
-  //         if (result) {
-  //           console.log(result.data);
-  //           setPregnancy(result.data);
-  //         } else {
-  //           console.log("Error found")
-  //         }
-  //       }
-  //       catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //     else {
-  //       navigation.navigate('Logout');
-  //     }
-
-  //   }
-
-  //   fn();
-  //   }, [isFocused])
-  // );
   useEffect(() => {
-    console.log("Use effect called")
     const fn = async () => {
       const access_token = await AsyncStorage.getItem(`access_token`);
-      console.log("Token Adalah" + access_token)
-
       if (access_token) {
         if (!isFocused) {
           setPregnancy([]);
@@ -79,17 +38,13 @@ export default function ChartIbu({ navigation }) {
           try {
             const result = await axios.get(url + "/pregnancy", { headers: { access_token: access_token } });
             if (result) {
-              console.log(result.data);
               setPregnancy(result.data);
             } else {
-              console.log("Error found")
             }
           }
           catch (error) {
-            console.log(error);
           }
         }
-
       }
       else {
         navigation.navigate('Logout');
@@ -101,13 +56,10 @@ export default function ChartIbu({ navigation }) {
 
   }, [isFocused])
   function displayModalMother(indexMonth) {
-    console.log(indexMonth);
-    console.log(dateData[indexMonth]);
     const fn = async () => {
       try {
         const result = await axios.get(url + "/categoryMonth/" + (indexMonth));
         if (result) {
-          console.log(result.data);
           if (result.data.Articles.length != 0) {
             setDisplayedArticle(result.data.Articles[0]);
           } else {
@@ -115,13 +67,11 @@ export default function ChartIbu({ navigation }) {
           }
 
         } else {
-          console.log("Error found")
           setDisplayedArticle("");
         }
-        // if(indexMonth!=1){
-        if(indexMonth==0){
+        if (indexMonth == 0) {
           setBeratTooltip("Bayi Anda lahir")
-        }else{
+        } else {
           let tempBerat = selectedBabyData[indexMonth] - selectedBabyData[indexMonth - 1];
           tempBerat = tempBerat.toFixed(2);
           if (tempBerat < 0) {
@@ -130,15 +80,9 @@ export default function ChartIbu({ navigation }) {
             setBeratTooltip("Berat badan bayi Anda telah bertambah " + tempBerat + " kg pada bulan ke-" + indexMonth)
           }
         }
-        
-
-        // }else{
-        //   setBeratTooltip("");
-        // }
         setModalShown(true);
       }
       catch (error) {
-        console.log(error);
       }
     }
 
@@ -204,15 +148,11 @@ export default function ChartIbu({ navigation }) {
 
   const displayChart = (event => {
     let tempStr = event.PregnancyDatum.beratAwal + "," + event.PregnancyDatum.beratBulanan;
-    console.log(tempStr + "   bagian ibu");
     let arrRes = tempStr.split(",");
-    console.log(arrRes);
     let arrRes2 = [];
     if (event.BabyDatum) {
       let tempStr2 = event.BabyDatum.beratAwal + "," + event.BabyDatum.beratBulanan;
-      console.log(tempStr2 + "   bagian anak");
       arrRes2 = tempStr2.split(",");
-
     }
     setDates(event, arrRes, arrRes2);
 
@@ -221,14 +161,10 @@ export default function ChartIbu({ navigation }) {
   function setDates(event, arrRes, arrRes2) {
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let tempDate = new Date(event.PregnancyDatum.tanggalDicatat).getMonth();
-    console.log(arrRes.length + " ibu");
     let result = []
-
     for (let i = 0; i < arrRes.length; i++) {
-
       result.push(month[((tempDate + i) % 12)]);
     }
-    console.log(result);
     setDateData(result);
     if (arrRes2.length != 0) {
       let tempDate2 = new Date(event.BabyDatum.tanggalDicatat).getMonth();
@@ -236,7 +172,6 @@ export default function ChartIbu({ navigation }) {
       for (let i = 0; i < arrRes2.length; i++) {
         if (i == 0) {
           temp.push((opacity = 1) => '#1fffee')
-
         }
         else {
           let type = weightCalculator(i, arrRes2[i], arrRes2[i - 1]);
@@ -250,17 +185,12 @@ export default function ChartIbu({ navigation }) {
         }
       }
       setSelectedBabyDataOpacityColor(temp);
-      console.log(selectedBabyDataOpacityColor);
-      console.log(arrRes2.length + " anak");
       let result2 = []
-
       for (let i = 0; i < arrRes2.length; i++) {
         result2.push(month[((tempDate2 + i) % 12)]);
       }
       setDateBabyData(result2);
-
       setSelectedBabyData(arrRes2)
-      console.log(result2);
     }
     setSelectedData(arrRes);
   }
@@ -268,9 +198,7 @@ export default function ChartIbu({ navigation }) {
   return (
     <View style={styles.container}>
       <ScrollView>
-
         <View style={styles.container}>
-
           <Text style={{ color: 'white', fontSize: 32, fontWeight: 'bold', marginBottom: 10, marginTop: 10 }}>History Kehamilan Ibu</Text>
           <Modal
             animationType={"fade"}
@@ -278,12 +206,11 @@ export default function ChartIbu({ navigation }) {
             backdropOpacity={0.5}
             hasBackdrop={true}
             visible={modalShown}
-            onRequestClose={() => { console.log("Modal has been closed.") }}>
-            {/*All views of Modal*/}
+            onRequestClose={() => { setModalShown(false) }}>
             <View style={setArticle != "" ? styles.modal1 : styles.modal2}>
               <Card>
                 <Card.Content>
-                  <Text style={{ fontSize: 20, color: '#008080',textAlign: 'center' }}>{beratTooltip}</Text>
+                  <Text style={{ fontSize: 20, color: '#008080', textAlign: 'center' }}>{beratTooltip}</Text>
 
                   {setArticle != "" ? <View>
                     <Card.Cover source={{ uri: setArticle.imageUrl }} />
@@ -291,11 +218,11 @@ export default function ChartIbu({ navigation }) {
                     <View style={{ height: 150 }}>
                       <ScrollView>
                         <Text>
-                        {setArticle.text}
+                          {setArticle.text}
                         </Text>
                       </ScrollView>
                     </View>
-                    </View> : <Text></Text>
+                  </View> : <Text></Text>
                   }
 
                 </Card.Content>
@@ -306,7 +233,6 @@ export default function ChartIbu({ navigation }) {
               }} />
             </View>
           </Modal>
-          {/* */}
           {pregnancy.length != 0 ? <View style={{ borderRadius: 10, borderWidth: 1, borderColor: '#bdc3c7', overflow: 'hidden' }}><SelectDropdown
             data={pregnancy}
             dropdownStyle={{
@@ -321,29 +247,16 @@ export default function ChartIbu({ navigation }) {
             rowTextStyle={{ color: "#008080" }}
             search={true}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem.name, index)
               displayChart(selectedItem)
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
-              // text represented after item is selected
-              // if data array is an array of objects then return selectedItem.property to render after item is selected
               return selectedItem.name
             }}
             rowTextForSelection={(item, index) => {
-              // text represented for each item in dropdown
-              // if data array is an array of objects then return item.property to represent item in dropdown
               return item.name
             }}
           /></View> : <Text style={{ color: 'white' }}>No Pregnancy Data Yet</Text>
           }
-          {/* { pregnancy.length!=0? <FlatList
-            horizontal={true}
-            data={pregnancy}
-            renderItem={({item})=><Button onPress={()=>displayChart(item)} title={item.name}></Button>}
-            keyExtractor={(item)=>item.id}
-            
-        ></FlatList> : <Text>No Pregnancy Data Yet</Text>
-          } */}
           {selectedData.length != 0 ? <View><Text style={{ textAlign: 'center', color: 'white', fontSize: 22, marginBottom: 5, marginTop: 5 }}>History Berat Badan Ibu</Text><BarChart
             data={{
               labels: dateData,
@@ -426,9 +339,8 @@ export default function ChartIbu({ navigation }) {
               borderRadius: 16
             }}
           />
-          <View><Text style={{ color: 'white',textAlign:'center' }}>Warna berdasarkan perbedaan berat badan</Text></View>
+            <View><Text style={{ color: 'white', textAlign: 'center' }}>Warna berdasarkan perbedaan berat badan</Text></View>
             <View style={{ backgroundColor: "#ffffff", alignItems: 'center', overflow: "hidden" }}><Text style={{ fontSize: 22 }}><Text style={{ color: '#1fffee' }}>∎ </Text>Lahir<Text style={{ color: '#FFA9FF' }}>∎ </Text>Kurang <Text style={{ color: '#78A9FF' }}>∎</Text>Cukup<Text style={{ color: '#8E95FF' }}>∎ </Text>Berlebih</Text></View></View> : <Text></Text>}
-
         </View>
       </ScrollView >
     </View>

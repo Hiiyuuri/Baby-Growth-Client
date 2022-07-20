@@ -1,9 +1,13 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { React, useState } from "react";
+import Select from "react-select";
+import { Button } from "react-bootstrap";
 
 export default function ListPageRow({ data }) {
   const navigate = useNavigate();
+  const [selectValue, setSelectValue] = useState("");
 
   const isLoading = useSelector(state => state.chart.isLoading);
 
@@ -12,6 +16,26 @@ export default function ListPageRow({ data }) {
     data.NIK = `Loading...`;
     data.address = `Loading...`;
   }
+
+  let options = [];
+
+  for (let i = 0; i < data.Pregnancies.length; i++) {
+    const el = data.Pregnancies[i];
+    let obj = {
+      value: el.id,
+      label: el.name
+    };
+
+    options.push(obj);
+  }
+
+  const handleChange = event => {
+    setSelectValue(event.value);
+    navigate(`/mothers/${event.value}`);
+  };
+
+  const MyComponent = () =>
+    <Select options={options} onChange={handleChange} value={selectValue} />;
 
   return (
     <tr>
@@ -24,30 +48,20 @@ export default function ListPageRow({ data }) {
       <td>
         {data.address}
       </td>
+          <MyComponent />
       <td>
-        <Dropdown
-          className="col-6 container"
-          hidden={isLoading === true ? true : false}
+        <Button
+          variant="info"
+          style={{ textAlign: "left" }}
+          onClick={() => {
+            navigate(`/register-pregnancy?motherId=${data.id}`);
+          }}
         >
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Pilih
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            {data.Pregnancies.map(el => {
-              return (
-                <Dropdown.Item
-                  onClick={() => {
-                    navigate(`/mothers/${el.id}`);
-                  }}
-                >
-                  {el.name}
-                </Dropdown.Item>
-              );
-            })}
-          </Dropdown.Menu>
-        </Dropdown>
+          Regist. Kehamilan Baru
+        </Button>
       </td>
+      <td />
+
     </tr>
   );
 }

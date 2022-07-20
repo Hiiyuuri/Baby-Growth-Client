@@ -13,6 +13,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Footer from "../components/Footer";
 
 export default function MothersPage() {
   const dispatch = useDispatch();
@@ -34,10 +35,12 @@ export default function MothersPage() {
   const recordedDate = useSelector(state => state.detail.recordedDate);
   const babyId = useSelector(state => state.detail.babyId);
   const pregnancyId = useSelector(state => state.detail.pregnancyId);
+  const userDetail = useSelector(state => state.user.userDetail);
 
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
 
+  let adminId = +userDetail.id;
   let filter = {
     key: key
   };
@@ -101,7 +104,13 @@ export default function MothersPage() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#eeee",
+        height: "auto" || "100vh",
+        paddingBottom: "20px"
+      }}
+    >
       <Navigation />
       <Container md="12" style={{ marginTop: "25px" }}>
         <Row>
@@ -127,19 +136,23 @@ export default function MothersPage() {
       <Container>
         <Stack md="12" style={{ marginTop: "25px" }}>
           <Tabs
-            className="mb-3"
-            justify
+            className="mb-1"
             style={{ marginBottom: "50px" }}
             activeKey={key}
             onSelect={k => setKey(k)}
           >
-            <Tab eventKey="pregnancy" title="Pregnancy Data">
+            <Tab
+              eventKey="pregnancy"
+              title="Pregnancy Data"
+              style={{ backgroundColor: "white", borderRadius: "20px" }}
+            >
               <Col md="1">
                 <Button
                   variant="danger"
                   onClick={() => {
                     navigate(`../edit-pregnancy-data/${pregnancyId}`);
                   }}
+                  hidden={motherProfile.UserId === adminId ? false : true}
                 >
                   Edit Data
                 </Button>
@@ -152,6 +165,10 @@ export default function MothersPage() {
               eventKey="baby"
               title="Baby's Data"
               disabled={motherData.sudahLahir ? false : true}
+              style={{
+                backgroundColor: "white",
+                borderRadius: "20px"
+              }}
             >
               <Col md="1">
                 <Button
@@ -159,6 +176,7 @@ export default function MothersPage() {
                   onClick={() => {
                     navigate(`../edit-baby-data/${babyId}`);
                   }}
+                  hidden={motherProfile.UserId === adminId ? false : true}
                 >
                   Edit Data
                 </Button>
@@ -168,12 +186,16 @@ export default function MothersPage() {
               </Col>
             </Tab>
           </Tabs>
-          <Col style={{ marginBottom: "25px" }}>
+          <Col style={{ marginBottom: "50px" }}>
             <Row md="12" style={{ marginTop: "25px" }}>
-              <Col md="6">
-                <Card>
-                  <Card.Header>Data Ibu</Card.Header>
-                  <Card.Body>
+              <Col md="6" style={{ borderRadius: "10px" }}>
+                <Card style={{ borderRadius: "10px" }}>
+                  <Card.Header style={{ backgroundColor: "#ff638433" }}>
+                    Data Ibu
+                  </Card.Header>
+                  <Card.Body
+                    style={{ backgroundColor: "white", borderRadius: "10px" }}
+                  >
                     <Card.Text>
                       <Row>
                         <Col style={{ textAlign: "left" }}>
@@ -199,10 +221,14 @@ export default function MothersPage() {
                   </Card.Body>
                 </Card>
               </Col>
-              <Col md="6">
-                <Card>
-                  <Card.Header>Data Kehamilan</Card.Header>
-                  <Card.Body>
+              <Col md="6" style={{ borderRadius: "10px" }}>
+                <Card style={{ borderRadius: "10px" }}>
+                  <Card.Header style={{ backgroundColor: "#ff638433" }}>
+                    Data Kehamilan
+                  </Card.Header>
+                  <Card.Body
+                    style={{ backgroundColor: "white", borderRadius: "10px" }}
+                  >
                     <Card.Text>
                       <Row>
                         <Col style={{ textAlign: "left" }}>
@@ -240,6 +266,7 @@ export default function MothersPage() {
           </Col>
         </Stack>
       </Container>
+      <Footer />
     </div>
   );
 }

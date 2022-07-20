@@ -17,39 +17,31 @@ export default function CategoryCard({ getDetail, item }) {
             marginVertical: 8,
             marginHorizontal: 16,
             alignItems: "center",
-    justifyContent: "center",
+            justifyContent: "center",
         },
         title: {
             color: '#008080',
             textAlign: 'center'
         },
         description: {
-            fontSize: 20, 
+            fontSize: 20,
         },
         price: {
             fontSize: 16,
         },
     });
 
-
-    useEffect(() => {
-        // console.log(item);
-
-    }, [])
-
     const onClickedDetail = (event => {
-        console.log('clicked on detail');
-        // console.log(event);
         getDetail(item.id);
     })
 
     return (
         <View style={styles.container}>
             <Card key={item.id} onPress={onClickedDetail} style={{
-    backgroundColor: 'white',
-    borderRadius: 10,
-    overflow: 'hidden'}}>
-                {/* <Card.Cover source={{ uri: item.imageUrl }} /> */}
+                backgroundColor: 'white',
+                borderRadius: 10,
+                overflow: 'hidden'
+            }}>
                 <Title style={styles.title}>{item.names}</Title>
             </Card>
         </View>

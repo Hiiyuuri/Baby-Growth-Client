@@ -1,4 +1,3 @@
-// import CreateForm from "../components/CreateForm";
 import PieChart from "../components/PieChart";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,6 +20,7 @@ import Button from "react-bootstrap/Button";
 import WatchlistRow from "../components/WatchlistRow";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import Footer from "../components/Footer";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -356,6 +356,7 @@ export default function Dashboard() {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 }

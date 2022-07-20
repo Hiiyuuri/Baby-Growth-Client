@@ -8,14 +8,15 @@ import {
   fetchBabyData,
   fetchPregnancyData,
   inputBabyDataAct,
-  inputPregnancyData
+  inputPregnancyData,
 } from "../store/actions/actionCreator";
+import { useSelector } from "react-redux";
+import Footer from "../components/Footer";
 
 function EditPregnancyData() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   let { PregnancyDataId } = useParams();
-
   const [loading, setLoading] = useState(true);
 
   const [inputCreate, setInputCreate] = useState({
@@ -28,52 +29,47 @@ function EditPregnancyData() {
     b6: "",
     b7: "",
     b8: "",
-    b9: ""
+    b9: "",
   });
 
   const [beratBulanan, setBeratBulanan] = useState([]);
+  const motherId = useSelector((state) => state.detail.motherData.id);
 
-  useEffect(
-    () => {
-      dispatch(fetchPregnancyData(PregnancyDataId))
-        .then(data => {
-          console.log(data.data.data, `TEST`);
-          let arr = data.data.data.beratBulanan.split(",");
-          setInputCreate({
-            ...inputCreate,
-            beratAwal: data.data.data.beratAwal,
-            b1: arr[0],
-            b2: arr[1],
-            b3: arr[2],
-            b4: arr[3],
-            b5: arr[4],
-            b6: arr[5],
-            b7: arr[6],
-            b8: arr[7],
-            b9: arr[8]
-          });
-        })
-        .finally(() => {
-          setLoading(false);
+  useEffect(() => {
+    dispatch(fetchPregnancyData(PregnancyDataId))
+      .then((data) => {
+        let arr = data.data.data.beratBulanan.split(",");
+        setInputCreate({
+          ...inputCreate,
+          beratAwal: data.data.data.beratAwal,
+          b1: arr[0],
+          b2: arr[1],
+          b3: arr[2],
+          b4: arr[3],
+          b5: arr[4],
+          b6: arr[5],
+          b7: arr[6],
+          b8: arr[7],
+          b9: arr[8],
         });
-    },
-    [loading]
-  );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [loading]);
 
-  const handleInput = e => {
+  const handleInput = (e) => {
     e.preventDefault();
-    // console.log(inputCreate)
-
-    dispatch(inputPregnancyData({ ...inputCreate, PregnancyDataId })) // =============== Nanti tinggal post axios lewat store/action
+    dispatch(inputPregnancyData({ ...inputCreate, PregnancyDataId }))
       .then(() => {
-        navigate(`/`);
+        navigate(`/mothers/${motherId}`);
         Swal.fire({
           title: `Success!`,
           text: `Success updating pregnancy data `,
-          icon: "success"
+          icon: "success",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -87,7 +83,7 @@ function EditPregnancyData() {
       className="h-full"
       style={{
         backgroundColor: "#eeee",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
       <Navigation />
@@ -98,14 +94,14 @@ function EditPregnancyData() {
           width: "40vw",
           marginTop: "30px",
           marginBottom: "10px",
-          borderRadius: "10px"
+          borderRadius: "10px",
         }}
       >
         <Card.Header
           className="h2 text-white"
           style={{
             background: "#29b57d",
-            borderRadius: "10px 10px 0px 0px"
+            borderRadius: "10px 10px 0px 0px",
           }}
         >
           Perbarui Data Kehamilan
@@ -134,10 +130,10 @@ function EditPregnancyData() {
 
               <input
                 value={inputCreate.beratAwal}
-                onChange={e => {
+                onChange={(e) => {
                   setInputCreate({
                     ...inputCreate,
-                    beratAwal: e.target.value
+                    beratAwal: e.target.value,
                   });
                 }}
                 type="text"
@@ -152,10 +148,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 1 :</label>
                 <input
                   value={inputCreate.b1}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b1: e.target.value
+                      b1: e.target.value,
                     });
                   }}
                   type="text"
@@ -166,10 +162,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 2 :</label>
                 <input
                   value={inputCreate.b2}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b2: e.target.value
+                      b2: e.target.value,
                     });
                   }}
                   type="text"
@@ -180,10 +176,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 3 :</label>
                 <input
                   value={inputCreate.b3}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b3: e.target.value
+                      b3: e.target.value,
                     });
                   }}
                   type="text"
@@ -195,10 +191,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 4 :</label>
                 <input
                   value={inputCreate.b4}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b4: e.target.value
+                      b4: e.target.value,
                     });
                   }}
                   type="text"
@@ -210,10 +206,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 5 :</label>
                 <input
                   value={inputCreate.b5}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b5: e.target.value
+                      b5: e.target.value,
                     });
                   }}
                   type="text"
@@ -225,10 +221,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 6 :</label>
                 <input
                   value={inputCreate.b6}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b6: e.target.value
+                      b6: e.target.value,
                     });
                   }}
                   type="text"
@@ -240,10 +236,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 7 :</label>
                 <input
                   value={inputCreate.b7}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b7: e.target.value
+                      b7: e.target.value,
                     });
                   }}
                   type="text"
@@ -255,10 +251,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 8 :</label>
                 <input
                   value={inputCreate.b8}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b8: e.target.value
+                      b8: e.target.value,
                     });
                   }}
                   type="text"
@@ -270,10 +266,10 @@ function EditPregnancyData() {
                 <label className="px-2">Month 9 :</label>
                 <input
                   value={inputCreate.b9}
-                  onChange={e => {
+                  onChange={(e) => {
                     setInputCreate({
                       ...inputCreate,
-                      b9: e.target.value
+                      b9: e.target.value,
                     });
                   }}
                   type="text"
@@ -284,7 +280,7 @@ function EditPregnancyData() {
             <button
               className="btn btn-primary btn-lg btn-block "
               style={{
-                background: "#29b57d"
+                background: "#29b57d",
               }}
             >
               Submit
@@ -293,13 +289,14 @@ function EditPregnancyData() {
           <button
             className="btn btn-danger btn-lg btn-block "
             onClick={() => {
-              navigate(`../mothers/`);
+              navigate(`../mothers/${motherId}`);
             }}
           >
             Cancel
           </button>
         </Card.Body>
       </Card>
+      <Footer />
     </div>
   );
 }
