@@ -33,9 +33,12 @@ export default function MothersPage() {
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
   const recordedDate = useSelector(state => state.detail.recordedDate);
   const babyId = useSelector(state => state.detail.babyId);
+  const pregnancyId = useSelector(state => state.detail.pregnancyId);
 
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
+
+  console.log(pregnancyId);
 
   let filter = {
     key: key
@@ -137,7 +140,7 @@ export default function MothersPage() {
                 <Button
                   variant="danger"
                   onClick={() => {
-                    navigate(`../edit-pregnancy-data/${id}`);
+                    navigate(`../edit-pregnancy-data/${pregnancyId}`);
                   }}
                 >
                   Edit Data
