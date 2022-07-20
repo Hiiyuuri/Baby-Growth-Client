@@ -126,7 +126,7 @@ export const babyId = payload => {
 };
 
 export function fetchCombinedData() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/babyWeigthCategories`, {
         headers: {
@@ -190,7 +190,7 @@ export const useDataRT = () => {
 };
 
 export function fetchDetailData(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/detailpregnancy/${id}`, {
         headers: {
@@ -212,7 +212,7 @@ export function fetchDetailData(id) {
 }
 
 export function motherListByRT(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile/${id}`, {
         headers: {
@@ -231,7 +231,7 @@ export function motherListByRT(id) {
 }
 
 export function allUsers() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listUser`, {
         headers: {
@@ -298,8 +298,11 @@ export const registerPregnancy = inputCreate => {
     });
     dispatch(fetchCombinedData());
 
-    if (inputCreate.sudahLahir) {
-      return { ...created, sudahLahir: true };
+    console.log(inputCreate.sudahLahir, `<<<<<<`)
+    if (inputCreate.sudahLahir === 'true') {
+      return { ...created, sudahLahir: true }
+    } else {
+      return { ...created, sudahLahir: false }
     }
 
     return created;
@@ -307,7 +310,7 @@ export const registerPregnancy = inputCreate => {
 };
 
 export function fetchMotherListOnly() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/listMotherProfile`, {
         headers: {
@@ -483,7 +486,7 @@ export const fetchPregnancyData = id => {
 };
 
 export function watchlist() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await axios.get(`${baseURL}/RTStatus`, {
         headers: {
