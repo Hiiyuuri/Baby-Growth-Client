@@ -26,6 +26,7 @@ function EditPregnancyData() {
         b7: '',
         b8: '',
         b9: '',
+        pregId: ''
     })
 
     const [beratBulanan, setBeratBulanan] = useState([])
@@ -47,6 +48,7 @@ function EditPregnancyData() {
                     b7: arr[6],
                     b8: arr[7],
                     b9: arr[8],
+                    pregId: data.data.data.PregnancyId
                 })
 
             })
@@ -63,10 +65,11 @@ function EditPregnancyData() {
 
         dispatch(inputPregnancyData({ ...inputCreate, PregnancyDataId })) // =============== Nanti tinggal post axios lewat store/action
             .then(() => {
-                navigate(`/`)
+                // console.log(data.data[1])
+                navigate(`/mothers/${inputCreate.pregId}`)
                 Swal.fire({
                     title: `Success!`,
-                    text: `Success updating pregnancy data `,
+                    text: `Success updating pregnancy data`,
                     icon: "success",
                 });
             })

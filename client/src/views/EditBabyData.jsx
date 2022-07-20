@@ -42,6 +42,7 @@ function EditBabyData() {
         b22: '',
         b23: '',
         b24: '',
+        pregId:''
     })
 
 
@@ -77,6 +78,7 @@ function EditBabyData() {
                     b22: arr[21],
                     b23: arr[22],
                     b24: arr[23],
+                    pregId: data.data.data.PregnancyId
                 })
 
             })
@@ -94,7 +96,7 @@ function EditBabyData() {
 
         dispatch(inputBabyDataAct({ ...inputCreate, BabyDataId })) // =============== Nanti tinggal post axios lewat store/action
             .then(() => {
-                navigate(`/`)
+                navigate(`/mothers/${inputCreate.pregId}`)
                 Swal.fire({
                     title: `Success!`,
                     text: `Success updating baby data `,
