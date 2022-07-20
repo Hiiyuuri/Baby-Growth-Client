@@ -77,6 +77,7 @@ export default function Navigation() {
               onClick={() => {
                 navigate(`/register-admin`);
               }}
+              hidden={userDetail.role !== "SuperAdmin" ? true : false}
             >
               Register Admin
             </Nav.Link>
