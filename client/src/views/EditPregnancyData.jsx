@@ -293,7 +293,7 @@ function EditPregnancyData() {
           <button
             className="btn btn-danger btn-lg btn-block "
             onClick={() => {
-              navigate(`/`);
+              navigate(`../mothers/`);
             }}
           >
             Cancel
