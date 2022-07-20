@@ -11,6 +11,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useConverter } from "../store/actions/actionCreator";
+import Footer from "../components/Footer";
 
 export default function ListPage() {
   const dispatch = useDispatch();
@@ -22,8 +23,8 @@ export default function ListPage() {
     dispatch(motherListByRT(id));
   }, []);
 
-  const motherListData = useSelector(state => state.list.motherList);
-  const isLoading = useSelector(state => state.chart.isLoading);
+  const motherListData = useSelector((state) => state.list.motherList);
+  const isLoading = useSelector((state) => state.chart.isLoading);
 
   let title = `Daftar Ibu Hamil dan Bayi di ${islandConverter(+id)}`;
 
@@ -49,9 +50,7 @@ export default function ListPage() {
           </Col>
           <Col md="8">
             <div style={{ marginTop: "25px" }}>
-              <h3>
-                {title}
-              </h3>
+              <h3>{title}</h3>
             </div>
           </Col>
         </Row>
@@ -65,12 +64,13 @@ export default function ListPage() {
             <th>Data Bayi & Kehamilan</th>
           </thead>
           <tbody>
-            {motherListData.map(data => {
+            {motherListData.map((data) => {
               return <ListPageRow data={data} key={data.id} />;
             })}
           </tbody>
         </Table>
       </Container>
+      <Footer />
     </div>
   );
 }

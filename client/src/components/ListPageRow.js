@@ -1,9 +1,12 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { React, useState } from "react";
+import Select from "react-select";
 
 export default function ListPageRow({ data }) {
   const navigate = useNavigate();
+  const [selectValue, setSelectValue] = useState("");
 
   const isLoading = useSelector(state => state.chart.isLoading);
 
@@ -12,6 +15,26 @@ export default function ListPageRow({ data }) {
     data.NIK = `Loading...`;
     data.address = `Loading...`;
   }
+
+  let options = [];
+
+  for (let i = 0; i < data.Pregnancies.length; i++) {
+    const el = data.Pregnancies[i];
+    let obj = {
+      value: el.id,
+      label: el.name
+    };
+
+    options.push(obj);
+  }
+
+  const handleChange = event => {
+    setSelectValue(event.value);
+    navigate(`/mothers/${event.value}`);
+  };
+
+  const MyComponent = () =>
+    <Select options={options} onChange={handleChange} value={selectValue} />;
 
   return (
     <tr>
@@ -24,7 +47,7 @@ export default function ListPageRow({ data }) {
       <td>
         {data.address}
       </td>
-      <td>
+      {/* <td>
         <Dropdown
           className="col-6 container"
           hidden={isLoading === true ? true : false}
@@ -47,7 +70,9 @@ export default function ListPageRow({ data }) {
             })}
           </Dropdown.Menu>
         </Dropdown>
-      </td>
+      </td> */}
+      <MyComponent />
+      <td />
     </tr>
   );
 }
