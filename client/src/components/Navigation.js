@@ -5,8 +5,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Logo from "../asset/logo.png";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import Col from "react-bootstrap/Col";
+import { useConverter } from "../store/actions/actionCreator";
+
 export default function Navigation() {
   const navigate = useNavigate();
+  const { islandConverter } = useConverter();
   const HandleLogout = e => {
     e.preventDefault();
     localStorage.clear();
@@ -17,6 +22,15 @@ export default function Navigation() {
       icon: "success"
     });
   };
+
+  const userDetail = useSelector(state => state.user.userDetail);
+
+  let islandName = islandConverter(userDetail.id);
+
+  if (userDetail.id === 1) {
+    islandName = "";
+  }
+
   return (
     <Navbar
       expand="lg"
@@ -67,6 +81,16 @@ export default function Navigation() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <Nav>
+          <Container>
+            <Col style={{ color: "white", fontWeight: "bold" }}>
+              Hallo {userDetail.username} !
+            </Col>
+            <Col style={{ color: "white" }}>
+              {userDetail.role} {islandName}
+            </Col>
+          </Container>
+        </Nav>
       </Container>
     </Navbar>
   );
