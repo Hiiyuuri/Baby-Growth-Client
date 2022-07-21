@@ -37,7 +37,7 @@ export default function ArticleDetail({ item }) {
                     <Card.Content>
                         <Card.Cover source={{ uri: item.imageUrl }} />
                         <Title>{item.name}</Title>
-                        <Paragraph>{item.text.replace('\\n', '\n')}</Paragraph>
+                        <Paragraph>{item.text.replace(/(?:\\r)?\\n/g, '\n'+'\n')}</Paragraph>
                     </Card.Content>
 
                 </Card>

@@ -161,9 +161,10 @@ export default function ChartIbu({ navigation }) {
   function setDates(event, arrRes, arrRes2) {
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let tempDate = new Date(event.PregnancyDatum.tanggalDicatat).getMonth();
+    let tempYear = new Date(event.PregnancyDatum.tanggalDicatat).getFullYear();
     let result = []
     for (let i = 0; i < arrRes.length; i++) {
-      result.push(month[((tempDate + i) % 12)]);
+      result.push(month[((tempDate + i) % 12)]+" "+tempYear);
     }
     setDateData(result);
     if (arrRes2.length != 0) {
@@ -218,7 +219,7 @@ export default function ChartIbu({ navigation }) {
                     <View style={{ height: 300 }}>
                       <ScrollView>
                         <Text>
-                          {setArticle.text}
+                          {setArticle.text.replace(/(?:\\r)?\\n/g, '\n'+'\n')}
                         </Text>
                       </ScrollView>
                     </View>
