@@ -26,23 +26,39 @@ export default function MothersPage() {
     dispatch(fetchDetailData(id));
   }, []);
 
-  const isLoading = useSelector((state) => state.chart.isLoading);
-  const pregnancyData = useSelector((state) => state.chart.pregnancyData);
-  const babyData = useSelector((state) => state.chart.babyData);
-  const motherData = useSelector((state) => state.detail.motherData);
-  const motherProfile = useSelector((state) => state.detail.motherProfile);
-  const motherPregnancy = useSelector((state) => state.detail.motherPregnancy);
-  const recordedDate = useSelector((state) => state.detail.recordedDate);
-  const babyId = useSelector((state) => state.detail.babyId);
-  const pregnancyId = useSelector((state) => state.detail.pregnancyId);
-  const userDetail = useSelector((state) => state.user.userDetail);
+  const isLoading = useSelector(state => state.chart.isLoading);
+  const pregnancyData = useSelector(state => state.chart.pregnancyData);
+  const babyData = useSelector(state => state.chart.babyData);
+  const motherData = useSelector(state => state.detail.motherData);
+  const motherProfile = useSelector(state => state.detail.motherProfile);
+  const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
+  const recordedDate = useSelector(state => state.detail.recordedDate);
+  const babyId = useSelector(state => state.detail.babyId);
+  const pregnancyId = useSelector(state => state.detail.pregnancyId);
+  const userDetail = useSelector(state => state.user.userDetail);
 
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
 
+  let initialWeight = (
+    <div>
+      : {motherPregnancy.beratAwal}{" "}
+      <span hidden={isLoading === true ? true : false}>Kg</span>
+    </div>
+  );
+
+  if (!motherPregnancy.beratAwal) {
+    initialWeight = (
+      <div>
+        :
+        <span hidden={isLoading === true ? true : false}> - Kg</span>
+      </div>
+    );
+  }
+
   let adminId = +userDetail.id;
   let filter = {
-    key: key,
+    key: key
   };
 
   let pregnancyNull = (
@@ -108,7 +124,7 @@ export default function MothersPage() {
       style={{
         backgroundColor: "#eeee",
         height: "auto" || "100vh",
-        paddingBottom: "20px",
+        paddingBottom: "20px"
       }}
     >
       <Navigation />
@@ -126,7 +142,9 @@ export default function MothersPage() {
           </Col>
           <Col md="10">
             <h3>
-              <b>{motherData.name}</b>
+              <b>
+                {motherData.name}
+              </b>
             </h3>
           </Col>
         </Row>
@@ -137,14 +155,14 @@ export default function MothersPage() {
             className="mb-1"
             style={{ marginBottom: "50px" }}
             activeKey={key}
-            onSelect={(k) => setKey(k)}
+            onSelect={k => setKey(k)}
           >
             <Tab
               eventKey="pregnancy"
               title="Pregnancy Data"
               style={{ backgroundColor: "white", borderRadius: "20px" }}
             >
-              <Col md="1">
+              <Col md="1" hidden={pregnancyId !== 0 ? false : true}>
                 <Button
                   variant="danger"
                   onClick={() => {
@@ -155,7 +173,9 @@ export default function MothersPage() {
                   Edit Data
                 </Button>
               </Col>
-              <Col>{pregnancyNull}</Col>
+              <Col>
+                {pregnancyNull}
+              </Col>
             </Tab>
             <Tab
               eventKey="baby"
@@ -163,10 +183,10 @@ export default function MothersPage() {
               disabled={motherData.sudahLahir ? false : true}
               style={{
                 backgroundColor: "white",
-                borderRadius: "20px",
+                borderRadius: "20px"
               }}
             >
-              <Col md="1">
+              <Col md="1" hidden={babyId === 0 ? true : false}>
                 <Button
                   variant="info"
                   onClick={() => {
@@ -178,7 +198,9 @@ export default function MothersPage() {
                   Edit Data
                 </Button>
               </Col>
-              <Col>{babyNull}</Col>
+              <Col>
+                {babyNull}
+              </Col>
             </Tab>
           </Tabs>
           <Col style={{ marginBottom: "50px" }}>
@@ -201,9 +223,15 @@ export default function MothersPage() {
                           </ul>
                         </Col>
                         <Col style={{ textAlign: "left" }}>
-                          <div>: {motherProfile.name}</div>
-                          <div>: {motherProfile.NIK}</div>
-                          <div>: {motherProfile.address}</div>
+                          <div>
+                            : {motherProfile.name}
+                          </div>
+                          <div>
+                            : {motherProfile.NIK}
+                          </div>
+                          <div>
+                            : {motherProfile.address}
+                          </div>
                         </Col>
                       </Row>
                     </Card.Text>
@@ -229,20 +257,19 @@ export default function MothersPage() {
                         </Col>
                         <Col style={{ textAlign: "left" }}>
                           <div>
-                            : {motherPregnancy.beratAwal}{" "}
-                            <span hidden={isLoading === true ? true : false}>
-                              Kg
-                            </span>
+                            {initialWeight}
                           </div>
                           <div>
                             :{" "}
                             {isLoading === true
                               ? `Loading...`
                               : motherData.sudahLahir === true
-                              ? "Sudah Lahir"
-                              : "Belum Lahir"}
+                                ? "Sudah Lahir"
+                                : "Belum Lahir"}
                           </div>
-                          <div>: {recordedDate}</div>
+                          <div>
+                            : {recordedDate}
+                          </div>
                         </Col>
                       </Row>
                     </Card.Text>

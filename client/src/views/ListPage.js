@@ -23,8 +23,10 @@ export default function ListPage() {
     dispatch(motherListByRT(id));
   }, []);
 
-  const motherListData = useSelector((state) => state.list.motherList);
-  const isLoading = useSelector((state) => state.chart.isLoading);
+  const motherListData = useSelector(state => state.list.motherList);
+  const isLoading = useSelector(state => state.chart.isLoading);
+
+  console.log(motherListData);
 
   let title = `Daftar Ibu Hamil dan Bayi di ${islandConverter(+id)}`;
 
@@ -33,10 +35,11 @@ export default function ListPage() {
   }
 
   return (
-    <div className="h-full"
+    <div
+      className="h-full"
       style={{
         backgroundColor: "#eeee",
-        minHeight: "100vh",
+        minHeight: "100vh"
       }}
     >
       <Navigation />
@@ -55,12 +58,17 @@ export default function ListPage() {
           </Col>
           <Col md="8">
             <div style={{ marginTop: "25px" }}>
-              <h3>{title}</h3>
+              <h3>
+                {title}
+              </h3>
             </div>
           </Col>
         </Row>
       </Container>
-      <Container className="bg-white border" style={{ marginTop: "25px", borderRadius: "10px"}}>
+      <Container
+        className="bg-white border"
+        style={{ marginTop: "25px", borderRadius: "10px" }}
+      >
         <Table striped>
           <thead>
             <th>Nama</th>
@@ -70,7 +78,7 @@ export default function ListPage() {
             <th>Register Kehamilan Baru</th>
           </thead>
           <tbody>
-            {motherListData.map((data) => {
+            {motherListData.map(data => {
               return <ListPageRow data={data} key={data.id} />;
             })}
           </tbody>
