@@ -104,7 +104,7 @@ function Login() {
                 </div>
                 <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                   <div className="text-white px-3 py-1 p-md-5 mx-md-2">
-                    <h4 className="mb-4">About Our App:</h4>
+                    <h4 className="mb-4">About Our App</h4>
                     <p
                       className="small"
                       style={{
