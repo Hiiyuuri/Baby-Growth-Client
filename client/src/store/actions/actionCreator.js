@@ -326,7 +326,6 @@ export const registerPregnancy = inputCreate => {
     });
     dispatch(fetchCombinedData());
 
-    console.log(inputCreate.sudahLahir, `<<<<<<`);
     if (inputCreate.sudahLahir === "true") {
       return { ...created, sudahLahir: true };
     } else {
@@ -345,7 +344,6 @@ export function fetchMotherListOnly() {
           access_token: localStorage.getItem(`access_token`)
         }
       });
-      // console.log(res)
       return res.data;
     } catch (err) {
       console.log(err);
@@ -388,8 +386,6 @@ export const createBabyData = inputCreate => {
 
 export const inputBabyDataAct = inputCreate => {
   return async dispatch => {
-    console.log(inputCreate);
-
     let arr = [
       inputCreate.b1,
       inputCreate.b2,
@@ -426,9 +422,6 @@ export const inputBabyDataAct = inputCreate => {
     });
     beratBulananStr = beratBulananStr.slice(0, -1);
 
-    // console.log(beratBulananStr)
-    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`);
-
     let created = await axios({
       method: "PUT",
       url: baseURL + `/babyData/${inputCreate.BabyDataId}`,
@@ -459,8 +452,6 @@ export const fetchBabyData = id => {
 
 export const inputPregnancyData = inputCreate => {
   return async dispatch => {
-    console.log(inputCreate);
-
     let arr = [
       inputCreate.b1,
       inputCreate.b2,
@@ -481,9 +472,6 @@ export const inputPregnancyData = inputCreate => {
       }
     });
     beratBulananStr = beratBulananStr.slice(0, -1);
-
-    // console.log(beratBulananStr)
-    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`);
 
     let created = await axios({
       method: "PUT",

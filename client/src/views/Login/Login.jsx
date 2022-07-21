@@ -11,12 +11,12 @@ function Login() {
 
   const [inputFormLogin, setInputFormLogin] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = e => {
     e.preventDefault();
     dispatch(PostLogin(inputFormLogin));
   };
@@ -31,7 +31,7 @@ function Login() {
         display: "flex",
         padding: 10,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
       }}
     >
       <div className="container">
@@ -59,10 +59,10 @@ function Login() {
                           className="form-control"
                           placeholder="Email Address"
                           value={inputFormLogin.email}
-                          onChange={(e) => {
+                          onChange={e => {
                             setInputFormLogin({
                               ...inputFormLogin,
-                              email: e.target.value,
+                              email: e.target.value
                             });
                           }}
                         />
@@ -75,31 +75,16 @@ function Login() {
                           className="form-control"
                           placeholder="Password"
                           value={inputFormLogin.password}
-                          onChange={(e) => {
+                          onChange={e => {
                             setInputFormLogin({
                               ...inputFormLogin,
-                              password: e.target.value,
+                              password: e.target.value
                             });
                           }}
                         />
                       </div>
 
                       <div className="text-center  mb-5 pb-2">
-                        {/* <button
-                          className="btn btn-primary btn-block fa-lg mb-3"
-                          type="submit"
-                          style={{
-                            backgroundColor: "#29b57d",
-                            borderColor: "white",
-                            borderRadius: 5,
-                            fontSize: "20px",
-                            paddingTop: "10px",
-                            paddingBottom: "10px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Log in
-                        </button> */}
                         <button
                           type="submit"
                           class="btn btn-primary btn-lg btn-block"
@@ -108,7 +93,7 @@ function Login() {
                             borderColor: "white",
                             borderRadius: 5,
                             fontSize: "20px",
-                            fontWeight: "bold",
+                            fontWeight: "bold"
                           }}
                         >
                           Log in
@@ -124,7 +109,7 @@ function Login() {
                       className="small"
                       style={{
                         textAlign: "justify",
-                        fontSize: "16px",
+                        fontSize: "16px"
                       }}
                     >
                       BabyGrowth is a multiplatform application to collect and

@@ -26,8 +26,6 @@ export default function ListPage() {
   const motherListData = useSelector(state => state.list.motherList);
   const isLoading = useSelector(state => state.chart.isLoading);
 
-  console.log(motherListData);
-
   let title = `Daftar Ibu Hamil dan Bayi di ${islandConverter(+id)}`;
 
   if (isLoading) {

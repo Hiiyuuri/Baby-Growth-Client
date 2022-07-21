@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-// import { useUser } from "../store/actions";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -20,7 +19,7 @@ export default function Navigation() {
     dispatch(fetchUserDetail());
   }, []);
 
-  const HandleLogout = (e) => {
+  const HandleLogout = e => {
     e.preventDefault();
     localStorage.clear();
     navigate("/login");
@@ -28,11 +27,11 @@ export default function Navigation() {
       title: "You've been succesfully logged out!",
       icon: "success",
       confirmButtonText: "OK",
-      confirmButtonColor: "#29b57d",
+      confirmButtonColor: "#29b57d"
     });
   };
 
-  const userDetail = useSelector((state) => state.user.userDetail);
+  const userDetail = useSelector(state => state.user.userDetail);
 
   let userId = +userDetail.id - 1;
 
@@ -47,7 +46,7 @@ export default function Navigation() {
       expand="lg"
       style={{
         background:
-          "linear-gradient(to right, #03a786, #29b57d, #008a45, #00753b)",
+          "linear-gradient(to right, #03a786, #29b57d, #008a45, #00753b)"
       }}
     >
       <Container>
@@ -71,10 +70,10 @@ export default function Navigation() {
               onClick={() => {
                 navigate(`/`);
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 e.target.style.color = "#D3D3D3";
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 e.target.style.color = "white";
               }}
             >
@@ -85,10 +84,10 @@ export default function Navigation() {
               onClick={() => {
                 navigate(`/register-admin`);
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 e.target.style.color = "#D3D3D3";
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 e.target.style.color = "white";
               }}
               hidden={userDetail.role !== "SuperAdmin" ? true : false}
@@ -100,10 +99,10 @@ export default function Navigation() {
               onClick={() => {
                 navigate(`/map-markers`);
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 e.target.style.color = "#D3D3D3";
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 e.target.style.color = "white";
               }}
             >
@@ -112,10 +111,10 @@ export default function Navigation() {
             <Nav.Link
               style={{ color: "white", fontSize: "18px" }}
               onClick={HandleLogout}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 e.target.style.color = "#D3D3D3";
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 e.target.style.color = "white";
               }}
             >
