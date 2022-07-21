@@ -7,6 +7,7 @@ import CategoryCards from './CategoryCards';
 import url from '../config/config';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import ArticleDetail from './ArticleDetail';
+import { CustomPagination } from '../components/CustomPagination';
 export default function HomeScreen(props) {
   const { navigation } = props;
   const [category, setCategory] = useState([])
@@ -67,24 +68,25 @@ export default function HomeScreen(props) {
   })
 
   return (
-    <ScrollView>
+    
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#008080" }}>
         <Text style={{ fontSize: 24, color: 'white' }}>Pilih Kategori dari Artikel</Text>
-        {category.length != 0 ? <FlatList
+        {category.length != 0 ? <ScrollView nestedScrollEnabled = {true} style={{padding:15,marginLeft:5,marginRight:5}}><FlatList
           horizontal={true}
           data={category}
           renderItem={({ item }) => <CategoryCards item={item} getDetail={navigateToDetail} ></CategoryCards>}
           keyExtractor={(item) => item.id}
-        ></FlatList> : <Text>Loading</Text>
+        ></FlatList></ScrollView> : <Text style={{color:'white'}}>Loading</Text>
         }
-        {article.length != 0 ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#008080" }}><SwiperFlatList
+        {article.length != 0 ? <ScrollView nestedScrollEnabled = {true}><View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#008080" }}><SwiperFlatList
           showPagination
+          PaginationComponent={CustomPagination}
           data={article}
           renderItem={({ item }) => <ArticleDetail item={item} ></ArticleDetail>}
           keyExtractor={(item) => item.id}
-        /></View> : <Text>{selectedCategory == "" ? "Please select a category" : "No article for this category yet"}</Text>
+        /></View></ScrollView> : <Text style={{color:'white'}}>{selectedCategory == "" ? "Please select a category" : "No article for this category yet"}</Text>
         }
       </View>
-    </ScrollView>
+    
   );
 }

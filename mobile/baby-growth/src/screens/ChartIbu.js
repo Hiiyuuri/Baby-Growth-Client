@@ -215,7 +215,7 @@ export default function ChartIbu({ navigation }) {
                   {setArticle != "" ? <View>
                     <Card.Cover source={{ uri: setArticle.imageUrl }} />
                     <Text style={{ fontSize: 16, color: '#008080' }}>Artikel Terkait:</Text>
-                    <View style={{ height: 150 }}>
+                    <View style={{ height: 300 }}>
                       <ScrollView>
                         <Text>
                           {setArticle.text}
@@ -240,8 +240,17 @@ export default function ChartIbu({ navigation }) {
               borderTopRightRadius: 10,
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
+              flex:1,
               color: "#008080"
             }}
+            buttonStyle={{
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              width: '90%'
+            }}
+            dropDownMaxWidth={'80%'}
             defaultButtonText={"Silahkan pilih history"}
             buttonTextStyle={{ color: "#008080" }}
             rowTextStyle={{ color: "#008080" }}
@@ -361,11 +370,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "#00BCD4",
-    height: '80%',
+    height: '100%',
     width: '80%',
     borderWidth: 1,
     borderColor: '#fff',
-    marginTop: 80,
+    marginTop: 10,
+    marginBottom: 20,
     marginLeft: 40,
 
   },
