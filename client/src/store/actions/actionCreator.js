@@ -218,10 +218,15 @@ export function fetchDetailData(id) {
       dispatch(pregnancyDataFetchSucess(res.data.selisihBulananHamil));
       dispatch(babyDataFetchSucess(res.data.selisihBulananBayi));
       dispatch(motherProfileDetail(res.data.data.MotherProfile));
-      dispatch(babyId(res.data.data.BabyDatum.id));
 
-      const pregnancyData = {
-        id: 0,
+      if (!res.data.data.BabyDatum) {
+        dispatch(babyId(null));
+      } else {
+        dispatch(babyId(res.data.data.BabyDatum.id));
+      }
+
+      let pregnancyData = {
+        id: null,
         PregnancyId: 0,
         beratAwal: 0
       };
@@ -229,10 +234,10 @@ export function fetchDetailData(id) {
       if (!res.data.data.PregnancyDatum) {
         dispatch(motherPregnancy(pregnancyData));
         dispatch(pregnancyId(pregnancyData.id));
-      } else {
-        dispatch(motherPregnancy(res.data.data.PregnancyDatum));
-        dispatch(pregnancyId(res.data.data.PregnancyDatum.id));
       }
+
+      dispatch(motherPregnancy(res.data.data.PregnancyDatum));
+      dispatch(pregnancyId(res.data.data.PregnancyDatum.id));
     } catch (err) {
       console.log(err);
     } finally {
