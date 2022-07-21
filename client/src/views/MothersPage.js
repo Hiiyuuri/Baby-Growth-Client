@@ -164,6 +164,7 @@ export default function MothersPage() {
             >
               <Col md="1" hidden={pregnancyId !== 0 ? false : true}>
                 <Button
+                  style={{ marginTop: "30px", marginLeft: "20px" }}
                   variant="danger"
                   onClick={() => {
                     navigate(`../edit-pregnancy-data/${pregnancyId}`);
@@ -188,6 +189,7 @@ export default function MothersPage() {
             >
               <Col md="1" hidden={babyId === 0 ? true : false}>
                 <Button
+                  style={{ marginTop: "30px", marginLeft: "20px" }}
                   variant="info"
                   onClick={() => {
                     navigate(`../edit-baby-data/${babyId}`);
