@@ -34,7 +34,7 @@ export default function MothersPage() {
   const motherPregnancy = useSelector(state => state.detail.motherPregnancy);
   const recordedDate = useSelector(state => state.detail.recordedDate);
   const babyId = useSelector(state => state.detail.babyId);
-  const pregnancyId = useSelector(state => state.detail.pregnancyId);
+  const pregnancyId = useSelector(state => state.detail.pregnancyId); //
   const userDetail = useSelector(state => state.user.userDetail);
 
   let rtLocation = motherProfile.UserId - 1;
@@ -162,7 +162,7 @@ export default function MothersPage() {
               title="Pregnancy Data"
               style={{ backgroundColor: "white", borderRadius: "20px" }}
             >
-              <Col md="1" hidden={pregnancyId !== 0 ? false : true}>
+              <Col md="1" hidden={pregnancyId === null ? true : false}>
                 <Button
                   variant="danger"
                   onClick={() => {
