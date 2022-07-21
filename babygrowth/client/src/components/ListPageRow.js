@@ -35,7 +35,12 @@ export default function ListPageRow({ data }) {
   };
 
   const MyComponent = () =>
-    <Select options={options} onChange={handleChange} value={selectValue} />;
+    <Select
+      style={{ paddingTop: 10, marginTop: 10 }}
+      options={options}
+      onChange={handleChange}
+      value={selectValue}
+    />;
 
   return (
     <tr>
@@ -48,11 +53,15 @@ export default function ListPageRow({ data }) {
       <td>
         {data.address}
       </td>
-          <MyComponent />
+      <td>
+        <MyComponent />
+      </td>
       <td>
         <Button
           variant="info"
-          style={{ textAlign: "left" }}
+          style={{
+            textAlign: "left"
+          }}
           onClick={() => {
             navigate(`/register-pregnancy?motherId=${data.id}`);
           }}
@@ -61,7 +70,6 @@ export default function ListPageRow({ data }) {
         </Button>
       </td>
       <td />
-
     </tr>
   );
 }

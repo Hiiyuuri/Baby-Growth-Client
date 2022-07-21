@@ -218,9 +218,21 @@ export function fetchDetailData(id) {
       dispatch(pregnancyDataFetchSucess(res.data.selisihBulananHamil));
       dispatch(babyDataFetchSucess(res.data.selisihBulananBayi));
       dispatch(motherProfileDetail(res.data.data.MotherProfile));
-      dispatch(motherPregnancy(res.data.data.PregnancyDatum));
-      dispatch(pregnancyId(res.data.data.PregnancyDatum.id));
       dispatch(babyId(res.data.data.BabyDatum.id));
+
+      const pregnancyData = {
+        id: 0,
+        PregnancyId: 0,
+        beratAwal: 0
+      };
+
+      if (!res.data.data.PregnancyDatum) {
+        dispatch(motherPregnancy(pregnancyData));
+        dispatch(pregnancyId(pregnancyData.id));
+      } else {
+        dispatch(motherPregnancy(res.data.data.PregnancyDatum));
+        dispatch(pregnancyId(res.data.data.PregnancyDatum.id));
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -314,7 +326,6 @@ export const registerPregnancy = inputCreate => {
     });
     dispatch(fetchCombinedData());
 
-    console.log(inputCreate.sudahLahir, `<<<<<<`);
     if (inputCreate.sudahLahir === "true") {
       return { ...created, sudahLahir: true };
     } else {
@@ -333,7 +344,6 @@ export function fetchMotherListOnly() {
           access_token: localStorage.getItem(`access_token`)
         }
       });
-      // console.log(res)
       return res.data;
     } catch (err) {
       console.log(err);
@@ -376,8 +386,6 @@ export const createBabyData = inputCreate => {
 
 export const inputBabyDataAct = inputCreate => {
   return async dispatch => {
-    console.log(inputCreate);
-
     let arr = [
       inputCreate.b1,
       inputCreate.b2,
@@ -414,9 +422,6 @@ export const inputBabyDataAct = inputCreate => {
     });
     beratBulananStr = beratBulananStr.slice(0, -1);
 
-    // console.log(beratBulananStr)
-    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`);
-
     let created = await axios({
       method: "PUT",
       url: baseURL + `/babyData/${inputCreate.BabyDataId}`,
@@ -447,8 +452,6 @@ export const fetchBabyData = id => {
 
 export const inputPregnancyData = inputCreate => {
   return async dispatch => {
-    console.log(inputCreate);
-
     let arr = [
       inputCreate.b1,
       inputCreate.b2,
@@ -469,9 +472,6 @@ export const inputPregnancyData = inputCreate => {
       }
     });
     beratBulananStr = beratBulananStr.slice(0, -1);
-
-    // console.log(beratBulananStr)
-    console.log({ ...inputCreate, beratBulanan: beratBulananStr }, `ini zlr`);
 
     let created = await axios({
       method: "PUT",
@@ -556,15 +556,29 @@ export const useLogin = () => {
         Swal.fire({
           title: "Login Success",
           text: "Welcome",
-          icon: "success"
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#29b57d"
         });
       } catch (err) {
         console.log(err);
-        Swal.fire({
-          title: "ERROR",
-          text: err.message,
-          icon: "error"
-        });
+        if (err.message === "Request failed with status code 401") {
+          Swal.fire({
+            title: "Email and password don't match!",
+            text: "Check your credentials and try again",
+            icon: "error",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#29b57d"
+          });
+        } else {
+          Swal.fire({
+            title: "ERROR",
+            text: err.message,
+            icon: "error",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#29b57d"
+          });
+        }
       }
     };
   };
@@ -578,13 +592,17 @@ export const useConverter = () => {
   const dispatch = useDispatch();
   const dateConverter = str => {
     try {
-      let arr = str.split("T");
+      if (!str) {
+        dispatch(recordedDate(` `));
+      } else {
+        let arr = str.split("T");
 
-      let date = arr[0];
+        let date = arr[0];
 
-      let result = date.split("-").reverse().join("-");
+        let result = date.split("-").reverse().join("-");
 
-      dispatch(recordedDate(result));
+        dispatch(recordedDate(result));
+      }
     } catch (err) {
       console.log(err);
     }

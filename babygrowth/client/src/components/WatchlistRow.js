@@ -5,11 +5,11 @@ import { useConverter } from "../store/actions/actionCreator";
 
 export default function WatchlistRow({ watchlist }) {
   const navigate = useNavigate();
-  const isLoading = useSelector(state => state.chart.isLoading);
+  const isLoading = useSelector((state) => state.chart.isLoading);
   const { islandConverter } = useConverter();
 
   let status = (
-    <Button variant="warning">
+    <Button variant="warning" className="shadow-sm text-light bold">
       {watchlist.status}
     </Button>
   );
@@ -35,11 +35,7 @@ export default function WatchlistRow({ watchlist }) {
     button = `Loading...`;
   } else {
     if (watchlist.status === "Critical") {
-      status = (
-        <Button variant="danger">
-          {watchlist.status}
-        </Button>
-      );
+      status = <Button variant="danger">{watchlist.status}</Button>;
     }
 
     if (watchlist.noRT < 10) {
@@ -49,15 +45,9 @@ export default function WatchlistRow({ watchlist }) {
 
   return (
     <tr>
-      <td style={{ paddingTop: "10px" }}>
-        {num}
-      </td>
-      <td>
-        {status}
-      </td>
-      <td>
-        {button}
-      </td>
+      <td style={{ paddingTop: "10px" }}>{num}</td>
+      <td>{status}</td>
+      <td>{button}</td>
     </tr>
   );
 }

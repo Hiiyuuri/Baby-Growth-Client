@@ -40,6 +40,22 @@ export default function MothersPage() {
   let rtLocation = motherProfile.UserId - 1;
   dateConverter(motherPregnancy.tanggalDicatat);
 
+  let initialWeight = (
+    <div>
+      : {motherPregnancy.beratAwal}{" "}
+      <span hidden={isLoading === true ? true : false}>Kg</span>
+    </div>
+  );
+
+  if (!motherPregnancy.beratAwal) {
+    initialWeight = (
+      <div>
+        :
+        <span hidden={isLoading === true ? true : false}> - Kg</span>
+      </div>
+    );
+  }
+
   let adminId = +userDetail.id;
   let filter = {
     key: key
@@ -146,7 +162,7 @@ export default function MothersPage() {
               title="Pregnancy Data"
               style={{ backgroundColor: "white", borderRadius: "20px" }}
             >
-              <Col md="1">
+              <Col md="1" hidden={pregnancyId !== 0 ? false : true}>
                 <Button
                   variant="danger"
                   onClick={() => {
@@ -170,12 +186,13 @@ export default function MothersPage() {
                 borderRadius: "20px"
               }}
             >
-              <Col md="1">
+              <Col md="1" hidden={babyId === 0 ? true : false}>
                 <Button
                   variant="info"
                   onClick={() => {
                     navigate(`../edit-baby-data/${babyId}`);
                   }}
+                  role="button"
                   hidden={motherProfile.UserId === adminId ? false : true}
                 >
                   Edit Data
@@ -240,10 +257,7 @@ export default function MothersPage() {
                         </Col>
                         <Col style={{ textAlign: "left" }}>
                           <div>
-                            : {motherPregnancy.beratAwal}{" "}
-                            <span hidden={isLoading === true ? true : false}>
-                              Kg
-                            </span>
+                            {initialWeight}
                           </div>
                           <div>
                             :{" "}

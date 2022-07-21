@@ -8,12 +8,16 @@ import Footer from "../components/Footer";
 
 function MainPage() {
   return (
-    <>
+    <div className="">
       <Navigation />
 
       <div
         className="d-flex flex-row"
-        style={{ justifyContent: "center", paddingTop: "150px" }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "15vh",
+        }}
       >
         <div className="hover-zoomin" style={{ maxWidth: "22rem" }}>
           <Link to={"/dashboard"}>
@@ -78,7 +82,7 @@ function MainPage() {
         </div>
         <Footer />
       </div>
-    </>
+    </div>
   );
 }
 
