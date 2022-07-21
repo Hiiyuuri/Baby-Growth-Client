@@ -9,7 +9,7 @@ export default function ListPageRow({ data }) {
   const navigate = useNavigate();
   const [selectValue, setSelectValue] = useState("");
 
-  const isLoading = useSelector((state) => state.chart.isLoading);
+  const isLoading = useSelector(state => state.chart.isLoading);
 
   if (isLoading) {
     data.name = `Loading...`;
@@ -23,44 +23,44 @@ export default function ListPageRow({ data }) {
     const el = data.Pregnancies[i];
     let obj = {
       value: el.id,
-      label: el.name,
+      label: el.name
     };
 
     options.push(obj);
   }
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setSelectValue(event.value);
     navigate(`/mothers/${event.value}`);
   };
 
-  const MyComponent = () => (
+  const MyComponent = () =>
     <Select
       style={{ paddingTop: 10, marginTop: 10 }}
       options={options}
       onChange={handleChange}
       value={selectValue}
-    />
-  );
+    />;
 
   return (
     <tr>
-      <td>{data.name}</td>
-      <td>{data.NIK}</td>
-      <td>{data.address}</td>
       <td>
-        <Select
-          // style={{ paddingTop: 3, marginTop: 3 }}
-          options={options}
-          onChange={handleChange}
-          value={selectValue}
-        />
+        {data.name}
+      </td>
+      <td>
+        {data.NIK}
+      </td>
+      <td>
+        {data.address}
+      </td>
+      <td>
+        <MyComponent />
       </td>
       <td>
         <Button
           variant="info"
           style={{
-            textAlign: "left",
+            textAlign: "left"
           }}
           onClick={() => {
             navigate(`/register-pregnancy?motherId=${data.id}`);

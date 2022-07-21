@@ -14,7 +14,7 @@ function MapMarkers() {
 
   const [coords, setCoords] = useState([]);
   useEffect(() => {
-    dispatch(fetchMotherListOnly()).then((data) => {
+    dispatch(fetchMotherListOnly()).then(data => {
       setCoords(data);
     });
   }, []);
@@ -25,29 +25,18 @@ function MapMarkers() {
 
       <div className="position-relative">
         <div className="position-absolute">
-          {/* <div className="m-3 w-300 h-50 ">
-            <span
-              className=" h2 px-2 py-1 m-5 w-300 h-200 rounded text-white"
-              style={{
-                background: "#29b57d",
-              }}
-            >
-              Lokasi-Lokasi Ibu
-            </span>
-          </div> */}
-
           <div className="position-relative">
             <Map
               initialViewState={{
                 longitude: 106.582581,
                 latitude: -5.776457,
-                zoom: 9,
+                zoom: 9
               }}
               style={{ width: "100vw", height: "100vh", margin: "auto" }}
               mapStyle="mapbox://styles/mapbox/streets-v9"
               mapboxAccessToken="pk.eyJ1IjoicmF5aGFubXVzdG9mYSIsImEiOiJjbDVtZ2p1MHQwOWQwM2pwMjNmdmlzNjgwIn0.x5rAaXLjR6yQDLuNQGinlQ"
             >
-              {coords.map((el) => {
+              {coords.map(el => {
                 return <MarkerComponent el={el} key={el.id} />;
               })}
             </Map>
