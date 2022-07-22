@@ -30,6 +30,8 @@ export default function HomeScreen(props) {
             }
           }
           catch (error) {
+            
+            alert(error.response.data.message);
           }
         }
         else {
@@ -54,6 +56,7 @@ export default function HomeScreen(props) {
           }
         }
         catch (error) {
+          alert(error.response.data.message);
         }
       }
       fn();

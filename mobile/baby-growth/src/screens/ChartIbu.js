@@ -43,6 +43,7 @@ export default function ChartIbu({ navigation }) {
             }
           }
           catch (error) {
+            alert(error.response.data.message);
           }
         }
       }
@@ -83,6 +84,7 @@ export default function ChartIbu({ navigation }) {
         setModalShown(true);
       }
       catch (error) {
+        alert(error.response.data.message);
       }
     }
 
@@ -164,11 +166,17 @@ export default function ChartIbu({ navigation }) {
     let tempYear = new Date(event.PregnancyDatum.tanggalDicatat).getFullYear();
     let result = []
     for (let i = 0; i < arrRes.length; i++) {
-      result.push(month[((tempDate + i) % 12)]+" "+tempYear);
+      let tempMonth=tempDate+i;
+      if(tempMonth>12){
+        tempMonth-=12
+        tempYear++
+      }
+      result.push(tempMonth+"-"+tempYear);
     }
     setDateData(result);
     if (arrRes2.length != 0) {
       let tempDate2 = new Date(event.BabyDatum.tanggalDicatat).getMonth();
+      let tempYear2 = new Date(event.BabyDatum.tanggalDicatat).getFullYear();
       let temp = [];
       for (let i = 0; i < arrRes2.length; i++) {
         if (i == 0) {
@@ -188,7 +196,13 @@ export default function ChartIbu({ navigation }) {
       setSelectedBabyDataOpacityColor(temp);
       let result2 = []
       for (let i = 0; i < arrRes2.length; i++) {
-        result2.push(month[((tempDate2 + i) % 12)]);
+        let tempMonth2=tempDate2+i;
+      if(tempMonth2>12){
+        tempMonth2-=12
+        tempYear2++
+      }
+        result2.push(tempMonth2+"-"+tempYear2);
+        // result2.push(month[((tempDate2 + i) % 12)]);
       }
       setDateBabyData(result2);
       setSelectedBabyData(arrRes2)

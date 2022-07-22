@@ -55,6 +55,8 @@ export default function LoginScreen(props) {
         }
 
       } catch (error) {
+        
+            alert(error.response.data.message);
       }
 
     }

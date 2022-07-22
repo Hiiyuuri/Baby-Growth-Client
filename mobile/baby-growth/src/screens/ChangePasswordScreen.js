@@ -59,6 +59,7 @@ export default function ChangePasswordScreen(props) {
             }
 
           } catch (error) {
+            alert(error.response.data.message);
           }
 
         }
