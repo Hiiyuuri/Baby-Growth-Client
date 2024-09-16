@@ -25,6 +25,13 @@ function MapMarkers() {
 
       <div className="position-relative">
         <div className="position-absolute">
+          <span
+            className="h3 px-2 py-1 text-white"
+            style={{
+              position: 'absolute', top: 20, left: "40%", elevation: 100, zIndex: 1000, background: "#29b57d",
+              borderRadius: "5px 5px 5px 5px", 
+            }}
+          >Lokasi-Lokasi Ibu Terdaftar</span>
           <div className="position-relative">
             <Map
               initialViewState={{
